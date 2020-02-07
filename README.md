@@ -1,7 +1,19 @@
 # DataStructureInterface
 
-数据结构接口编写，使用C++描述。
+> data structure and algorithm API with the implementation of C++.
 
-**参考资料**
+### 1 Data Structure
 
-1. [邓俊辉老师慕课](https://dsa.cs.tsinghua.edu.cn/~deng/ds/dsacpp/index.htm)
+#### 1.1 Vector
+
+|id|description|finished|
+|-|-|-|
+|1 |finish all api| |
+|2 |robust with exception process| |
+|3 |index with miu number| |
+
+### 2 Algorithm
+
+### 3 Reference
+
+1. [MOOC of Deng Junhui](https://dsa.cs.tsinghua.edu.cn/~deng/ds/dsacpp/index.htm)
