@@ -67,7 +67,7 @@ namespace lxc {
 		T& operator[] (SizeType pos) const;
 		Vector<T>& operator=(const Vector<T>& v);
 		T remove(SizeType pos);
-		int remove(SizeType low, SizeType high);
+		SizeType remove(SizeType low, SizeType high);
 		T remove_back();
 		T remove_front();
 		void insert(SizeType pos, const T& ele);

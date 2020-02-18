@@ -212,7 +212,7 @@ T Vector<T>::remove(SizeType pos)
 }
 
 template <class T>
-int Vector<T>::remove(SizeType low, SizeType high)
+SizeType Vector<T>::remove(SizeType low, SizeType high)
 {
 	T* new_elements = new T[this->_capacity];
 	for (int i = 0, j = 0; i < this->_size; i++) {
@@ -227,6 +227,32 @@ int Vector<T>::remove(SizeType low, SizeType high)
 
 	if (double(this->_size) / this->_capacity < 0.25) { this->_shrink(); }
 	return (high - low);
+}
+
+template <class T>
+T Vector<T>::remove_back()
+{
+	T ele = this->_elements[this->_size - 1];
+	this->_size--;
+
+	if (double(this->_size) / this->_capacity < 0.25) { this->_shrink(); }
+	return ele;
+}
+
+template <class T>
+T Vector<T>::remove_front()
+{
+	T ele = this->_elements[0];
+	T* new_elements = new T[this->_capacity];
+	for (int i = 1, j = 0; i < this->_size; i++, j++) {
+		new_elements[j] = this->_elements[i];
+	}
+	delete[] this->_elements;
+	this->_elements = new_elements;
+	this->_size--;
+
+	if (double(this->_size) / this->_capacity < 0.25) { this->_shrink(); }
+	return ele;
 }
 
 template <class T>
@@ -312,18 +338,6 @@ void Vector<T>::insert_front(const T& ele)
 	}
 
 	this->_size++;
-}
-
-template <class T>
-void Vector<T>::traverse(void(*visit)(T&))
-{
-	for (int i = 0; i < this->_size; i++) { visit(this->_elements[i]); }
-}
-
-template <class T> template <class VST>
-void Vector<T>::traverse(VST& visit)
-{
-	for (int i = 0; i < this->_size; i++) { visit(this->_elements[i]); }
 }
 
 
@@ -437,4 +451,18 @@ void Vector<T>::sort(SizeType low, SizeType high, const char* type, bool(*comp)(
 	else if ('h' == type[0]) {
 		this->_heap_sort(low, high, comp);
 	}
+}
+
+
+// traverse
+template <class T>
+void Vector<T>::traverse(void(*visit)(T&))
+{
+	for (int i = 0; i < this->_size; i++) { visit(this->_elements[i]); }
+}
+
+template <class T> template <class VST>
+void Vector<T>::traverse(VST& visit)
+{
+	for (int i = 0; i < this->_size; i++) { visit(this->_elements[i]); }
 }

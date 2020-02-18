@@ -5,8 +5,6 @@
 
 using namespace std;
 
-void visit(int& ele) { cout << ele << " "; }
-
 int main()
 {
 	test_vector();
