@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 
-#include "DataStructure/Vector.hpp"
+#include "Test/TestVector.hpp"
 
 using namespace std;
 
@@ -9,16 +9,7 @@ void visit(int& ele) { cout << ele << " "; }
 
 int main()
 {
-	int arr[8] = { 2,3,8,7,6 };
-	Vector<int> v(arr, 0, 5);
-	Vector<int> v2 = v;
-
-	v2.traverse(visit);
-	cout << endl;
-
-	v2.sort(0, 5, "heap");
-	v2.traverse(visit);
-	cout << endl;
+	test_vector();
 
 	system("pause");
 	return 0;

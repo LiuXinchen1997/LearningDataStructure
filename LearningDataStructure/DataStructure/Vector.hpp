@@ -1,5 +1,7 @@
 #include "Vector.h"
 
+using namespace lxc;
+
 /*
 template <class T>
 ostream& operator<< (ostream& os, const Vector<T>& v)
@@ -31,12 +33,8 @@ void Vector<T>::_copy_from(const T* arr, SizeType low, SizeType high)
 template <class T>
 void Vector<T>::_expand()
 {
-	if (double(this->_size) / this->_capacity < 0.5) { return; }
-
 	T* new_elements = new T[(this->_capacity <<= 1)];
-	for (int i = 0; i < this->_size; i++) {
-		new_elements[i] = this->_elements[i];
-	}
+	for (int i = 0; i < this->_size; i++) { new_elements[i] = this->_elements[i]; }
 	delete[] this->_elements;
 	this->_elements = new_elements;
 }
@@ -45,7 +43,6 @@ template <class T>
 void Vector<T>::_shrink()
 {
 	if (this->_capacity <= DEFAULT_CAPACITY) { return; }
-	if (double(this->_size) / this->_capacity > 0.25) { return; }
 
 	T* new_elements = new T[(this->_capacity >>= 1)];
 	for (int i = 0; i < min_of_2(this->_size, this->_capacity); i++) {
@@ -117,12 +114,7 @@ void Vector<T>::resize(SizeType new_size, T ele)
 		return;
 	}
 
-	while (new_size > this->_capacity) {
-		for (; this->_size < this->_capacity; ) {
-			this->_elements[this->_size++] = ele;
-		}
-		this->_expand();
-	}
+	while (new_size > this->_capacity) { this->_expand(); }
 	for (; this->_size < new_size; ) { this->_elements[this->_size++] = ele; }
 }
 
@@ -232,8 +224,8 @@ int Vector<T>::remove(SizeType low, SizeType high)
 	delete[] this->_elements;
 	this->_elements = new_elements;
 	this->_size -= (high - low);
-	this->_shrink();
 
+	if (double(this->_size) / this->_capacity < 0.25) { this->_shrink(); }
 	return (high - low);
 }
 
@@ -263,8 +255,7 @@ template <class T>
 void Vector<T>::insert(SizeType pos, const T* arr, SizeType low, SizeType high)
 {
 	int prev_size = this->_size;
-	this->_size += (high - low);
-	while (this->_capacity < this->_size) { _expand(); }
+	while (this->_capacity < this->_size + (high - low)) { _expand(); }
 
 	T* new_elements = new T[this->_capacity];
 	for (int i = 0, j = 0; i < prev_size;) {
@@ -279,6 +270,7 @@ void Vector<T>::insert(SizeType pos, const T* arr, SizeType low, SizeType high)
 
 	delete[] this->_elements;
 	this->_elements = new_elements;
+	this->_size += (high - low);
 }
 
 template <class T>
