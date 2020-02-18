@@ -266,7 +266,7 @@ void lxc::Vector<T>::insert(SizeType pos, const T& ele)
 	if (this->_size == this->_capacity) { this->_expand(); }
 
 	T* new_elements = new T[this->_capacity];
-	for (int i = 0, j = 0; i < this->_size;) {
+	for (int i = 0, j = 0; j < this->_size + 1;) {
 		if (j == pos) {
 			new_elements[j] = ele;
 			j++;
@@ -285,11 +285,10 @@ void lxc::Vector<T>::insert(SizeType pos, const T& ele)
 template <class T>
 void lxc::Vector<T>::insert(SizeType pos, const T* arr, SizeType low, SizeType high)
 {
-	int prev_size = this->_size;
-	while (this->_capacity < this->_size + (high - low)) { _expand(); }
+	while (this->_capacity < this->_size + (high - low)) { this->_expand(); }
 
 	T* new_elements = new T[this->_capacity];
-	for (int i = 0, j = 0; i < prev_size;) {
+	for (int i = 0, j = 0; j < this->_size + (high - low);) {
 		if (pos <= j && j < pos + high - low) {
 			new_elements[j] = arr[low + j - pos];
 			j++;
@@ -324,26 +323,11 @@ void lxc::Vector<T>::insert(SizeType pos, const lxc::Vector<T>& v)
 
 template <class T>
 void lxc::Vector<T>::insert_back(const T& ele)
-{
-	if (this->_size == this->_capacity) { this->_expand(); }
-
-	this->_elements[this->_size] = ele;
-	this->_size++;
-}
+{ this->insert(this->_size, ele); }
 
 template <class T>
 void lxc::Vector<T>::insert_front(const T& ele)
-{
-	if (this->_size == this->_capacity) { this->_expand(); }
-
-	T prev = this->_elements[0];
-	this->_elements[0] = ele;
-	for (int i = 1; i <= this->_size; i++) {
-		T tmp = prev; prev = this->_elements[i]; this->_elements[i] = tmp;
-	}
-
-	this->_size++;
-}
+{ this->insert(0, ele); }
 
 
 // sort/unsort/uniquify

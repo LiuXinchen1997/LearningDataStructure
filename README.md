@@ -17,7 +17,7 @@
 
 |id|description|finished|
 |-|-|-|
-|1|bug: insert cannot push_back||
+|1|bug: insert cannot push_back|√|
 |2 |finish all api| |
 |3 |robust with exception process| |
 |4 |index with miu number| |
