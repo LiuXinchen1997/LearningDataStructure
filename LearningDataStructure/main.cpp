@@ -2,8 +2,9 @@
 #include <cstdlib>
 
 #include "Test/TestVector.hpp"
+#include "DataStructure/Vector.h"
 
-using namespace std;
+using lxc::Vector;
 
 int main()
 {

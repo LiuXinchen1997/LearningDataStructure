@@ -1,15 +1,17 @@
 /* unit test of Vector */
-
+#pragma once
 #include <iostream>
-#include "./DataStructure/Vector.hpp"
+#include "../DataStructure/Vector.hpp"
 
 void visit(int& ele) { std::cout << ele << " "; }
 
 template <class T>
-bool equal(Vector<T> v1, Vector<T> v2)
+bool equal(lxc::Vector<T> v1, lxc::Vector<T> v2)
 { return v1 == v2; }
 
 void test_vector()
 {
-	Vector<int> v1;
+	lxc::Vector<int> v1(10, 5, 2);
+
+	std::cout << v1;
 }

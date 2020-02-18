@@ -1,6 +1,5 @@
 /* declaration of Vector */
 #pragma once
-
 #include <iostream>
 
 typedef int SizeType;

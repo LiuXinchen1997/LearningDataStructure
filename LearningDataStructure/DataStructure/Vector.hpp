@@ -1,25 +1,30 @@
+/* implementation of Vector */
+#pragma once
+#include <iostream>
+
 #include "Vector.h"
 
-using namespace lxc;
 
-/*
 template <class T>
-ostream& operator<< (ostream& os, const Vector<T>& v)
+std::ostream& operator<< (std::ostream& os, const lxc::Vector<T>& v)
 {
-	ostream os;
+	os << "Vector {";
+	os << "capacity: " <<  v.capacity() << ", ";
+	os << "size: " << v.size() << ", ";
+	os << "elements: [";
 	for (int i = 0; i < v.size(); i++) {
-		os << v[i] << " ";
+		if (i) { os << ", "; }
+		os << v[i];
 	}
-	os << "\n";
+	os << "]}\n";
 
 	return os;
 }
-*/
 
 
 // auxiliary
 template <class T>
-void Vector<T>::_copy_from(const T* arr, SizeType low, SizeType high)
+void lxc::Vector<T>::_copy_from(const T* arr, SizeType low, SizeType high)
 {
 	// copy from [low, high)
 	this->_capacity = (high - low) * 2;
@@ -31,7 +36,7 @@ void Vector<T>::_copy_from(const T* arr, SizeType low, SizeType high)
 }
 
 template <class T>
-void Vector<T>::_expand()
+void lxc::Vector<T>::_expand()
 {
 	T* new_elements = new T[(this->_capacity <<= 1)];
 	for (int i = 0; i < this->_size; i++) { new_elements[i] = this->_elements[i]; }
@@ -40,7 +45,7 @@ void Vector<T>::_expand()
 }
 
 template <class T>
-void Vector<T>::_shrink()
+void lxc::Vector<T>::_shrink()
 {
 	if (this->_capacity <= DEFAULT_CAPACITY) { return; }
 
@@ -55,7 +60,7 @@ void Vector<T>::_shrink()
 
 // constructor
 template <class T>
-Vector<T>::Vector(SizeType capacity, SizeType s, T ele)
+lxc::Vector<T>::Vector(SizeType capacity, SizeType s, T ele)
 {
 	this->_capacity = capacity;
 	this->_size = s;
@@ -66,25 +71,25 @@ Vector<T>::Vector(SizeType capacity, SizeType s, T ele)
 }
 
 template <class T>
-Vector<T>::Vector(const T* arr, SizeType n)
+lxc::Vector<T>::Vector(const T* arr, SizeType n)
 {
 	this->_copy_from(arr, 0, n);
 }
 
 template <class T>
-Vector<T>::Vector(const T* arr, SizeType low, SizeType high)
+lxc::Vector<T>::Vector(const T* arr, SizeType low, SizeType high)
 {
 	this->_copy_from(arr, low, high);
 }
 
 template <class T>
-Vector<T>::Vector(const Vector<T>& v)
+lxc::Vector<T>::Vector(const lxc::Vector<T>& v)
 {
 	this->_copy_from(v._elements, 0, v._size);
 }
 
 template <class T>
-Vector<T>::Vector(const Vector<T>& v, SizeType low, SizeType high)
+lxc::Vector<T>::Vector(const lxc::Vector<T>& v, SizeType low, SizeType high)
 {
 	this->_copy_from(v._elements, low, high);
 }
@@ -92,21 +97,21 @@ Vector<T>::Vector(const Vector<T>& v, SizeType low, SizeType high)
 
 // deconstructor
 template <class T>
-Vector<T>::~Vector() { delete[] this->_elements; }
+lxc::Vector<T>::~Vector() { delete[] this->_elements; }
 
 
 // capacity
 template <class T>
-SizeType Vector<T>::size() const { return this->_size; }
+SizeType lxc::Vector<T>::size() const { return this->_size; }
 
 template <class T>
-SizeType Vector<T>::capacity() const { return this->_capacity; }
+SizeType lxc::Vector<T>::capacity() const { return this->_capacity; }
 
 template <class T>
-bool Vector<T>::empty() const { return this->_size == 0; }
+bool lxc::Vector<T>::empty() const { return this->_size == 0; }
 
 template <class T>
-void Vector<T>::resize(SizeType new_size, T ele)
+void lxc::Vector<T>::resize(SizeType new_size, T ele)
 {
 	if (new_size <= this->_size) { this->_size = new_size; return; }
 	if (new_size <= this->_capacity) {
@@ -119,7 +124,7 @@ void Vector<T>::resize(SizeType new_size, T ele)
 }
 
 template <class T>
-void Vector<T>::reserve(SizeType new_size)
+void lxc::Vector<T>::reserve(SizeType new_size)
 {
 	if (new_size <= this->_size) { return; }
 	T* new_elements = new T[new_size];
@@ -135,7 +140,7 @@ void Vector<T>::reserve(SizeType new_size)
 
 // access elements(read only)
 template <class T>
-bool Vector<T>::is_ordered() const
+bool lxc::Vector<T>::is_ordered() const
 {
 	for (int i = 0; i < this->_size - 1; i++) {
 		if (this->_elements[i] > this->_elements[i + 1]) { return false; }
@@ -144,13 +149,13 @@ bool Vector<T>::is_ordered() const
 }
 
 template <class T>
-T Vector<T>::get(SizeType r) const { return this->_elements[r]; }
+T lxc::Vector<T>::get(SizeType r) const { return this->_elements[r]; }
 
 template <class T>
-SizeType Vector<T>::find(const T& ele) const { return this->find(ele, 0, this->_size); }
+SizeType lxc::Vector<T>::find(const T& ele) const { return this->find(ele, 0, this->_size); }
 
 template <class T>
-SizeType Vector<T>::find(const T& ele, SizeType low, SizeType high) const
+SizeType lxc::Vector<T>::find(const T& ele, SizeType low, SizeType high) const
 {
 	for (int i = low; i < high; i++) {
 		if (this->get(i) == ele) { return i; }
@@ -159,15 +164,15 @@ SizeType Vector<T>::find(const T& ele, SizeType low, SizeType high) const
 }
 
 template <class T>
-SizeType Vector<T>::search(const T& ele) const
+SizeType lxc::Vector<T>::search(const T& ele) const
 {
 	return this->search(ele, 0, this->_size);
 }
 
 template <class T>
-SizeType Vector<T>::search(const T& ele, SizeType low, SizeType high) const
+SizeType lxc::Vector<T>::search(const T& ele, SizeType low, SizeType high) const
 {
-	if (!this->is_ordered()) { throw "Vector is not ordered."; }
+	if (!this->is_ordered()) { throw "lxc::Vector is not ordered."; }
 	while (low < high) {
 		SizeType mid = (low + high) / 2;
 		if (this->get(mid) == ele) { return mid; }
@@ -179,7 +184,7 @@ SizeType Vector<T>::search(const T& ele, SizeType low, SizeType high) const
 }
 
 template <class T>
-bool Vector<T>::operator==(const Vector<T>& v) const
+bool lxc::Vector<T>::operator==(const lxc::Vector<T>& v) const
 {
 	if (this->_size != v._size) { return false; }
 	for (int i = 0; i < this->_size; i++) {
@@ -192,10 +197,10 @@ bool Vector<T>::operator==(const Vector<T>& v) const
 
 // writable interface and modifier
 template <class T>
-T& Vector<T>::operator[] (SizeType pos) const { return this->_elements[pos]; }
+T& lxc::Vector<T>::operator[] (SizeType pos) const { return this->_elements[pos]; }
 
 template <class T>
-Vector<T>& Vector<T>::operator=(const Vector<T>& v)
+lxc::Vector<T>& lxc::Vector<T>::operator=(const lxc::Vector<T>& v)
 {
 	if (this->_elements) delete[] this->_elements;
 	this->_copy_from(v._elements, 0, v._size);
@@ -203,7 +208,7 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& v)
 }
 
 template <class T>
-T Vector<T>::remove(SizeType pos)
+T lxc::Vector<T>::remove(SizeType pos)
 {
 	T ele = this->get(pos);
 	this->remove(pos, pos + 1);
@@ -212,7 +217,7 @@ T Vector<T>::remove(SizeType pos)
 }
 
 template <class T>
-SizeType Vector<T>::remove(SizeType low, SizeType high)
+SizeType lxc::Vector<T>::remove(SizeType low, SizeType high)
 {
 	T* new_elements = new T[this->_capacity];
 	for (int i = 0, j = 0; i < this->_size; i++) {
@@ -230,7 +235,7 @@ SizeType Vector<T>::remove(SizeType low, SizeType high)
 }
 
 template <class T>
-T Vector<T>::remove_back()
+T lxc::Vector<T>::remove_back()
 {
 	T ele = this->_elements[this->_size - 1];
 	this->_size--;
@@ -240,7 +245,7 @@ T Vector<T>::remove_back()
 }
 
 template <class T>
-T Vector<T>::remove_front()
+T lxc::Vector<T>::remove_front()
 {
 	T ele = this->_elements[0];
 	T* new_elements = new T[this->_capacity];
@@ -256,7 +261,7 @@ T Vector<T>::remove_front()
 }
 
 template <class T>
-void Vector<T>::insert(SizeType pos, const T& ele)
+void lxc::Vector<T>::insert(SizeType pos, const T& ele)
 {
 	if (this->_size == this->_capacity) { this->_expand(); }
 
@@ -278,7 +283,7 @@ void Vector<T>::insert(SizeType pos, const T& ele)
 }
 
 template <class T>
-void Vector<T>::insert(SizeType pos, const T* arr, SizeType low, SizeType high)
+void lxc::Vector<T>::insert(SizeType pos, const T* arr, SizeType low, SizeType high)
 {
 	int prev_size = this->_size;
 	while (this->_capacity < this->_size + (high - low)) { _expand(); }
@@ -300,25 +305,25 @@ void Vector<T>::insert(SizeType pos, const T* arr, SizeType low, SizeType high)
 }
 
 template <class T>
-void Vector<T>::insert(SizeType pos, const Vector<T>& v, SizeType low, SizeType high)
+void lxc::Vector<T>::insert(SizeType pos, const lxc::Vector<T>& v, SizeType low, SizeType high)
 {
 	this->insert(pos, v._elements, low, high);
 }
 
 template <class T>
-void Vector<T>::insert(SizeType pos, const Vector<T>& v, SizeType n)
+void lxc::Vector<T>::insert(SizeType pos, const lxc::Vector<T>& v, SizeType n)
 {
 	this->insert(pos, v, 0, n);
 }
 
 template <class T>
-void Vector<T>::insert(SizeType pos, const Vector<T>& v)
+void lxc::Vector<T>::insert(SizeType pos, const lxc::Vector<T>& v)
 {
 	this->insert(pos, v, 0, v._size);
 }
 
 template <class T>
-void Vector<T>::insert_back(const T& ele)
+void lxc::Vector<T>::insert_back(const T& ele)
 {
 	if (this->_size == this->_capacity) { this->_expand(); }
 
@@ -327,7 +332,7 @@ void Vector<T>::insert_back(const T& ele)
 }
 
 template <class T>
-void Vector<T>::insert_front(const T& ele)
+void lxc::Vector<T>::insert_front(const T& ele)
 {
 	if (this->_size == this->_capacity) { this->_expand(); }
 
@@ -343,10 +348,10 @@ void Vector<T>::insert_front(const T& ele)
 
 // sort/unsort/uniquify
 template <class T>
-void Vector<T>::_swap(T& ele1, T& ele2) { T tmp = ele1; ele1 = ele2; ele2 = tmp; }
+void lxc::Vector<T>::_swap(T& ele1, T& ele2) { T tmp = ele1; ele1 = ele2; ele2 = tmp; }
 
 template <class T>
-void Vector<T>::_bubble_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
+void lxc::Vector<T>::_bubble_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
 {
 	for (int i = 0; i < high - low; i++) {
 		for (int j = low; j < high - i - 1; j++) {
@@ -360,7 +365,7 @@ void Vector<T>::_bubble_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
 }
 
 template <class T>
-void Vector<T>::_insert_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
+void lxc::Vector<T>::_insert_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
 {
 	for (int i = low; i < high; i++) {
 		T tmp = this->_elements[i];
@@ -379,7 +384,7 @@ void Vector<T>::_insert_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
 }
 
 template <class T>
-void Vector<T>::_select_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
+void lxc::Vector<T>::_select_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
 {
 	for (int i = high - 1; i > low; i--) {
 		T _max = this->_elements[low];
@@ -397,7 +402,7 @@ void Vector<T>::_select_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
 }
 
 template <class T>
-void Vector<T>::_max_heapify(SizeType low, SizeType high, SizeType i, bool(*comp)(T&, T&))
+void lxc::Vector<T>::_max_heapify(SizeType low, SizeType high, SizeType i, bool(*comp)(T&, T&))
 {
 	SizeType lc = (i - low) * 2 + 1 + low;
 	SizeType rc = (i - low) * 2 + 2 + low;
@@ -416,7 +421,7 @@ void Vector<T>::_max_heapify(SizeType low, SizeType high, SizeType i, bool(*comp
 }
 
 template <class T>
-void Vector<T>::_build_max_heap(SizeType low, SizeType high, bool(*comp)(T&, T&))
+void lxc::Vector<T>::_build_max_heap(SizeType low, SizeType high, bool(*comp)(T&, T&))
 {
 	for (int i = low + (low + high) / 2 + 1; i >= low; i--) {
 		this->_max_heapify(low, high, i, comp);
@@ -424,7 +429,7 @@ void Vector<T>::_build_max_heap(SizeType low, SizeType high, bool(*comp)(T&, T&)
 }
 
 template <class T>
-void Vector<T>::_heap_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
+void lxc::Vector<T>::_heap_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
 {
 	this->_build_max_heap(low, high, comp);
 	for (int i = high - 1; i > low; i--) {
@@ -437,7 +442,7 @@ void Vector<T>::_heap_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
 //void _quick_sort(Rank low, Rank high, bool(*comp)(T&, T&) = common_comp);
 
 template <class T>
-void Vector<T>::sort(SizeType low, SizeType high, const char* type, bool(*comp)(T&, T&))
+void lxc::Vector<T>::sort(SizeType low, SizeType high, const char* type, bool(*comp)(T&, T&))
 {
 	if ('b' == type[0]) {
 		this->_bubble_sort(low, high, comp);
@@ -456,13 +461,13 @@ void Vector<T>::sort(SizeType low, SizeType high, const char* type, bool(*comp)(
 
 // traverse
 template <class T>
-void Vector<T>::traverse(void(*visit)(T&))
+void lxc::Vector<T>::traverse(void(*visit)(T&))
 {
 	for (int i = 0; i < this->_size; i++) { visit(this->_elements[i]); }
 }
 
 template <class T> template <class VST>
-void Vector<T>::traverse(VST& visit)
+void lxc::Vector<T>::traverse(VST& visit)
 {
 	for (int i = 0; i < this->_size; i++) { visit(this->_elements[i]); }
 }
