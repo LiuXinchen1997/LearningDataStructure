@@ -16,7 +16,7 @@ std::ostream& operator<< (std::ostream& os, const lxc::Vector<T>& v)
 		if (i) { os << ", "; }
 		os << v[i];
 	}
-	os << "]}\n";
+	os << "]}";
 
 	return os;
 }
@@ -71,9 +71,9 @@ lxc::Vector<T>::Vector(SizeType capacity, SizeType s, T ele)
 }
 
 template <class T>
-lxc::Vector<T>::Vector(const T* arr, SizeType n)
+lxc::Vector<T>::Vector(const T* arr, SizeType size)
 {
-	this->_copy_from(arr, 0, n);
+	this->_copy_from(arr, 0, size);
 }
 
 template <class T>
@@ -193,6 +193,14 @@ bool lxc::Vector<T>::operator==(const lxc::Vector<T>& v) const
 
 	return true;
 }
+
+template <class T>
+bool lxc::Vector<T>::equals(const Vector<T>& v) const
+{ return *this == v; }
+
+template <class T>
+bool lxc::Vector<T>::equals(const T* arr, SizeType size) const
+{ return *this == lxc::Vector<T>(arr, size); }
 
 
 // writable interface and modifier
@@ -422,23 +430,60 @@ void lxc::Vector<T>::_heap_sort(SizeType low, SizeType high, bool(*comp)(T&, T&)
 	}
 }
 
-//void _merge_sort(Rank low, Rank high, bool(*comp)(T&, T&) = common_comp);
-//void _quick_sort(Rank low, Rank high, bool(*comp)(T&, T&) = common_comp);
+template <class T>
+void lxc::Vector<T>::_merge(SizeType low, SizeType high, SizeType mid, bool(*comp)(T&, T&))
+{
+	// merge two lists: [low, mid) and [mid, high)
+	T* tmp = new T[high - low + 1];
+	for (SizeType i = low, j = mid, k = 0; k < high - low;) {
+		if (high <= j || (i < mid && comp(this->_elements[i], this->_elements[j]))) {
+			tmp[k] = this->_elements[i];
+			k++; i++;
+		}
+		if (mid <= i || (j < high && comp(this->_elements[j], this->_elements[i]))) {
+			tmp[k] = this->_elements[j];
+			k++; j++;
+		}
+	}
+
+	for (SizeType i = 0; i < high - low; i++) {
+		this->_elements[low + i] = tmp[i];
+	}
+	delete[] tmp;
+}
+
+template <class T>
+void lxc::Vector<T>::_merge_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
+{
+	if (high - 1 <= low) { return; }
+	SizeType mid = (low + high) / 2;
+	_merge_sort(low, mid, comp);
+	_merge_sort(mid, high, comp);
+	this->_merge(low, high, mid, comp);
+}
 
 template <class T>
 void lxc::Vector<T>::sort(SizeType low, SizeType high, const char* type, bool(*comp)(T&, T&))
 {
-	if ('b' == type[0]) {
+	switch (type[0])
+	{
+	case 'b':
 		this->_bubble_sort(low, high, comp);
-	}
-	else if ('i' == type[0]) {
+		break;
+	case 'i':
 		this->_insert_sort(low, high, comp);
-	}
-	else if ('s' == type[0]) {
+		break;
+	case 's':
 		this->_select_sort(low, high, comp);
-	}
-	else if ('h' == type[0]) {
+		break;
+	case 'h':
 		this->_heap_sort(low, high, comp);
+		break;
+	case 'm':
+		this->_merge_sort(low, high, comp);
+		break;
+	default:
+		break;
 	}
 }
 

@@ -25,6 +25,7 @@ namespace lxc {
 		// sort
 		// comp can be considered as operator<
 		void _swap(T& ele1, T& ele2);
+		// for comp: if 1st ele < 2nd ele, return true; else return false.
 		void _bubble_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
 		void _insert_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
 		void _select_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
@@ -32,13 +33,15 @@ namespace lxc {
 		void _max_heapify(SizeType low, SizeType high, SizeType i, bool(*comp)(T&, T&) = common_comp);
 		void _build_max_heap(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
 		void _heap_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
+		// merge sort
+		void _merge(SizeType low, SizeType high, SizeType mid, bool(*comp)(T&, T&) = common_comp);
 		void _merge_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
 		void _quick_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
 
 	public:
 		// constructor
 		Vector(SizeType capacity = DEFAULT_CAPACITY, SizeType s = 0, T e = 0);
-		Vector(const T* arr, SizeType n); // copy from [0, n) of arr
+		Vector(const T* arr, SizeType size); // copy from [0, size) of arr
 		Vector(const T* arr, SizeType low, SizeType high);
 		Vector(const Vector<T>& v);
 		Vector(const Vector<T>& v, SizeType low, SizeType high);
@@ -61,6 +64,8 @@ namespace lxc {
 		SizeType search(const T& ele) const; // search for disordered array(binary search)
 		SizeType search(const T& ele, SizeType low, SizeType high) const;
 		bool operator==(const Vector<T>& v) const;
+		bool equals(const Vector<T>& v) const;
+		bool equals(const T* arr, SizeType size) const;
 
 		// writable interface and modifier
 		T& operator[] (SizeType pos) const;
