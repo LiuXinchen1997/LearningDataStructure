@@ -1,6 +1,8 @@
 /* implementation of Vector */
 #pragma once
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 #include "Vector.h"
 
@@ -453,19 +455,30 @@ void lxc::Vector<T>::_merge(SizeType low, SizeType high, SizeType mid, bool(*com
 }
 
 template <class T>
-SizeType lxc::Vector<T>::_partition(SizeType low, SizeType high)
+void lxc::Vector<T>::_merge_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
+{
+	if (high - 1 <= low) { return; }
+	SizeType mid = (low + high) / 2;
+	_merge_sort(low, mid, comp);
+	_merge_sort(mid, high, comp);
+	this->_merge(low, high, mid, comp);
+}
+
+template <class T>
+SizeType lxc::Vector<T>::_partition(SizeType low, SizeType high, bool(*comp)(T&, T&))
 {
 	T seperate = this->_elements[high - 1];
 	SizeType i = low, j = low;
 	while (true) {
-		if (this->_elements[j] <= seperate) {
+		if (comp(this->_elements[j], seperate)) {
 			this->_swap(this->_elements[i++], this->_elements[j]);
 		}
 		j++;
 		if (j == high) { break; }
 	}
-	
-	return i - 1; // easy to make mistakes
+	this->_swap(this->_elements[i], this->_elements[high - 1]);
+
+	return i;
 }
 
 template <class T>
@@ -478,17 +491,7 @@ void lxc::Vector<T>::_quick_sort(SizeType low, SizeType high, bool(*comp)(T&, T&
 }
 
 template <class T>
-void lxc::Vector<T>::_merge_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
-{
-	if (high - 1 <= low) { return; }
-	SizeType mid = (low + high) / 2;
-	_merge_sort(low, mid, comp);
-	_merge_sort(mid, high, comp);
-	this->_merge(low, high, mid, comp);
-}
-
-template <class T>
-void lxc::Vector<T>::sort(SizeType low, SizeType high, const char* type, bool(*comp)(T&, T&))
+void lxc::Vector<T>::sort(const char* type, SizeType low, SizeType high, bool(*comp)(T&, T&))
 {
 	switch (type[0])
 	{
@@ -515,6 +518,17 @@ void lxc::Vector<T>::sort(SizeType low, SizeType high, const char* type, bool(*c
 	}
 }
 
+template <class T>
+void lxc::Vector<T>::unsort(SizeType low, SizeType high)
+{
+	unsigned seed = time(0);
+	srand(seed);
+
+	for (SizeType i = high - 1; i >= low + 1; i--) {
+		SizeType pos = (rand() % (i - low + 1)) + low;
+		this->_swap(this->_elements[pos], this->_elements[i]);
+	}
+}
 
 // traverse
 template <class T>

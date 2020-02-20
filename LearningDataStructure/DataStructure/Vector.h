@@ -37,7 +37,7 @@ namespace lxc {
 		void _merge(SizeType low, SizeType high, SizeType mid, bool(*comp)(T&, T&) = common_comp);
 		void _merge_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
 		// quick sort
-		SizeType _partition(SizeType low, SizeType high);
+		SizeType _partition(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
 		void _quick_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
 
 	public:
@@ -85,8 +85,9 @@ namespace lxc {
 		void insert_front(const T& ele);
 
 		// sort/unsort/uniquify
-		void sort(SizeType low = 0, SizeType high = this->_size, const char* type = "bubble",
+		void sort(const char* type = "quick", SizeType low = 0, SizeType high = 0,
 			bool(*comp)(T&, T&) = common_comp);
+		void unsort(SizeType low = 0, SizeType high = 0);
 
 		// traverse
 		void traverse(void(*visit)(T&)); // for function pointer

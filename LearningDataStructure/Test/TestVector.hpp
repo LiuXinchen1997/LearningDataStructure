@@ -1,6 +1,7 @@
 /* unit test of Vector */
 #pragma once
 #include <iostream>
+#include <string>
 #include "../DataStructure/Vector.hpp"
 
 void visit(int& ele) { std::cout << ele << " "; }
@@ -19,7 +20,7 @@ void test_vector_merge_sort()
 	lxc::Vector<int> v(arr, 6);
 	std::cout << v << std::endl;
 
-	v.sort(0, v.size(), "merge");
+	v.sort("merge", 0, v.size());
 	std::cout << v << std::endl;
 
 	int sorted_arr[6] = { 1, 3, 5, 6, 7, 9 };
@@ -32,18 +33,35 @@ void test_vector_quick_sort()
 	lxc::Vector<int> v(arr, 6);
 	std::cout << v << std::endl;
 
-	v.sort(0, v.size(), "quick");
+	v.sort("quick", 0, v.size());
 	std::cout << v << std::endl;
 
 	int sorted_arr[6] = { 1, 3, 5, 6, 7, 9 };
 	if (!equals(v, sorted_arr, 6)) { throw "quick sort error."; }
 }
 
+void test_vector_sort()
+{
+	const SizeType SORTNUM = 6;
+
+	std::string sort_names[SORTNUM] 
+		= { "bubble", "insert", "select", "heap", "merge", "quick" };
+	int arr[6] = { 5, 3, 7, 1, 9, 6 };
+	int sorted_arr[6] = { 1, 3, 5, 6, 7, 9 };
+	lxc::Vector<int> v(arr, 6);
+	for (SizeType i = 0; i < SORTNUM; i++) {
+		v.unsort(0, v.size());
+		v.sort(sort_names[i].c_str(), 0, v.size());
+		if (!equals(v, sorted_arr, 6)) { 
+			throw sort_names[i] + " sort error."; 
+		}
+	}
+}
+
 void test_vector()
 {
 	try {
-		test_vector_merge_sort();
-		test_vector_quick_sort();
+		test_vector_sort();
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;
