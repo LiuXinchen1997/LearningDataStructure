@@ -453,6 +453,31 @@ void lxc::Vector<T>::_merge(SizeType low, SizeType high, SizeType mid, bool(*com
 }
 
 template <class T>
+SizeType lxc::Vector<T>::_partition(SizeType low, SizeType high)
+{
+	T seperate = this->_elements[high - 1];
+	SizeType i = low, j = low;
+	while (true) {
+		if (this->_elements[j] <= seperate) {
+			this->_swap(this->_elements[i++], this->_elements[j]);
+		}
+		j++;
+		if (j == high) { break; }
+	}
+	
+	return i - 1; // easy to make mistakes
+}
+
+template <class T>
+void lxc::Vector<T>::_quick_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
+{
+	if (high <= low) { return; }
+	SizeType seperate_pos = this->_partition(low, high);
+	_quick_sort(low, seperate_pos);
+	_quick_sort(seperate_pos + 1, high);
+}
+
+template <class T>
 void lxc::Vector<T>::_merge_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
 {
 	if (high - 1 <= low) { return; }
@@ -481,6 +506,9 @@ void lxc::Vector<T>::sort(SizeType low, SizeType high, const char* type, bool(*c
 		break;
 	case 'm':
 		this->_merge_sort(low, high, comp);
+		break;
+	case 'q':
+		this->_quick_sort(low, high, comp);
 		break;
 	default:
 		break;

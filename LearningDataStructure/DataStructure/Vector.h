@@ -36,6 +36,8 @@ namespace lxc {
 		// merge sort
 		void _merge(SizeType low, SizeType high, SizeType mid, bool(*comp)(T&, T&) = common_comp);
 		void _merge_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
+		// quick sort
+		SizeType _partition(SizeType low, SizeType high);
 		void _quick_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
 
 	public:
