@@ -70,11 +70,26 @@ void test_vector_deduplicate()
 	if (!equals(v, _arr, 4)) { throw "deduplicate error."; }
 }
 
+void test_vector_uniquify()
+{
+	int arr[6] = { 2, 4, 6, 2, 4, 5 };
+	lxc::Vector<int> v(arr, 6);
+	std::cout << v << std::endl;
+
+	v.sort("quick", 0, v.size());
+	std::cout << v << std::endl;
+	v.uniquify();
+	std::cout << v << std::endl;
+	int _arr[4] = { 2, 4, 5, 6 };
+	if (!equals(v, _arr, 4)) { throw "uniquify error."; }
+}
+
 void test_vector()
 {
 	try {
 		test_vector_sort();
 		test_vector_deduplicate();
+		test_vector_uniquify();
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;

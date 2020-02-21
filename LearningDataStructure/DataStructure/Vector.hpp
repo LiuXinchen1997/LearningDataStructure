@@ -222,7 +222,7 @@ std::string lxc::Vector<T>::to_str() const
 		if (i) { str += ", "; }
 		str += std::to_string(this->get(i));
 	}
-	str += "]}";
+	str += "] }";
 
 	return str;
 }
@@ -361,6 +361,12 @@ template <class T>
 void lxc::Vector<T>::insert_front(const T& ele)
 { this->insert(0, ele); }
 
+template <class T>
+Vector<T> lxc::Vector<T>::operator+(const Vector<T>& v)
+{
+}
+
+//Vector<T>& operator+=(const Vector<T>& v);
 
 // sort/unsort/uniquify
 template <class T>
@@ -576,6 +582,25 @@ int lxc::Vector<T>::deduplicate()
 template <class T>
 int lxc::Vector<T>::uniquify()
 {
+	if (!this->is_ordered()) { throw "lxc::Vector is not ordered."; }
+	T* new_elements = new T[this->_capacity];
+	SizeType new_size = 0;
+
+	new_elements[new_size++] = this->_elements[0];
+	T cur_ele = this->_elements[0];
+	for (SizeType i = 1; i < this->_size; i++) {
+		if (this->get(i) != cur_ele) {
+			new_elements[new_size++] = this->_elements[i];
+			cur_ele = this->_elements[i];
+		}
+	}
+
+	delete[] this->_elements;
+	this->_elements = new_elements;
+	SizeType res = this->_size - new_size;
+	this->_size = new_size;
+
+	return res;
 }
 
 // traverse

@@ -62,9 +62,9 @@ namespace lxc {
 		// access elements(read only)
 		bool is_ordered() const; // ordered: from min to max
 		T get(SizeType r) const;
-		SizeType find(const T& ele) const; // search for ordered array(find first of ele)
+		SizeType find(const T& ele) const; // search for disordered array(find first of ele)
 		SizeType find(const T& ele, SizeType low, SizeType high) const; // search in [low, high)
-		SizeType search(const T& ele) const; // search for disordered array(binary search)
+		SizeType search(const T& ele) const; // search for ordered array(binary search)
 		SizeType search(const T& ele, SizeType low, SizeType high) const;
 		bool operator==(const Vector<T>& v) const;
 		bool equals(const Vector<T>& v) const;
@@ -85,6 +85,8 @@ namespace lxc {
 		void insert(SizeType pos, const Vector<T>& v);
 		void insert_back(const T& ele);
 		void insert_front(const T& ele);
+		Vector<T> operator+(const Vector<T>& v);
+		Vector<T>& operator+=(const Vector<T>& v);
 
 		// sort/unsort/uniquify
 		void sort(const char* type = "quick", SizeType low = 0, SizeType high = 0,
