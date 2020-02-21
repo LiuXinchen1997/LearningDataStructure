@@ -362,11 +362,19 @@ void lxc::Vector<T>::insert_front(const T& ele)
 { this->insert(0, ele); }
 
 template <class T>
-Vector<T> lxc::Vector<T>::operator+(const Vector<T>& v)
+lxc::Vector<T> lxc::Vector<T>::operator+(const Vector<T>& v)
 {
+	lxc::Vector<T> res_v(*this);
+	res_v.insert(res_v.size(), v);
+	return res_v;
 }
 
-//Vector<T>& operator+=(const Vector<T>& v);
+template <class T>
+lxc::Vector<T>& lxc::Vector<T>::operator+=(const Vector<T>& v)
+{
+	this->insert(this->_size, v);
+	return *this;
+}
 
 // sort/unsort/uniquify
 template <class T>

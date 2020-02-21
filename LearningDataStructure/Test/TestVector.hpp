@@ -84,12 +84,46 @@ void test_vector_uniquify()
 	if (!equals(v, _arr, 4)) { throw "uniquify error."; }
 }
 
+void test_operator_plus()
+{
+	int arr[3] = { 2, 4, 6};
+	lxc::Vector<int> v1(arr, 3);
+	std::cout << v1 << std::endl;
+
+	int arr2[3] = { 2, 4, 5 };
+	lxc::Vector<int> v2(arr2, 3);
+	std::cout << v2 << std::endl;
+
+	int arr3[6] = { 2, 4, 6, 2, 4, 5 };
+	lxc::Vector<int> v3 = v1 + v2;
+	std::cout << v3 << std::endl;
+	if (!equals(v3, arr3, 6)) { throw "operator+ error."; }
+}
+
+void test_operator_plus_equal()
+{
+	int arr[3] = { 2, 4, 6 };
+	lxc::Vector<int> v1(arr, 3);
+	std::cout << v1 << std::endl;
+
+	int arr2[3] = { 2, 4, 5 };
+	lxc::Vector<int> v2(arr2, 3);
+	std::cout << v2 << std::endl;
+
+	int arr3[6] = { 2, 4, 6, 2, 4, 5 };
+	v1 += v2;
+	std::cout << v1 << std::endl;
+	if (!equals(v1, arr3, 6)) { throw "operator+= error."; }
+}
+
 void test_vector()
 {
 	try {
 		test_vector_sort();
 		test_vector_deduplicate();
 		test_vector_uniquify();
+		test_operator_plus();
+		test_operator_plus_equal();
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;
