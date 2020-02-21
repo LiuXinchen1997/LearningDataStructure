@@ -10,8 +10,17 @@
 template <class T>
 std::ostream& operator<< (std::ostream& os, const lxc::Vector<T>& v)
 {
+	os << v.to_str();
+	return os;
+}
+
+/*
+// how to solve the problem of self-defined type 2 string ??? 
+template <class T>
+std::ostream& operator<< (std::ostream& os, const lxc::Vector<T>& v)
+{
 	os << "Vector {";
-	os << "capacity: " <<  v.capacity() << ", ";
+	os << "capacity: " << v.capacity() << ", ";
 	os << "size: " << v.size() << ", ";
 	os << "elements: [";
 	for (int i = 0; i < v.size(); i++) {
@@ -22,7 +31,7 @@ std::ostream& operator<< (std::ostream& os, const lxc::Vector<T>& v)
 
 	return os;
 }
-
+*/
 
 // auxiliary
 template <class T>
@@ -204,6 +213,19 @@ template <class T>
 bool lxc::Vector<T>::equals(const T* arr, SizeType size) const
 { return *this == lxc::Vector<T>(arr, size); }
 
+template <class T>
+std::string lxc::Vector<T>::to_str() const
+{
+	std::string str = "Vector { capacity: " + std::to_string(this->_capacity)
+		+ ", size: " + std::to_string(this->_size) + ", elements: [ ";
+	for (int i = 0; i < this->_size; i++) {
+		if (i) { str += ", "; }
+		str += std::to_string(this->get(i));
+	}
+	str += "]}";
+
+	return str;
+}
 
 // writable interface and modifier
 template <class T>
@@ -521,13 +543,39 @@ void lxc::Vector<T>::sort(const char* type, SizeType low, SizeType high, bool(*c
 template <class T>
 void lxc::Vector<T>::unsort(SizeType low, SizeType high)
 {
-	unsigned seed = time(0);
+	time_t seed = time(0);
 	srand(seed);
 
 	for (SizeType i = high - 1; i >= low + 1; i--) {
 		SizeType pos = (rand() % (i - low + 1)) + low;
 		this->_swap(this->_elements[pos], this->_elements[i]);
 	}
+}
+
+template <class T>
+int lxc::Vector<T>::deduplicate()
+{
+	T* new_elements = new T[this->_capacity];
+	SizeType new_size = 0;
+	for (SizeType i = 0; i < this->_size; i++) {
+		bool existed = false;
+		for (SizeType j = 0; j < i; j++) {
+			if (this->_elements[j] == this->_elements[i]) { existed = true; break; }
+		}
+		if (!existed) { new_elements[new_size++] = this->_elements[i]; }
+	}
+
+	delete[] this->_elements;
+	this->_elements = new_elements;
+	SizeType res = this->_size - new_size;
+	this->_size = new_size;
+
+	return res;
+}
+
+template <class T>
+int lxc::Vector<T>::uniquify()
+{
 }
 
 // traverse

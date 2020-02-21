@@ -1,6 +1,7 @@
 /* declaration of Vector */
 #pragma once
 #include <iostream>
+#include <string>
 
 typedef int SizeType;
 
@@ -68,6 +69,7 @@ namespace lxc {
 		bool operator==(const Vector<T>& v) const;
 		bool equals(const Vector<T>& v) const;
 		bool equals(const T* arr, SizeType size) const;
+		std::string to_str() const;
 
 		// writable interface and modifier
 		T& operator[] (SizeType pos) const;
@@ -88,6 +90,8 @@ namespace lxc {
 		void sort(const char* type = "quick", SizeType low = 0, SizeType high = 0,
 			bool(*comp)(T&, T&) = common_comp);
 		void unsort(SizeType low = 0, SizeType high = 0);
+		int deduplicate(); // for disordered array
+		int uniquify(); // for ordered array
 
 		// traverse
 		void traverse(void(*visit)(T&)); // for function pointer
