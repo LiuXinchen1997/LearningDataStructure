@@ -320,7 +320,7 @@ T lxc::Vector<T>::remove_front()
 }
 
 template <class T>
-SizeType lxc::Vector<T>::remove_if(bool(*filter)(T&))
+SizeType lxc::Vector<T>::remove_if(bool(*filter)(const T))
 {
 	T* new_elements = new T[this->_capacity];
 	SizeType new_size = 0;
@@ -421,6 +421,32 @@ lxc::Vector<T>& lxc::Vector<T>::operator+=(const Vector<T>& v)
 	this->insert(this->_size, v);
 	return *this;
 }
+
+
+// functional op
+template <class T> template <class S>
+lxc::Vector<S> lxc::Vector<T>::map_to(S(*mapper)(T))
+{
+	Vector<S> v;
+	for (SizeType i = 0; i < this->_size; i++) { 
+		v.insert_back(mapper(this->_elements[i]));
+	}
+
+	return v;
+}
+
+template <class T> template <class S> 
+S lxc::Vector<T>::reduce_to(S(*reducer)(const T, const T))
+{
+	if (this->_size < 2) { throw "reduce error: too few elements."; return 0; }
+	S cur = reducer(this->_elements[0], this->_elements[1]);
+	for (SizeType i = 2; i < this->_size; i++) {
+		cur = reducer(cur, this->_elements[i]);
+	}
+
+	return cur;
+}
+
 
 // sort/unsort/uniquify
 template <class T> template <class S>

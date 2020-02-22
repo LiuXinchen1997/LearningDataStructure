@@ -88,7 +88,7 @@ namespace lxc {
 		SizeType remove(SizeType low, SizeType high);
 		T remove_back();
 		T remove_front();
-		SizeType remove_if(bool(*filter)(T&));
+		SizeType remove_if(bool(*filter)(const T));
 		void insert(SizeType pos, const T& ele);
 		void insert(SizeType pos, const T* arr, SizeType low, SizeType high);
 		void insert(SizeType pos, const Vector<T>& v, SizeType low, SizeType high);
@@ -98,6 +98,10 @@ namespace lxc {
 		void insert_front(const T& ele);
 		Vector<T> operator+(const Vector<T>& v);
 		Vector<T>& operator+=(const Vector<T>& v);
+
+		// functional op
+		template <class S> Vector<S> map_to(S(*mapper)(T));
+		template <class S> S reduce_to(S(*reducer)(const T, const T));
 
 		// sort/unsort/uniquify
 		void sort(const char* type = "quick", SizeType low = 0, SizeType high = 0,
