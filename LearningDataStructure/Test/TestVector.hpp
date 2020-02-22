@@ -124,6 +124,29 @@ void test_remove_if()
 	else { throw "remove_if error."; }
 }
 
+void test_assign()
+{
+	lxc::Vector<int> v;
+	int arr[6] = { 2, 4, 6, 2, 4, 5 };
+	v.assign(arr, 6);
+
+	if (equals(v, arr, 6)) { std::cout << "assign pass." << std::endl; }
+	else { throw "assign error."; }
+}
+
+void test_swap()
+{
+	int arr[] = { 2, 5, 3, 7, 7 };
+	int arr2[] = { 4, 1, 7, 9, 4, 2 };
+	lxc::Vector<int> v(arr, 5);
+	lxc::Vector<int> v2(arr2, 6);
+
+	v.swap(v2);
+
+	if (equals(v, arr2, 6) && equals(v2, arr, 5)) { std::cout << "swap pass." << std::endl; }
+	else { throw "swap error."; }
+}
+
 void test_vector()
 {
 	try {
@@ -133,6 +156,8 @@ void test_vector()
 		test_operator_plus();
 		test_operator_plus_equal();
 		test_remove_if();
+		test_assign();
+		test_swap();
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;

@@ -7,6 +7,7 @@ typedef int SizeType;
 
 #define DEFAULT_CAPACITY 3
 #define min_of_2(a, b) (a < b ? a : b)
+#define max_of_2(a, b) (a < b ? b : a)
 
 template <class T>
 bool common_comp(T& ele1, T& ele2) { return (ele1 < ele2); }
@@ -25,7 +26,7 @@ namespace lxc {
 
 		// sort
 		// comp can be considered as operator<
-		void _swap(T& ele1, T& ele2);
+		template <class S> void _swap(S& ele1, S& ele2);
 		// for comp: if 1st ele < 2nd ele, return true; else return false.
 		void _bubble_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
 		void _insert_sort(SizeType low, SizeType high, bool(*comp)(T&, T&) = common_comp);
@@ -77,6 +78,12 @@ namespace lxc {
 		T& operator[] (SizeType pos) const;
 		T& operator[] (std::string pos) const; // slice op
 		Vector<T>& operator=(const Vector<T>& v);
+		void assign(const T* arr, SizeType size);
+		void assign(const T* arr, SizeType low, SizeType high);
+		void assign(const Vector<T>& v);
+		void assign(const Vector<T>& v, SizeType low, SizeType high);
+		void swap(Vector<T>& v);
+		void clear();
 		T remove(SizeType pos);
 		SizeType remove(SizeType low, SizeType high);
 		T remove_back();

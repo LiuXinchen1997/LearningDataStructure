@@ -246,6 +246,27 @@ lxc::Vector<T>& lxc::Vector<T>::operator=(const lxc::Vector<T>& v)
 }
 
 template <class T>
+void lxc::Vector<T>::assign(const T* arr, SizeType size)
+{ *this = Vector(arr, size); }
+
+template <class T>
+void lxc::Vector<T>::assign(const T* arr, SizeType low, SizeType high)
+{ *this = Vector(arr, low, high); }
+
+template <class T>
+void lxc::Vector<T>::assign(const lxc::Vector<T>& v) { *this = Vector(v); }
+
+template <class T>
+void lxc::Vector<T>::assign(const lxc::Vector<T>& v, SizeType low, SizeType high)
+{ *this = Vector(v, low, high); }
+
+template <class T>
+void lxc::Vector<T>::swap(lxc::Vector<T>& v) { this->_swap(*this, v); }
+
+template <class T>
+void lxc::Vector<T>::clear() { *this = Vector(); }
+
+template <class T>
 T lxc::Vector<T>::remove(SizeType pos)
 {
 	T ele = this->get(pos);
@@ -402,8 +423,8 @@ lxc::Vector<T>& lxc::Vector<T>::operator+=(const Vector<T>& v)
 }
 
 // sort/unsort/uniquify
-template <class T>
-void lxc::Vector<T>::_swap(T& ele1, T& ele2) { T tmp = ele1; ele1 = ele2; ele2 = tmp; }
+template <class T> template <class S>
+void lxc::Vector<T>::_swap(S& ele1, S& ele2) { S tmp = ele1; ele1 = ele2; ele2 = tmp; }
 
 template <class T>
 void lxc::Vector<T>::_bubble_sort(SizeType low, SizeType high, bool(*comp)(T&, T&))
