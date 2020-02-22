@@ -62,6 +62,8 @@ namespace lxc {
 		// access elements(read only)
 		bool is_ordered() const; // ordered: from min to max
 		T get(SizeType r) const;
+		T front() const;
+		T back() const;
 		SizeType find(const T& ele) const; // search for disordered array(find first of ele)
 		SizeType find(const T& ele, SizeType low, SizeType high) const; // search in [low, high)
 		SizeType search(const T& ele) const; // search for ordered array(binary search)
@@ -73,6 +75,7 @@ namespace lxc {
 
 		// writable interface and modifier
 		T& operator[] (SizeType pos) const;
+		T& operator[] (std::string pos) const; // slice op
 		Vector<T>& operator=(const Vector<T>& v);
 		T remove(SizeType pos);
 		SizeType remove(SizeType low, SizeType high);

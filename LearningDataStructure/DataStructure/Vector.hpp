@@ -163,6 +163,12 @@ template <class T>
 T lxc::Vector<T>::get(SizeType r) const { return this->_elements[r]; }
 
 template <class T>
+T lxc::Vector<T>::front() const { return this->get[0]; }
+
+template <class T>
+T lxc::Vector<T>::back() const { return this->get(this->_size - 1); }
+
+template <class T>
 SizeType lxc::Vector<T>::find(const T& ele) const { return this->find(ele, 0, this->_size); }
 
 template <class T>
