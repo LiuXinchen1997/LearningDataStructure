@@ -78,6 +78,7 @@ namespace lxc {
 		SizeType remove(SizeType low, SizeType high);
 		T remove_back();
 		T remove_front();
+		SizeType remove_if(bool(*filter)(T&));
 		void insert(SizeType pos, const T& ele);
 		void insert(SizeType pos, const T* arr, SizeType low, SizeType high);
 		void insert(SizeType pos, const Vector<T>& v, SizeType low, SizeType high);

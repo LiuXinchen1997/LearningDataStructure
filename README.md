@@ -7,7 +7,7 @@
 | id   | description              | finished |
 | ---- | ------------------------ | -------- |
 | 1    | project file arrangement | √        |
-| 2    | test code                |          |
+| 2    | test code                | √        |
 
 
 
@@ -18,7 +18,7 @@
 |id|description|finished|
 |-|-|-|
 |1|bug: insert cannot push_back|√|
-|2 |finish all api| |
+|2 |finish all api| √ |
 |3 |robust with exception process| |
 |4 |index with miu number| |
 | 5 |lxc namespace| √ |

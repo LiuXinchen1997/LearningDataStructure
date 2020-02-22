@@ -293,6 +293,25 @@ T lxc::Vector<T>::remove_front()
 }
 
 template <class T>
+SizeType lxc::Vector<T>::remove_if(bool(*filter)(T&))
+{
+	T* new_elements = new T[this->_capacity];
+	SizeType new_size = 0;
+	for (SizeType i = 0; i < this->_size; i++) {
+		if (!filter(this->_elements[i])) { 
+			new_elements[new_size++] = this->_elements[i]; 
+		}
+	}
+
+	delete[] this->_elements;
+	this->_elements = new_elements;
+	SizeType res = this->_size - new_size;
+	this->_size = new_size;
+
+	return res;
+}
+
+template <class T>
 void lxc::Vector<T>::insert(SizeType pos, const T& ele)
 {
 	if (this->_size == this->_capacity) { this->_expand(); }
