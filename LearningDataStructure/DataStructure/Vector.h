@@ -2,21 +2,18 @@
 #pragma once
 #include <iostream>
 #include <string>
-
-typedef int SizeType;
-
-#define DEFAULT_CAPACITY 3
-#define min_of_2(a, b) (a < b ? a : b)
-#define max_of_2(a, b) (a < b ? b : a)
-
-template <class T>
-bool common_comp(T& ele1, T& ele2) { return (ele1 < ele2); }
+#include "../General/Base.h"
 
 namespace lxc {
 	template <class T>
 	class Vector
 	{
 	protected:
+		static const SizeType DEFAULT_CAPACITY = 3;
+		static T min_of_2(const T a, const T b) { return (a < b ? a : b); }
+		static T max_of_2(const T a, const T b) { return (a < b ? b : a); }
+		static bool common_comp(T& ele1, T& ele2) { return (ele1 < ele2); }
+
 		SizeType _size;
 		SizeType _capacity;
 		T* _elements;
