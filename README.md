@@ -25,8 +25,8 @@
 |4 |index with miu number| |
 | 5 |lxc namespace| √ |
 |6 |bug: operator<<| √ |
-| 7 |sort and unsort default para "high"|  |
-| 8 |const static variable and function management| |
+| 7 |sort and unsort default para "high"| √ |
+| 8 |const static variable and function management| √ |
 
 
 
