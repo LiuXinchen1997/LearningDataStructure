@@ -58,5 +58,10 @@ namespace lxc {
 		const char& at(SizeType pos) const { return this->operator[](pos); };
 		char& at(SizeType pos) { return this->operator[](pos); };
 		char get(SizeType pos) { return this->at(pos); }
+
+		// modifiers
+		String& operator+= (const String& str);
+		String& operator+= (const char* cstr);
+		String& operator+= (char c);
 	};
 };

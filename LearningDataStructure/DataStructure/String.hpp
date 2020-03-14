@@ -160,3 +160,22 @@ void lxc::String::clear()
 }
 
 
+// modifiers
+lxc::String& lxc::String::operator+= (const lxc::String& str)
+{ return this->operator+=(str.c_str()); }
+
+lxc::String& lxc::String::operator+= (const char* cstr)
+{
+	while (this->_capacity <= this->_size + lxc::String::_cstr_len(cstr) + 1) { this->_expand(); }
+	lxc::String::_cstr_copy(this->_elements + this->_size, cstr);
+	this->_size += lxc::String::_cstr_len(cstr);
+
+	return *this;
+}
+
+lxc::String& lxc::String::operator+= (char c)
+{
+	if (this->_size + 1 == this->_capacity) { this->_expand(); }
+	this->_elements[this->_size++] = c;
+	this->_elements[this->_size] = '\0';
+}
