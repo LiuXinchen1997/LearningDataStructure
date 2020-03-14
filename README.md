@@ -10,6 +10,7 @@
 | ---- | ------------------------ | -------- |
 | 1    | project file arrangement | √        |
 | 2    | test code                | √        |
+| 3    | exception class		  |          |
 
 
 
@@ -32,6 +33,9 @@
 
 #### 1.1.2 String
 
+|id|description|finished|
+|-|-|-|
+|1|constructor: not unnamed object warning|√|
 
 
 #### 1.1.3 List
@@ -53,6 +57,13 @@
 |id|method name|tested|passed|
 |-|-|-|-|
 |1||||
+
+#### 2.1.2 String
+
+|id|method name|tested|passed|
+|-|-|-|-|
+|1|constructor|√|√|
+|2|operator|√|√|
 
 ## 3 Reference
 

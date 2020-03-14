@@ -9,7 +9,8 @@ using lxc::Vector;
 int main()
 {
 	// run unit test
-	test_vector();
+	// test_vector();
+
 	test_string();
 
 	system("pause");
