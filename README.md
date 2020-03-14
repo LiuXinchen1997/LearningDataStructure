@@ -14,6 +14,7 @@
 | 1    | project file arrangement | √        |
 | 2    | test code                | √        |
 | 3    | exception class		  |          |
+| 4    | assert func for unit test|          |
 
 
 

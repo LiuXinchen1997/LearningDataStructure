@@ -49,5 +49,14 @@ namespace lxc {
 		// capacity
 		void resize(SizeType new_size, char c = char());
 		void reserve(SizeType new_capacity);
+		void clear();
+		bool empty() const { return (this->_size == 0); };
+
+		// element access
+		const char& operator[] (SizeType pos) const { return this->_elements[pos]; };
+		char& operator[] (SizeType pos) { return this->_elements[pos]; };
+		const char& at(SizeType pos) const { return this->operator[](pos); };
+		char& at(SizeType pos) { return this->operator[](pos); };
+		char get(SizeType pos) { return this->at(pos); }
 	};
 };

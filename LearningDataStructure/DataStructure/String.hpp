@@ -149,3 +149,14 @@ void lxc::String::reserve(SizeType new_capacity)
 	this->_elements = new_elements;
 	this->_capacity = new_capacity;
 }
+
+void lxc::String::clear()
+{
+	this->_size = 0;
+	delete[] this->_elements;
+
+	this->_elements = new char[lxc::String::DEFAULT_CAPACITY];
+	this->_capacity = lxc::String::DEFAULT_CAPACITY;
+}
+
+
