@@ -23,18 +23,25 @@ lxc::SizeType lxc::String::_cstr_len(const char* cstr)
 	return size;
 }
 
+void lxc::String::_cstr_copy(char* dest, const char* source, lxc::SizeType low, lxc::SizeType high)
+{
+	SizeType offset = 0;
+	for (; offset < high - low; offset++) { dest[offset] = source[low + offset]; }
+	dest[offset] = '\0';
+}
+
+void lxc::String::_cstr_copy(char* dest, const char* source)
+{ lxc::String::_cstr_copy(dest, source, 0, lxc::String::_cstr_len(source)); }
+
 
 // constructor
 void lxc::String::_copy_from(const char* cstr, lxc::SizeType low, lxc::SizeType high)
 {
 	this->_elements = new char[(high - low + 1) << 1];
 	this->_capacity = ((high - low + 1) << 1);
-	this->_size = 0;
-
-	for (lxc::SizeType pos = low; pos < high; pos++) {
-		this->_elements[this->_size++] = cstr[pos];
-	}
-	this->_elements[this->_size] = '\0';
+	
+	lxc::String::_cstr_copy(this->_elements, cstr, low, high);
+	this->_size = high - low;
 }
 
 void lxc::String::_copy_from(lxc::SizeType n, char c)
@@ -99,10 +106,8 @@ lxc::String& lxc::String::operator= (char c)
 void lxc::String::_expand()
 {
 	char* new_elements = new char[this->_capacity <<= 1];
-	for (lxc::SizeType pos = 0; pos < this->_size; pos++) {
-		new_elements[pos] = this->_elements[pos];
-	}
-
+	lxc::String::_cstr_copy(new_elements, this->_elements);
+	
 	delete[] this->_elements;
 	this->_elements = new_elements;
 }
@@ -112,15 +117,11 @@ void lxc::String::_shrink()
 	if ((this->_capacity >> 1) < this->DEFAULT_CAPACITY) { return; }
 
 	char* new_elements = new char[this->_capacity = (this->_capacity >> 1) + 1];
-	SizeType new_size = 0;
-	for (; new_size < lxc::min_of_2(this->_size, this->_capacity - 1); new_size++) {
-		new_elements[new_size] = this->_elements[new_size];
-	}
-
-	this->_size = new_size;
+	this->_size = lxc::min_of_2(this->_size, this->_capacity - 1);
+	lxc::String::_cstr_copy(new_elements, this->_elements, 0, this->_size);
+	
 	delete[] this->_elements;
 	this->_elements = new_elements;
-	this->_elements[this->_size] = '\0';
 }
 
 void lxc::String::resize(lxc::SizeType n, char c)

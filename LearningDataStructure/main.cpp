@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 
-#include "Test/TestVector.hpp"
-#include "Test/TestString.hpp"
+#include "UnitTest/TestVector.hpp"
+#include "UnitTest/TestString.hpp"
 
 using lxc::Vector;
 
