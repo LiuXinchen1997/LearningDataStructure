@@ -39,7 +39,7 @@
 |id|description|finished|
 |-|-|-|
 |1|constructor: not unnamed object warning|√|
-|2|cstr_cpy: from source to dest and reuse this method||
+|2|cstr_cpy: from source to dest and reuse this method|√|
 |3|para high default value: npos||
 
 

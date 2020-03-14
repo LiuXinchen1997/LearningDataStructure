@@ -12,8 +12,7 @@ namespace lxc {
 		static const SizeType DEFAULT_CAPACITY = 3;
 		static const SizeType NPOS = INT_MAX;
 		static SizeType _cstr_len(const char* cstr);
-		static void _cstr_copy(char* dest, const char* source,
-			lxc::SizeType low, lxc::SizeType high);
+		static void _cstr_copy(char* dest, const char* source, SizeType low, SizeType high);
 		static void _cstr_copy(char* dest, const char* source);
 
 		SizeType _size;
@@ -48,6 +47,7 @@ namespace lxc {
 		SizeType max_size() const { return this->NPOS; }
 
 		// capacity
-		void resize(SizeType n, char c = char());
+		void resize(SizeType new_size, char c = char());
+		void reserve(SizeType new_capacity);
 	};
 };

@@ -124,17 +124,28 @@ void lxc::String::_shrink()
 	this->_elements = new_elements;
 }
 
-void lxc::String::resize(lxc::SizeType n, char c)
+void lxc::String::resize(lxc::SizeType new_size, char c)
 {
-	if (n <= this->_size) {
-		this->_size = n;
+	if (new_size <= this->_size) {
+		this->_size = new_size;
 		if (double(this->_size) / this->_capacity < 0.25) { this->_shrink(); }
 		return;
 	}
 
-	while (this->_capacity < n + 1) { this->_expand(); }
-	for (;  this->_size < n; ) {
+	while (this->_capacity < new_size + 1) { this->_expand(); }
+	for (;  this->_size < new_size; ) {
 		this->_elements[this->_size++] = c;
 	}
 	this->_elements[this->_size] = '\0';
+}
+
+void lxc::String::reserve(SizeType new_capacity)
+{
+	if (new_capacity <= this->_size) { return; }
+	
+	char* new_elements = new char[new_capacity];
+	lxc::String::_cstr_copy(new_elements, this->_elements, 0, this->_size);
+	delete[] this->_elements;
+	this->_elements = new_elements;
+	this->_capacity = new_capacity;
 }
