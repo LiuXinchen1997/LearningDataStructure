@@ -18,7 +18,9 @@ namespace lxc {
 		char* _elements;
 
 		void _copy_from(const char* cstr, SizeType low, SizeType high);
-		void _copy_from(char c, SizeType n);
+		void _copy_from(SizeType n, char c);
+		void _expand();
+		void _shrink();
 
 	public:
 		// constructor
@@ -27,7 +29,7 @@ namespace lxc {
 		String(const char* cstr);
 		String(const String& str, SizeType low, SizeType high);
 		String(const String& str);
-		String(char c, SizeType n);
+		String(SizeType n, char c);
 		String& operator= (const String& str);
 		String& operator= (const char* cstr);
 		String& operator= (char c);
@@ -40,5 +42,9 @@ namespace lxc {
 		SizeType size() const { return this->_size; }
 		SizeType length() const { return this->size(); }
 		SizeType capacity() const { return this->_capacity; }
+		SizeType max_size() const { return this->NPOS; }
+
+		// capacity
+		void resize(SizeType n, char c = char());
 	};
 };

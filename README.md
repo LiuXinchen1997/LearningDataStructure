@@ -8,6 +8,7 @@
 
 | id   | description              | finished |
 | ---- | ------------------------ | -------- |
+| 0    | API doc                  |          |
 | 1    | project file arrangement | √        |
 | 2    | test code                | √        |
 | 3    | exception class		  |          |
@@ -36,6 +37,8 @@
 |id|description|finished|
 |-|-|-|
 |1|constructor: not unnamed object warning|√|
+|2|cstr_cpy: from source to dest and reuse this method||
+|3|para high default value: npos||
 
 
 #### 1.1.3 List
@@ -65,6 +68,9 @@
 |1|constructor|√|√|
 |2|operator<<|√|√|
 |3|operator=|√|√|
+|4|_expand|||
+|5|_shrink|||
+|6|resize|||
 
 ## 3 Reference
 

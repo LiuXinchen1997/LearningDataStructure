@@ -11,7 +11,7 @@ template <class S>
 bool equals(const S s1, const S s2) { return s1 == s2; }
 
 template <class T>
-bool equals(const lxc::Vector<T>& v, const T* arr, SizeType size)
+bool equals(const lxc::Vector<T>& v, const T* arr, lxc::SizeType size)
 { return v.equals(arr, size); }
 
 void test_vector_merge_sort()
@@ -42,14 +42,14 @@ void test_vector_quick_sort()
 
 void test_vector_sort()
 {
-	const SizeType SORTNUM = 6;
+	const lxc::SizeType SORTNUM = 6;
 
 	std::string sort_names[SORTNUM] 
 		= { "bubble", "insert", "select", "heap", "merge", "quick" };
 	int arr[6] = { 5, 3, 7, 1, 9, 6 };
 	int sorted_arr[6] = { 1, 3, 5, 6, 7, 9 };
 	lxc::Vector<int> v(arr, 6);
-	for (SizeType i = 0; i < SORTNUM; i++) {
+	for (lxc::SizeType i = 0; i < SORTNUM; i++) {
 		v.unsort(0, v.size());
 		v.sort(sort_names[i].c_str(), 0, v.size());
 		if (!equals(v, sorted_arr, 6)) { 

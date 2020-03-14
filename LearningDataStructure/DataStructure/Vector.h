@@ -10,8 +10,6 @@ namespace lxc {
 	{
 	protected:
 		static const SizeType DEFAULT_CAPACITY = 3;
-		static T min_of_2(const T a, const T b) { return (a < b ? a : b); }
-		static T max_of_2(const T a, const T b) { return (a < b ? b : a); }
 		static bool common_comp(T& ele1, T& ele2) { return (ele1 < ele2); }
 
 		SizeType _size;
@@ -55,7 +53,7 @@ namespace lxc {
 		SizeType capacity() const;
 		bool empty() const;
 		void resize(SizeType new_size, T ele);
-		void reserve(SizeType new_size);
+		void reserve(SizeType new_capacity);
 
 		// access elements(read only)
 		bool is_ordered() const; // ordered: from min to max
@@ -104,8 +102,8 @@ namespace lxc {
 		void sort(const char* type = "quick", SizeType low = 0, SizeType high = 0,
 			bool(*comp)(T&, T&) = common_comp);
 		void unsort(SizeType low = 0, SizeType high = 0);
-		int deduplicate(); // for disordered array
-		int uniquify(); // for ordered array
+		SizeType deduplicate(); // for disordered array
+		SizeType uniquify(); // for ordered array
 
 		// traverse
 		void traverse(void(*visit)(T&)); // for function pointer

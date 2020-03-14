@@ -3,7 +3,7 @@
 #include <iostream>
 #include "../DataStructure/String.hpp"
 
-void test_constructor()
+void test_string_constructor()
 {
 	using std::cout;
 	using std::endl;
@@ -24,11 +24,11 @@ void test_constructor()
 	String str5(str3);
 	cout << str5 << endl;
 
-	String str6('c', 10);
+	String str6(10, 'c');
 	cout << str6 << endl;
 }
 
-void test_operator_equal()
+void test_string_operator_equal()
 {
 	using std::cout;
 	using std::endl;
@@ -47,8 +47,14 @@ void test_operator_equal()
 	cout << str3 << endl;
 }
 
+void test_string_resize()
+{
+	lxc::String str("I love C++.");
+	str.resize(20, '.');
+}
+
 void test_string()
 {
-	test_constructor();
-	test_operator_equal();
+	test_string_constructor();
+	test_string_operator_equal();
 }
