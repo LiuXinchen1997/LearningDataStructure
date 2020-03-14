@@ -63,7 +63,8 @@
 |id|method name|tested|passed|
 |-|-|-|-|
 |1|constructor|√|√|
-|2|operator|√|√|
+|2|operator<<|√|√|
+|3|operator=|√|√|
 
 ## 3 Reference
 

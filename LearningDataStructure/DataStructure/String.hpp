@@ -37,6 +37,18 @@ void lxc::String::_copy_from(const char* cstr, SizeType low, SizeType high)
 	this->_elements[this->_size] = '\0';
 }
 
+void lxc::String::_copy_from(char c, SizeType n)
+{
+	this->_elements = new char[2 * n];
+	this->_capacity = 2 * n;
+	this->_size = 0;
+
+	while (this->_size < n) {
+		this->_elements[this->_size++] = c;
+	}
+	this->_elements[this->_size] = '\0';
+}
+
 lxc::String::String()
 {
 	this->_elements = new char[DEFAULT_CAPACITY + 1];
@@ -44,7 +56,6 @@ lxc::String::String()
 	this->_size = 0;
 
 	this->_elements[this->_size] = '\0';
-	std::cout << this->_elements << std::endl;
 }
 
 lxc::String::String(const char* cstr, SizeType low, SizeType high)
@@ -59,14 +70,26 @@ lxc::String::String(const String& str, SizeType low, SizeType high)
 lxc::String::String(const String& str)
 { this->_copy_from(str._elements, 0, str._size); }
 
-lxc::String::String(SizeType n, char c)
-{
-	this->_elements = new char[2 * n];
-	this->_capacity = 2 * n;
-	this->_size = 0;
+lxc::String::String(char c, SizeType n)
+{ this->_copy_from(c, n); }
 
-	while (this->_size < n) {
-		this->_elements[this->_size++] = c;
-	}
-	this->_elements[this->_size] = '\0';
+lxc::String& lxc::String::operator= (const String& str)
+{
+	delete[] this->_elements;
+	this->_copy_from(str.c_str(), 0, str.size());
+	return *this;
+}
+
+lxc::String& lxc::String::operator= (const char* cstr)
+{
+	delete[] this->_elements;
+	this->_copy_from(cstr, 0, lxc::String::_cstr_len(cstr));
+	return *this;
+}
+
+lxc::String& lxc::String::operator= (char c)
+{
+	delete[] this->_elements;
+	this->_copy_from(c, 1);
+	return *this;
 }

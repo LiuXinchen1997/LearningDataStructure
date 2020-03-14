@@ -18,6 +18,7 @@ namespace lxc {
 		char* _elements;
 
 		void _copy_from(const char* cstr, SizeType low, SizeType high);
+		void _copy_from(char c, SizeType n);
 
 	public:
 		// constructor
@@ -26,7 +27,10 @@ namespace lxc {
 		String(const char* cstr);
 		String(const String& str, SizeType low, SizeType high);
 		String(const String& str);
-		String(SizeType n, char c);
+		String(char c, SizeType n);
+		String& operator= (const String& str);
+		String& operator= (const char* cstr);
+		String& operator= (char c);
 
 		// deconstructor
 		~String() { delete[] this->_elements; }

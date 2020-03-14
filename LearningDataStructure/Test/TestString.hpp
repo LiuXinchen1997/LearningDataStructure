@@ -24,11 +24,31 @@ void test_constructor()
 	String str5(str3);
 	cout << str5 << endl;
 
-	String str6(10, 'c');
+	String str6('c', 10);
 	cout << str6 << endl;
+}
+
+void test_operator_equal()
+{
+	using std::cout;
+	using std::endl;
+	using lxc::String;
+
+	lxc::String str;
+	str = String("I love C++.");
+	cout << str << endl;
+
+	lxc::String str2;
+	str2 = "I love C++.";
+	cout << str2 << endl;
+
+	lxc::String str3;
+	str3 = 'c';
+	cout << str3 << endl;
 }
 
 void test_string()
 {
 	test_constructor();
+	test_operator_equal();
 }
