@@ -76,5 +76,10 @@ namespace lxc {
 		String& assign(SizeType n, char c);
 		String& assign(const String& str, SizeType low, SizeType high);
 		String& assign(const String& str);
+		String& insert(SizeType pos, const char* cstr, SizeType low, SizeType high);
+		String& insert(SizeType pos, const char* cstr);
+		String& insert(SizeType pos, SizeType n, char c);
+		String& insert(SizeType pos, const String& str);
+		String& insert(SizeType pos, const String& str, SizeType low, SizeType high);
 	};
 };

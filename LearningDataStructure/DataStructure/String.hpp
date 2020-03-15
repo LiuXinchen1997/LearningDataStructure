@@ -25,6 +25,7 @@ lxc::SizeType lxc::String::_cstr_len(const char* cstr)
 
 void lxc::String::_cstr_copy(char* dest, const char* source, lxc::SizeType low, lxc::SizeType high)
 {
+	high = lxc::min_of_2(high, lxc::String::_cstr_len(source));
 	SizeType offset = 0;
 	for (; offset < high - low; offset++) { dest[offset] = source[low + offset]; }
 	dest[offset] = '\0';
@@ -227,3 +228,32 @@ lxc::String& lxc::String::assign(const lxc::String& str, lxc::SizeType low, lxc:
 
 lxc::String& lxc::String::assign(const lxc::String& str)
 { return this->assign(str.c_str()); }
+
+lxc::String& lxc::String::insert(lxc::SizeType pos, const char* cstr, lxc::SizeType low, lxc::SizeType high)
+{
+	high = lxc::min_of_2(high, lxc::String::_cstr_len(cstr));
+	SizeType new_capacity = 0;
+	char* new_elements = new char[new_capacity = ((this->_size + high - low + 1) << 1)];
+	lxc::String::_cstr_copy(new_elements, this->_elements, 0, pos);
+	lxc::String::_cstr_copy(new_elements + pos, cstr, low, high);
+	lxc::String::_cstr_copy(new_elements + pos + (high - low), this->_elements, pos, lxc::String::NPOS);
+	SizeType new_size = lxc::String::_cstr_len(cstr) + high - low;
+
+	delete[] this->_elements;
+	this->_elements = new_elements;
+	this->_capacity = new_capacity;
+	this->_size = new_size;
+	return *this;
+}
+
+lxc::String& lxc::String::insert(lxc::SizeType pos, const char* cstr)
+{ return this->insert(pos, cstr, 0, lxc::String::_cstr_len(cstr)); }
+
+lxc::String& lxc::String::insert(lxc::SizeType pos, lxc::SizeType n, char c)
+{ return this->insert(pos, String(n, c)); }
+
+lxc::String& lxc::String::insert(lxc::SizeType pos, const lxc::String& str)
+{ return this->insert(pos, str.c_str()); }
+
+lxc::String& lxc::String::insert(lxc::SizeType pos, const lxc::String& str, lxc::SizeType low, lxc::SizeType high)
+{ return this->insert(pos, str.c_str(), low, high); }
