@@ -33,6 +33,12 @@ std::ostream& operator<< (std::ostream& os, const lxc::Vector<T>& v)
 }
 */
 
+
+// static member
+const lxc::SizeType lxc::String::DEFAULT_CAPACITY = 3;
+const double lxc::String::SHRINK_RATIO = 0.25;
+
+
 // auxiliary
 template <class T>
 void lxc::Vector<T>::_copy_from(const T* arr, lxc::SizeType low, lxc::SizeType high)
@@ -292,7 +298,7 @@ lxc::SizeType lxc::Vector<T>::remove(lxc::SizeType low, lxc::SizeType high)
 	this->_elements = new_elements;
 	this->_size -= (high - low);
 
-	if (double(this->_size) / this->_capacity < 0.25) { this->_shrink(); }
+	if (double(this->_size) / this->_capacity < lxc::Vector<T>::SHRINK_RATIO) { this->_shrink(); }
 	return (high - low);
 }
 
@@ -302,7 +308,7 @@ T lxc::Vector<T>::remove_back()
 	T ele = this->_elements[this->_size - 1];
 	this->_size--;
 
-	if (double(this->_size) / this->_capacity < 0.25) { this->_shrink(); }
+	if (double(this->_size) / this->_capacity < lxc::Vector<T>::SHRINK_RATIO) { this->_shrink(); }
 	return ele;
 }
 
@@ -318,7 +324,7 @@ T lxc::Vector<T>::remove_front()
 	this->_elements = new_elements;
 	this->_size--;
 
-	if (double(this->_size) / this->_capacity < 0.25) { this->_shrink(); }
+	if (double(this->_size) / this->_capacity < lxc::Vector<T>::SHRINK_RATIO) { this->_shrink(); }
 	return ele;
 }
 

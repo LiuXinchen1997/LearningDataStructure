@@ -3,6 +3,7 @@
 #pragma once
 #include "String.h"
 #include <iostream>
+#include <climits>
 
 
 std::ostream& operator<< (std::ostream& os, const lxc::String& str)
@@ -13,6 +14,10 @@ std::ostream& operator<< (std::ostream& os, const lxc::String& str)
 	return os;
 }
 
+
+const lxc::SizeType lxc::String::DEFAULT_CAPACITY = 3;
+const lxc::SizeType lxc::String::NPOS = INT_MAX;
+const double lxc::String::SHRINK_RATIO = 0.25;
 
 // static member methods
 lxc::SizeType lxc::String::_cstr_len(const char* cstr)
@@ -38,6 +43,7 @@ void lxc::String::_cstr_copy(char* dest, const char* source)
 // constructor
 void lxc::String::_copy_from(const char* cstr, lxc::SizeType low, lxc::SizeType high)
 {
+	high = lxc::min_of_2(high, lxc::String::_cstr_len(cstr));
 	this->_elements = new char[(high - low + 1) << 1];
 	this->_capacity = ((high - low + 1) << 1);
 	
@@ -129,7 +135,7 @@ void lxc::String::resize(lxc::SizeType new_size, char c)
 {
 	if (new_size <= this->_size) {
 		this->_size = new_size;
-		if (double(this->_size) / this->_capacity < 0.25) { this->_shrink(); }
+		if (double(this->_size) / this->_capacity < lxc::String::SHRINK_RATIO) { this->_shrink(); }
 		return;
 	}
 
@@ -173,6 +179,7 @@ lxc::String& lxc::String::operator+= (char c)
 
 lxc::String& lxc::String::append(const char* cstr, lxc::SizeType low, lxc::SizeType high)
 {
+	high = lxc::min_of_2(high, lxc::String::_cstr_len(cstr));
 	while (this->_capacity <= this->_size + high - low + 1) { this->_expand(); }
 	lxc::String::_cstr_copy(this->_elements + this->_size, cstr, low, high);
 	this->_size += (high - low);
@@ -257,3 +264,13 @@ lxc::String& lxc::String::insert(lxc::SizeType pos, const lxc::String& str)
 
 lxc::String& lxc::String::insert(lxc::SizeType pos, const lxc::String& str, lxc::SizeType low, lxc::SizeType high)
 { return this->insert(pos, str.c_str(), low, high); }
+
+lxc::String& lxc::String::erase(lxc::SizeType low, lxc::SizeType high)
+{
+	high = lxc::min_of_2(high, this->_size);
+	lxc::String::_cstr_copy(this->_elements + low, this->_elements + high);
+	this->_size -= (high - low);
+
+	if (double(this->_size) / this->_capacity < lxc::String::SHRINK_RATIO) { this->_shrink(); }
+	return *this;
+}

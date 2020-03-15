@@ -9,7 +9,8 @@ namespace lxc {
 	class Vector
 	{
 	protected:
-		static const SizeType DEFAULT_CAPACITY = 3;
+		static const SizeType DEFAULT_CAPACITY;
+		static const double SHRINK_RATIO;
 		static bool common_comp(T& ele1, T& ele2) { return (ele1 < ele2); }
 
 		SizeType _size;

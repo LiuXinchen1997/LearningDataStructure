@@ -41,7 +41,8 @@
 |-|-|-|
 |1|constructor: not unnamed object warning|√|
 |2|cstr_cpy: from source to dest and reuse this method|√|
-|3|para high default value: npos||
+|3|para high default value: npos|√|
+|4|rebuild code: n chars||
 
 
 #### 1.1.3 List

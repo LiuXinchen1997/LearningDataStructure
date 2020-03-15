@@ -2,15 +2,15 @@
 
 #pragma once
 #include <iostream>
-#include <climits>
 #include "../General/Base.h"
 
 namespace lxc {
 	class String
 	{
 	protected:
-		static const SizeType DEFAULT_CAPACITY = 3;
-		static const SizeType NPOS = INT_MAX;
+		static const SizeType DEFAULT_CAPACITY;
+		static const SizeType NPOS;
+		static const double SHRINK_RATIO;
 		static SizeType _cstr_len(const char* cstr);
 		static void _cstr_copy(char* dest, const char* source, SizeType low, SizeType high);
 		static void _cstr_copy(char* dest, const char* source);
@@ -81,5 +81,6 @@ namespace lxc {
 		String& insert(SizeType pos, SizeType n, char c);
 		String& insert(SizeType pos, const String& str);
 		String& insert(SizeType pos, const String& str, SizeType low, SizeType high);
+		String& erase(SizeType low = 0, SizeType high = NPOS);
 	};
 };
