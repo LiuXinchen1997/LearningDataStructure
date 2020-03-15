@@ -199,3 +199,31 @@ lxc::String& lxc::String::append(lxc::SizeType n, char c)
 
 	return *this;
 }
+
+void lxc::String::push_back(char c) { this->append(1, c); }
+
+lxc::String& lxc::String::assign(const char* cstr, lxc::SizeType low, lxc::SizeType high)
+{
+	delete[] this->_elements;
+	this->_copy_from(cstr, low, high);
+	return *this;
+}
+
+lxc::String& lxc::String::assign(const char* cstr, lxc::SizeType n)
+{ return this->assign(cstr, 0, n); }
+
+lxc::String& lxc::String::assign(const char* cstr)
+{ return this->assign(cstr, 0, lxc::String::_cstr_len(cstr)); }
+
+lxc::String& lxc::String::assign(lxc::SizeType n, char c)
+{
+	delete[] this->_elements;
+	this->_copy_from(n, c);
+	return *this;
+}
+
+lxc::String& lxc::String::assign(const lxc::String& str, lxc::SizeType low, lxc::SizeType high)
+{ return this->assign(str.c_str(), low, high); }
+
+lxc::String& lxc::String::assign(const lxc::String& str)
+{ return this->assign(str.c_str()); }

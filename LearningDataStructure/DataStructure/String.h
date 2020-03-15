@@ -69,5 +69,12 @@ namespace lxc {
 		String& append(const String& str, SizeType low, SizeType high);
 		String& append(const String& str);
 		String& append(SizeType n, char c);
+		void push_back(char c);
+		String& assign(const char* cstr, SizeType low, SizeType high);
+		String& assign(const char* cstr, SizeType n);
+		String& assign(const char* cstr);
+		String& assign(SizeType n, char c);
+		String& assign(const String& str, SizeType low, SizeType high);
+		String& assign(const String& str);
 	};
 };
