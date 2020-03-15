@@ -162,20 +162,40 @@ void lxc::String::clear()
 
 // modifiers
 lxc::String& lxc::String::operator+= (const lxc::String& str)
-{ return this->operator+=(str.c_str()); }
+{ return this->append(str); }
 
 lxc::String& lxc::String::operator+= (const char* cstr)
+{ return this->append(cstr); }
+
+lxc::String& lxc::String::operator+= (char c)
+{ return this->append(1, c); }
+
+lxc::String& lxc::String::append(const char* cstr, lxc::SizeType low, lxc::SizeType high)
 {
-	while (this->_capacity <= this->_size + lxc::String::_cstr_len(cstr) + 1) { this->_expand(); }
-	lxc::String::_cstr_copy(this->_elements + this->_size, cstr);
-	this->_size += lxc::String::_cstr_len(cstr);
+	while (this->_capacity <= this->_size + high - low + 1) { this->_expand(); }
+	lxc::String::_cstr_copy(this->_elements + this->_size, cstr, low, high);
+	this->_size += (high - low);
 
 	return *this;
 }
 
-lxc::String& lxc::String::operator+= (char c)
+lxc::String& lxc::String::append(const char* cstr, lxc::SizeType n)
+{ return this->append(cstr, 0, n); }
+
+lxc::String& lxc::String::append(const char* cstr)
+{ return this->append(cstr, 0, lxc::String::_cstr_len(cstr)); }
+
+lxc::String& lxc::String::append(const lxc::String& str, lxc::SizeType low, lxc::SizeType high)
+{ return this->append(str.c_str(), low, high); }
+
+lxc::String& lxc::String::append(const lxc::String& str)
+{ return this->append(str, 0, this->_size); }
+
+lxc::String& lxc::String::append(lxc::SizeType n, char c)
 {
-	if (this->_size + 1 == this->_capacity) { this->_expand(); }
-	this->_elements[this->_size++] = c;
+	if (this->_capacity <= this->_size + n) { this->_expand(); }
+	while (n--) { this->_elements[this->_size++] = c; }
 	this->_elements[this->_size] = '\0';
+
+	return *this;
 }

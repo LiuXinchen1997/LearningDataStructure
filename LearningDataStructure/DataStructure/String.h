@@ -63,5 +63,11 @@ namespace lxc {
 		String& operator+= (const String& str);
 		String& operator+= (const char* cstr);
 		String& operator+= (char c);
+		String& append(const char* cstr, SizeType low, SizeType high);
+		String& append(const char* cstr, SizeType n);
+		String& append(const char* cstr);
+		String& append(const String& str, SizeType low, SizeType high);
+		String& append(const String& str);
+		String& append(SizeType n, char c);
 	};
 };
