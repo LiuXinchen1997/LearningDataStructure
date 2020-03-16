@@ -82,5 +82,11 @@ namespace lxc {
 		String& insert(SizeType pos, const String& str);
 		String& insert(SizeType pos, const String& str, SizeType low, SizeType high);
 		String& erase(SizeType low = 0, SizeType high = NPOS);
+		String& replace(SizeType low1, SizeType high1, const char* cstr, SizeType low2, SizeType high2);
+		String& replace(SizeType low, SizeType high, const char* cstr);
+		String& replace(SizeType low, SizeType high, const char* cstr, SizeType n);
+		String& replace(SizeType low, SizeType high, SizeType n, char c);
+		String& replace(SizeType low, SizeType high, const String& str);
+		String& replace(SizeType low1, SizeType high1, const String& str, SizeType low2, SizeType high2);
 	};
 };

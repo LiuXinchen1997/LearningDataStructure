@@ -35,8 +35,11 @@ std::ostream& operator<< (std::ostream& os, const lxc::Vector<T>& v)
 
 
 // static member
-const lxc::SizeType lxc::String::DEFAULT_CAPACITY = 3;
-const double lxc::String::SHRINK_RATIO = 0.25;
+template <class T>
+const lxc::SizeType lxc::Vector<T>::DEFAULT_CAPACITY = 3;
+
+template <class T>
+const double lxc::Vector<T>::SHRINK_RATIO = 0.25;
 
 
 // auxiliary

@@ -274,3 +274,44 @@ lxc::String& lxc::String::erase(lxc::SizeType low, lxc::SizeType high)
 	if (double(this->_size) / this->_capacity < lxc::String::SHRINK_RATIO) { this->_shrink(); }
 	return *this;
 }
+
+lxc::String& lxc::String::replace(lxc::SizeType low1, lxc::SizeType high1, const char* cstr,
+	lxc::SizeType low2, lxc::SizeType high2)
+{
+	high1 = lxc::min_of_2(high1, this->_size);
+	high2 = lxc::min_of_2(high2, lxc::String::_cstr_len(cstr));
+
+	lxc::SizeType new_size = this->_size - (high1 - low1) + (high2 - low2);
+	lxc::SizeType new_capacity = 0;
+	char* new_elements = new char[new_capacity = (new_size << 1)];
+
+	lxc::String::_cstr_copy(new_elements, this->_elements, 0, low1);
+	lxc::String::_cstr_copy(new_elements + low1, cstr, low2, high2);
+	lxc::String::_cstr_copy(new_elements + low1 + (high2 - low2), this->_elements, high1, lxc::String::NPOS);
+
+	delete[] this->_elements;
+	this->_elements = new_elements;
+	this->_capacity = new_capacity;
+	this->_size = new_size;
+
+	if (double(this->_size) / this->_capacity < lxc::String::SHRINK_RATIO) { this->_shrink(); }
+	return *this;
+}
+
+
+lxc::String& lxc::String::replace(lxc::SizeType low, lxc::SizeType high, const char* cstr)
+{ return this->replace(low, high, cstr, 0, lxc::String::_cstr_len(cstr)); }
+
+lxc::String& lxc::String::replace(lxc::SizeType low, lxc::SizeType high, const char* cstr, lxc::SizeType n)
+{ return this->replace(low, high, cstr, 0, n); }
+
+lxc::String& lxc::String::replace(lxc::SizeType low, lxc::SizeType high, const lxc::String& str)
+{ return this->replace(low, high, str.c_str()); }
+
+lxc::String& lxc::String::replace(lxc::SizeType low1, lxc::SizeType high1, const String& str,
+	lxc::SizeType low2, lxc::SizeType high2)
+{ return this->replace(low1, high1, str.c_str(), low2, high2); }
+
+lxc::String& lxc::String::replace(lxc::SizeType low, lxc::SizeType high, lxc::SizeType n, char c)
+{ return this->replace(low, high, String(n, c)); }
+
