@@ -39,6 +39,27 @@ void lxc::String::_cstr_copy(char* dest, const char* source, lxc::SizeType low, 
 void lxc::String::_cstr_copy(char* dest, const char* source)
 { lxc::String::_cstr_copy(dest, source, 0, lxc::String::_cstr_len(source)); }
 
+int lxc::String::_cstr_comp(const char* cstr1, const char* cstr2)
+{
+	// return value: 
+	// 0: str1 == str2
+	// 1: str1 > str2
+	// -1: str1 < str2
+	SizeType len1 = lxc::String::_cstr_len(cstr1);
+	SizeType len2 = lxc::String::_cstr_len(cstr2);
+	lxc::SizeType len = lxc::min_of_2(len1, len2);
+	for (SizeType pos = 0; pos < len; pos++) {
+		if (cstr1[pos] < cstr2[pos]) { return -1; }
+		else if (cstr2[pos] < cstr1[pos]) { return 1; }
+	}
+	if (len1 == len2) { return 0; }
+	else if (len1 < len2) { return -1; }
+	else { return 1; }
+}
+
+bool lxc::String::_cstr_equal(const char* cstr1, const char* cstr2)
+{ return lxc::String::_cstr_comp(cstr1, cstr2) == 0; }
+
 
 // constructor
 void lxc::String::_copy_from(const char* cstr, lxc::SizeType low, lxc::SizeType high)
@@ -315,3 +336,12 @@ lxc::String& lxc::String::replace(lxc::SizeType low1, lxc::SizeType high1, const
 lxc::String& lxc::String::replace(lxc::SizeType low, lxc::SizeType high, lxc::SizeType n, char c)
 { return this->replace(low, high, String(n, c)); }
 
+lxc::SizeType lxc::String::copy(char* s, lxc::SizeType low, lxc::SizeType high)
+{
+	high = lxc::min_of_2(high, this->_size);
+	lxc::String::_cstr_copy(s, this->_elements, low, high);
+
+	return high - low;
+}
+
+void lxc::String::swap(lxc::String& str) { lxc::swap(*this, str); }

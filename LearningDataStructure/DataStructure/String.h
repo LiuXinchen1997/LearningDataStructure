@@ -14,6 +14,8 @@ namespace lxc {
 		static SizeType _cstr_len(const char* cstr);
 		static void _cstr_copy(char* dest, const char* source, SizeType low, SizeType high);
 		static void _cstr_copy(char* dest, const char* source);
+		static int _cstr_comp(const char* cstr1, const char* cstr2);
+		static bool _cstr_equal(const char* cstr1, const char* cstr2);
 
 		SizeType _size;
 		SizeType _capacity;
@@ -88,5 +90,17 @@ namespace lxc {
 		String& replace(SizeType low, SizeType high, SizeType n, char c);
 		String& replace(SizeType low, SizeType high, const String& str);
 		String& replace(SizeType low1, SizeType high1, const String& str, SizeType low2, SizeType high2);
+		SizeType copy(char* s, SizeType low, SizeType high);
+		void swap(String& str);
+
+		// operations
+		bool operator==(const String str) const { return _cstr_equal(_elements, str.c_str()); }
+		bool operator<(const String str) const { return _cstr_comp(_elements, str.c_str()) < 0; }
+		bool operator<=(const String str) const { return _cstr_comp(_elements, str.c_str()) <= 0; }
+		bool operator>(const String str) const { return _cstr_comp(_elements, str.c_str()) > 0; }
+		bool operator>=(const String str) const { return _cstr_comp(_elements, str.c_str()) >= 0; }
+		String operator+(const String str) const;
+		String operator+(const char* cstr) const;
+		String operator+(const char c) const;
 	};
 };
