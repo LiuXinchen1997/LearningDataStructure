@@ -5,14 +5,11 @@
 #include <iostream>
 #include <climits>
 
+#include <string>
+
 
 std::ostream& operator<< (std::ostream& os, const lxc::String& str)
-{
-	os << "capacity: " << str.capacity(); 
-	os << ", size: " << str.size();
-	os << ", elements: " << str.c_str();
-	return os;
-}
+{ os << str.to_str().c_str(); return os; }
 
 
 const lxc::SizeType lxc::String::DEFAULT_CAPACITY = 3;
@@ -59,6 +56,11 @@ int lxc::String::_cstr_comp(const char* cstr1, const char* cstr2)
 
 bool lxc::String::_cstr_equal(const char* cstr1, const char* cstr2)
 { return lxc::String::_cstr_comp(cstr1, cstr2) == 0; }
+
+
+// static tools
+lxc::String lxc::String::convert_to_str(int val) // !!!
+{ return lxc::String(std::to_string(val).c_str()); }
 
 
 // constructor
@@ -127,6 +129,17 @@ lxc::String& lxc::String::operator= (char c)
 	delete[] this->_elements;
 	this->_copy_from(1, c);
 	return *this;
+}
+
+
+// getter
+lxc::String lxc::String::to_str() const
+{
+	String str = String("String { capacity: ") + String::convert_to_str(_capacity)
+		+ ", size: " + String::convert_to_str(_size) + ", elements: \""
+		+ _elements + "\" }";
+
+	return str;
 }
 
 

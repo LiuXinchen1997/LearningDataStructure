@@ -27,6 +27,9 @@ namespace lxc {
 		void _shrink();
 
 	public:
+		// static tools
+		static String convert_to_str(int val);
+
 		// constructor
 		explicit String();
 		String(const char* cstr, SizeType low, SizeType high);
@@ -47,6 +50,7 @@ namespace lxc {
 		SizeType length() const { return this->size(); }
 		SizeType capacity() const { return this->_capacity; }
 		SizeType max_size() const { return this->NPOS; }
+		String to_str() const;
 
 		// capacity
 		void resize(SizeType new_size, char c = char());

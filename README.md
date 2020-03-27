@@ -32,6 +32,7 @@
 |6 |bug: operator<<| √ |
 | 7 |sort and unsort default para "high"| √ |
 | 8 |const static variable and function management| √ |
+| 9 |to_str use lxc::String|  |
 
 
 
@@ -44,6 +45,7 @@
 |3|para high default value: npos|√|
 |4|replace --> insert, erase, append||
 |5|is size redundant?||
+|6|types(int, float, ....) convert 2 String||
 
 
 #### 1.1.3 List
