@@ -4,8 +4,12 @@
 
 #include <iostream>
 #include "../DataStructure/String.hpp"
+#include "../General/Base.h"
+#include "../Exception/AssertException.h"
 
-
+void assert_string(bool ass)
+{
+}
 
 void test_string_constructor()
 {
@@ -59,6 +63,11 @@ void test_string_resize()
 
 void test_string()
 {
-	test_string_constructor();
-	test_string_operator_equal();
+	try {
+		test_string_constructor();
+		test_string_operator_equal();
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e.get_name() << " " << e.get_message() << std::endl;
+	}
 }

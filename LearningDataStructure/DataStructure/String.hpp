@@ -348,6 +348,8 @@ void lxc::String::swap(lxc::String& str) { lxc::swap(*this, str); }
 
 
 // operations
+bool lxc::String::operator==(const char* cstr) const { return _cstr_equal(_elements, cstr); }
+
 bool lxc::String::operator==(const String str) const 
 {
 	if (this->_size != str.size()) { return false; }
