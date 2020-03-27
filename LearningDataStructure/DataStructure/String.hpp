@@ -9,7 +9,7 @@
 
 
 std::ostream& operator<< (std::ostream& os, const lxc::String& str)
-{ os << str.to_str().c_str(); return os; }
+{ os << str.to_cstr(); return os; }
 
 
 const lxc::SizeType lxc::String::DEFAULT_CAPACITY = 3;
@@ -58,8 +58,8 @@ bool lxc::String::_cstr_equal(const char* cstr1, const char* cstr2)
 { return lxc::String::_cstr_comp(cstr1, cstr2) == 0; }
 
 
-// static tools
-lxc::String lxc::String::convert_to_str(int val) // !!!
+// type conversions
+lxc::String lxc::String::convert_from(int val) // !!!
 { return lxc::String(std::to_string(val).c_str()); }
 
 
@@ -113,7 +113,7 @@ lxc::String::String(lxc::SizeType n, char c)
 lxc::String& lxc::String::operator= (const String& str)
 {
 	delete[] this->_elements;
-	this->_copy_from(str.c_str(), 0, str.size());
+	this->_copy_from(str.elements(), 0, str.size());
 	return *this;
 }
 
@@ -133,10 +133,10 @@ lxc::String& lxc::String::operator= (char c)
 
 
 // getter
-lxc::String lxc::String::to_str() const
+const lxc::String lxc::String::to_str() const
 {
-	String str = String("String { capacity: ") + String::convert_to_str(_capacity)
-		+ ", size: " + String::convert_to_str(_size) + ", elements: \""
+	const String str = String("String { capacity: ") + String::convert_from(_capacity)
+		+ ", size: " + String::convert_from(_size) + ", elements: \""
 		+ _elements + "\" }";
 
 	return str;
@@ -149,7 +149,7 @@ bool lxc::String::equals(const char* cstr) const { return _cstr_equal(_elements,
 bool lxc::String::equals(const String str) const
 {
 	if (this->_size != str.size()) { return false; }
-	return _cstr_equal(_elements, str.c_str());
+	return _cstr_equal(_elements, str.elements());
 }
 
 
@@ -238,7 +238,7 @@ lxc::String& lxc::String::append(const char* cstr)
 { return this->append(cstr, 0, lxc::String::_cstr_len(cstr)); }
 
 lxc::String& lxc::String::append(const lxc::String& str, lxc::SizeType low, lxc::SizeType high)
-{ return this->append(str.c_str(), low, high); }
+{ return this->append(str.elements(), low, high); }
 
 lxc::String& lxc::String::append(const lxc::String& str)
 { return this->append(str, 0, this->_size); }
@@ -275,10 +275,10 @@ lxc::String& lxc::String::assign(lxc::SizeType n, char c)
 }
 
 lxc::String& lxc::String::assign(const lxc::String& str, lxc::SizeType low, lxc::SizeType high)
-{ return this->assign(str.c_str(), low, high); }
+{ return this->assign(str.elements(), low, high); }
 
 lxc::String& lxc::String::assign(const lxc::String& str)
-{ return this->assign(str.c_str()); }
+{ return this->assign(str.elements()); }
 
 lxc::String& lxc::String::insert(lxc::SizeType pos, const char* cstr, lxc::SizeType low, lxc::SizeType high)
 {
@@ -304,10 +304,10 @@ lxc::String& lxc::String::insert(lxc::SizeType pos, lxc::SizeType n, char c)
 { return this->insert(pos, String(n, c)); }
 
 lxc::String& lxc::String::insert(lxc::SizeType pos, const lxc::String& str)
-{ return this->insert(pos, str.c_str()); }
+{ return this->insert(pos, str.elements()); }
 
 lxc::String& lxc::String::insert(lxc::SizeType pos, const lxc::String& str, lxc::SizeType low, lxc::SizeType high)
-{ return this->insert(pos, str.c_str(), low, high); }
+{ return this->insert(pos, str.elements(), low, high); }
 
 lxc::String& lxc::String::erase(lxc::SizeType low, lxc::SizeType high)
 {
@@ -350,11 +350,11 @@ lxc::String& lxc::String::replace(lxc::SizeType low, lxc::SizeType high, const c
 { return this->replace(low, high, cstr, 0, n); }
 
 lxc::String& lxc::String::replace(lxc::SizeType low, lxc::SizeType high, const lxc::String& str)
-{ return this->replace(low, high, str.c_str()); }
+{ return this->replace(low, high, str.elements()); }
 
 lxc::String& lxc::String::replace(lxc::SizeType low1, lxc::SizeType high1, const String& str,
 	lxc::SizeType low2, lxc::SizeType high2)
-{ return this->replace(low1, high1, str.c_str(), low2, high2); }
+{ return this->replace(low1, high1, str.elements(), low2, high2); }
 
 lxc::String& lxc::String::replace(lxc::SizeType low, lxc::SizeType high, lxc::SizeType n, char c)
 { return this->replace(low, high, String(n, c)); }

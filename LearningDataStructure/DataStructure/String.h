@@ -27,8 +27,8 @@ namespace lxc {
 		void _shrink();
 
 	public:
-		// static tools
-		static String convert_to_str(int val);
+		// type conversions
+		static String convert_from(int val);
 
 		// constructor
 		explicit String();
@@ -45,12 +45,14 @@ namespace lxc {
 		~String() { delete[] this->_elements; }
 
 		// getter
-		const char* c_str() const { return this->_elements; }
+		const char* elements() const { return this->_elements; }
 		SizeType size() const { return this->_size; }
 		SizeType length() const { return this->size(); }
 		SizeType capacity() const { return this->_capacity; }
 		SizeType max_size() const { return this->NPOS; }
-		String to_str() const;
+		const String to_str() const;
+		const String to_cstr() const { return this->to_str().elements(); }
+
 
 		// capacity
 		void resize(SizeType new_size, char c = char());
@@ -101,13 +103,13 @@ namespace lxc {
 
 		// operations
 		bool operator<(const char* cstr) const { return _cstr_comp(_elements, cstr) < 0; }
-		bool operator<(const String str) const { return this->operator<(str.c_str()); }
+		bool operator<(const String str) const { return this->operator<(str.elements()); }
 		bool operator<=(const char* cstr) const { return _cstr_comp(_elements, cstr) <= 0; }
-		bool operator<=(const String str) const { return this->operator<=(str.c_str()); }
+		bool operator<=(const String str) const { return this->operator<=(str.elements()); }
 		bool operator>(const char* cstr) const { return _cstr_comp(_elements, cstr) > 0; }
-		bool operator>(const String str) const { return this->operator>(str.c_str()); }
+		bool operator>(const String str) const { return this->operator>(str.elements()); }
 		bool operator>=(const char* cstr) const { return _cstr_comp(_elements, cstr) >= 0; }
-		bool operator>=(const String str) const { return this->operator>=(str.c_str()); }
+		bool operator>=(const String str) const { return this->operator>=(str.elements()); }
 		bool operator==(const char* cstr) const { return this->equals(cstr); }
 		bool operator==(const String str) const { return this->equals(str); }
 		bool operator!=(const String str) const { return !this->equals(str); }
