@@ -130,6 +130,16 @@ lxc::String& lxc::String::operator= (char c)
 }
 
 
+// element access
+bool lxc::String::equals(const char* cstr) const { return _cstr_equal(_elements, cstr); }
+
+bool lxc::String::equals(const String str) const
+{
+	if (this->_size != str.size()) { return false; }
+	return _cstr_equal(_elements, str.c_str());
+}
+
+
 // capacity
 void lxc::String::_expand()
 {
@@ -348,14 +358,6 @@ void lxc::String::swap(lxc::String& str) { lxc::swap(*this, str); }
 
 
 // operations
-bool lxc::String::operator==(const char* cstr) const { return _cstr_equal(_elements, cstr); }
-
-bool lxc::String::operator==(const String str) const 
-{
-	if (this->_size != str.size()) { return false; }
-	return _cstr_equal(_elements, str.c_str()); 
-}
-
 lxc::String lxc::String::operator+(const String str) const
 {
 	String new_str(*this); new_str += str;

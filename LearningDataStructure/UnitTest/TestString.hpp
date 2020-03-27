@@ -5,11 +5,17 @@
 #include <iostream>
 #include "../DataStructure/String.hpp"
 #include "../General/Base.h"
+#include "../General/Assert.h"
 #include "../Exception/AssertException.h"
 
-void assert_string(bool ass)
-{
-}
+void assert_string(bool ass, const char* message)
+{ lxc::assert(ass, message); }
+
+void assert_equals_string(lxc::String& str, const char* cstr, const char* message)
+{ assert_string(str == cstr, message); }
+
+void assert_equals_string(lxc::String& str1, lxc::String& str2, const char* message)
+{ assert_string(str1 == str2, message); }
 
 void test_string_constructor()
 {
@@ -61,13 +67,25 @@ void test_string_resize()
 	str.resize(20, '.');
 }
 
+void test_string_operator_equals()
+{
+	// £¡£¡£¡
+	const char* errmsg = "String::operator== failed";
+	lxc::String str1("abcdefg");
+	lxc::String str2("abcdefh");
+
+	assert_string(str1 == str2, errmsg);
+
+	std::cout << "ssss" << std::endl;
+}
+
 void test_string()
 {
 	try {
-		test_string_constructor();
-		test_string_operator_equal();
+		//test_string_constructor();
+		test_string_operator_equals();
 	}
 	catch (lxc::AssertException e) {
-		std::cerr << e.get_name() << " " << e.get_message() << std::endl;
+		std::cerr << e.get_name() << ": " << e.get_message() << std::endl;
 	}
 }

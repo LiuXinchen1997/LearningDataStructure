@@ -60,6 +60,8 @@ namespace lxc {
 		const char& at(SizeType pos) const { return this->operator[](pos); };
 		char& at(SizeType pos) { return this->operator[](pos); };
 		char get(SizeType pos) { return this->at(pos); }
+		bool equals(const char* cstr) const;
+		bool equals(const String str) const;
 
 		// modifiers
 		String& operator+= (const String& str);
@@ -102,8 +104,10 @@ namespace lxc {
 		bool operator>(const String str) const { return this->operator>(str.c_str()); }
 		bool operator>=(const char* cstr) const { return _cstr_comp(_elements, cstr) >= 0; }
 		bool operator>=(const String str) const { return this->operator>=(str.c_str()); }
-		bool operator==(const char* cstr) const;
-		bool operator==(const String str) const;
+		bool operator==(const char* cstr) const { return this->equals(cstr); }
+		bool operator==(const String str) const { return this->equals(str); }
+		bool operator!=(const String str) const { return !this->equals(str); }
+		bool operator!=(const char* cstr) const { return !this->equals(cstr); }
 		String operator+(const String str) const;
 		String operator+(const char* cstr) const;
 		String operator+(const char c) const;
