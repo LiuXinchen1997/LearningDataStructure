@@ -94,11 +94,11 @@ namespace lxc {
 		void swap(String& str);
 
 		// operations
-		bool operator==(const String str) const { return _cstr_equal(_elements, str.c_str()); }
 		bool operator<(const String str) const { return _cstr_comp(_elements, str.c_str()) < 0; }
 		bool operator<=(const String str) const { return _cstr_comp(_elements, str.c_str()) <= 0; }
 		bool operator>(const String str) const { return _cstr_comp(_elements, str.c_str()) > 0; }
 		bool operator>=(const String str) const { return _cstr_comp(_elements, str.c_str()) >= 0; }
+		bool operator==(const String str) const;
 		String operator+(const String str) const;
 		String operator+(const char* cstr) const;
 		String operator+(const char c) const;

@@ -345,3 +345,23 @@ lxc::SizeType lxc::String::copy(char* s, lxc::SizeType low, lxc::SizeType high)
 }
 
 void lxc::String::swap(lxc::String& str) { lxc::swap(*this, str); }
+
+
+// operations
+bool lxc::String::operator==(const String str) const 
+{
+	if (this->_size != str.size()) { return false; }
+	return _cstr_equal(_elements, str.c_str()); 
+}
+
+lxc::String lxc::String::operator+(const String str) const
+{
+	String new_str(*this); new_str += str;
+	return new_str;
+}
+
+lxc::String lxc::String::operator+(const char* cstr) const
+{ return this->operator+(String(cstr)); }
+
+lxc::String lxc::String::operator+(const char c) const
+{ return this->operator+(String(1, c)); }

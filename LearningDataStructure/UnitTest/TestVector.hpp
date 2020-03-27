@@ -4,11 +4,9 @@
 #include <iostream>
 #include <string>
 #include "../DataStructure/Vector.hpp"
+#include "../General/Base.h"
 
 void visit(int& ele) { std::cout << ele << " "; }
-
-template <class S>
-bool equals(const S s1, const S s2) { return s1 == s2; }
 
 template <class T>
 bool equals(const lxc::Vector<T>& v, const T* arr, lxc::SizeType size)
@@ -165,7 +163,7 @@ void test_vector_reduce_to()
 {
 	int arr[] = { 5, 2, 6, 3, 5 };
 	lxc::Vector<int> v(arr, 5);
-	if (equals(v.reduce_to(vector_reduce_to_conventor), 21)) {
+	if (lxc::equals(v.reduce_to(vector_reduce_to_conventor), 21)) {
 		std::cout << "vector reduce_to pass." << std::endl;
 	}
 	else {
