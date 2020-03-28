@@ -66,8 +66,6 @@ namespace lxc {
 		const char& at(SizeType pos) const { return this->operator[](pos); };
 		char& at(SizeType pos) { return this->operator[](pos); };
 		char get(SizeType pos) { return this->at(pos); }
-		bool equals(const char* cstr) const;
-		bool equals(const String str) const;
 
 		// modifiers
 		String& operator+= (const String& str);
@@ -117,5 +115,27 @@ namespace lxc {
 		String operator+(const String str) const;
 		String operator+(const char* cstr) const;
 		String operator+(const char c) const;
+
+		SizeType find(const String& str, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find(const char* cstr, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find(char ch, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType rfind(const String& str, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType rfind(const char* cstr, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType rfind(char ch, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_first_of(const String& str, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_first_of(const char* cstr, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_first_of(char ch, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_last_of(const String& str, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_last_of(const char* cstr, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_last_of(char ch, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_first_not_of(const String& str, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_first_not_of(const char* cstr, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_first_not_of(char ch, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_last_not_of(const String& str, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_last_not_of(const char* cstr, SizeType low = 0, SizeType high = NPOS) const;
+		SizeType find_last_not_of(char ch, SizeType low = 0, SizeType high = NPOS) const;
+		String substr(SizeType low = 0, SizeType high = NPOS) const;
+		bool equals(const char* cstr) const;
+		bool equals(const String str) const;
 	};
 };

@@ -382,3 +382,49 @@ lxc::String lxc::String::operator+(const char* cstr) const
 
 lxc::String lxc::String::operator+(const char c) const
 { return this->operator+(String(1, c)); }
+
+
+lxc::SizeType lxc::String::find(const char* cstr, lxc::SizeType low, lxc::SizeType high) const
+{
+	SizeType cstrlen = String::_cstr_len(cstr);
+	if (high - low < cstrlen) { return NOT_FOUND; }
+
+	for (SizeType pos = low; pos <= high - cstrlen; pos++) {
+		bool match = true;
+		for (SizeType pos2 = 0; pos2 < String::_cstr_len(cstr); pos2++) {
+			if (cstr[pos2] != this->_elements[pos + pos2]) { match = false; break; }
+		}
+		if (match) { return pos; }
+	}
+
+	return NOT_FOUND;
+}
+
+lxc::SizeType lxc::String::find(const lxc::String& str, lxc::SizeType low, lxc::SizeType high) const
+{ return find(str.elements(), low, high); }
+
+lxc::SizeType lxc::String::find(char ch, lxc::SizeType low, lxc::SizeType high) const
+{ return find(String(1, ch), low, high); }
+
+lxc::SizeType lxc::String::rfind(const char* cstr, lxc::SizeType low, lxc::SizeType high) const
+{
+	SizeType cstrlen = String::_cstr_len(cstr);
+	if (high - low < cstrlen) { return NOT_FOUND; }
+
+	for (SizeType pos = high - 1; pos >= low + cstrlen - 1; pos--) {
+		bool match = true;
+		for (SizeType pos2 = cstrlen - 1; pos2 >= 0; pos2--) {
+			if (cstr[pos2] != this->_elements[pos - (cstrlen - 1 - pos2)]) { match = false; break; }
+		}
+		if (match) { return pos - cstrlen + 1; }
+	}
+
+	return NOT_FOUND;
+}
+
+lxc::SizeType lxc::String::rfind(const lxc::String& str, lxc::SizeType low, lxc::SizeType high) const
+{ return rfind(str.elements(), low, high); }
+
+lxc::SizeType lxc::String::rfind(char ch, lxc::SizeType low, lxc::SizeType high) const
+{ return rfind(String(1, ch), low, high); }
+
