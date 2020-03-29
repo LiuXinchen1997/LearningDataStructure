@@ -386,8 +386,9 @@ lxc::String lxc::String::operator+(const char c) const
 
 lxc::SizeType lxc::String::find(const char* cstr, lxc::SizeType low, lxc::SizeType high) const
 {
+	high = lxc::min_of_2(high, this->_size);
 	SizeType cstrlen = String::_cstr_len(cstr);
-	if (high - low < cstrlen) { return NOT_FOUND; }
+	if (high - low < cstrlen) { return NPOS; }
 
 	for (SizeType pos = low; pos <= high - cstrlen; pos++) {
 		bool match = true;
@@ -397,7 +398,7 @@ lxc::SizeType lxc::String::find(const char* cstr, lxc::SizeType low, lxc::SizeTy
 		if (match) { return pos; }
 	}
 
-	return NOT_FOUND;
+	return NPOS;
 }
 
 lxc::SizeType lxc::String::find(const lxc::String& str, lxc::SizeType low, lxc::SizeType high) const
@@ -408,8 +409,9 @@ lxc::SizeType lxc::String::find(char ch, lxc::SizeType low, lxc::SizeType high) 
 
 lxc::SizeType lxc::String::rfind(const char* cstr, lxc::SizeType low, lxc::SizeType high) const
 {
+	high = lxc::min_of_2(high, this->_size);
 	SizeType cstrlen = String::_cstr_len(cstr);
-	if (high - low < cstrlen) { return NOT_FOUND; }
+	if (high - low < cstrlen) { return NPOS; }
 
 	for (SizeType pos = high - 1; pos >= low + cstrlen - 1; pos--) {
 		bool match = true;
@@ -419,7 +421,7 @@ lxc::SizeType lxc::String::rfind(const char* cstr, lxc::SizeType low, lxc::SizeT
 		if (match) { return pos - cstrlen + 1; }
 	}
 
-	return NOT_FOUND;
+	return NPOS;
 }
 
 lxc::SizeType lxc::String::rfind(const lxc::String& str, lxc::SizeType low, lxc::SizeType high) const
@@ -428,3 +430,78 @@ lxc::SizeType lxc::String::rfind(const lxc::String& str, lxc::SizeType low, lxc:
 lxc::SizeType lxc::String::rfind(char ch, lxc::SizeType low, lxc::SizeType high) const
 { return rfind(String(1, ch), low, high); }
 
+lxc::SizeType lxc::String::find_first_of(const char* cstr, lxc::SizeType low, lxc::SizeType high) const
+{
+	high = lxc::min_of_2(high, this->_size);
+	SizeType cstrlen = String::_cstr_len(cstr);
+	for (SizeType pos = low; pos < high; pos++) {
+		for (SizeType pos2 = 0; pos2 < cstrlen; pos2++) {
+			if (this->_elements[pos] == cstr[pos2]) { return pos; }
+		}
+	}
+
+	return NPOS;
+}
+
+lxc::SizeType lxc::String::find_first_of(const lxc::String& str, lxc::SizeType low, lxc::SizeType high) const
+{ return find_first_of(str.elements(), low, high); }
+
+lxc::SizeType lxc::String::find_first_of(char ch, lxc::SizeType low, lxc::SizeType high) const
+{ return find_first_of(String(1, ch), low, high); }
+
+lxc::SizeType lxc::String::find_last_of(const char* cstr, lxc::SizeType low, lxc::SizeType high) const
+{
+	high = lxc::min_of_2(high, this->_size);
+	SizeType cstrlen = String::_cstr_len(cstr);
+	for (SizeType pos = high - 1; pos >= low; pos--) {
+		for (SizeType pos2 = 0; pos2 < cstrlen; pos2++) {
+			if (this->_elements[pos] == cstr[pos2]) { return pos; }
+		}
+	}
+
+	return NPOS;
+}
+
+lxc::SizeType lxc::String::find_last_of(const lxc::String& str, lxc::SizeType low, lxc::SizeType high) const
+{ return find_last_of(str.elements(), low, high); }
+
+lxc::SizeType lxc::String::find_last_of(char ch, lxc::SizeType low, lxc::SizeType high) const
+{ return find_last_of(String(1, ch), low, high); }
+
+lxc::SizeType lxc::String::find_first_not_of(const char* cstr, lxc::SizeType low, lxc::SizeType high) const
+{
+	high = lxc::min_of_2(high, this->_size);
+	for (SizeType pos = low; pos < high; pos++) {
+		if (this->find_first_of(cstr, pos, pos + 1) == NPOS) { return pos; }
+	}
+
+	return NPOS;
+}
+
+lxc::SizeType lxc::String::find_first_not_of(const lxc::String& str, lxc::SizeType low, lxc::SizeType high) const
+{ return find_first_not_of(str.elements(), low, high); }
+
+lxc::SizeType lxc::String::find_first_not_of(char ch, lxc::SizeType low, lxc::SizeType high) const
+{ return find_first_not_of(String(1, ch), low, high); }
+
+lxc::SizeType lxc::String::find_last_not_of(const char* cstr, lxc::SizeType low, lxc::SizeType high) const
+{
+	high = lxc::min_of_2(high, this->_size);
+	for (SizeType pos = high - 1; pos >= low; pos--) {
+		if (this->find_last_of(cstr, pos, pos + 1) == NPOS) { return pos; }
+	}
+
+	return NPOS;
+}
+
+lxc::SizeType lxc::String::find_last_not_of(const lxc::String& str, lxc::SizeType low, lxc::SizeType high) const
+{ return find_last_not_of(str.elements(), low, high); }
+
+lxc::SizeType lxc::String::find_last_not_of(char ch, lxc::SizeType low, lxc::SizeType high) const
+{ return find_last_not_of(String(1, ch), low, high); }
+
+lxc::String lxc::String::substr(lxc::SizeType low, lxc::SizeType high) const
+{
+	high = lxc::min_of_2(high, this->_size);
+	return String(*this, low, high);
+}
