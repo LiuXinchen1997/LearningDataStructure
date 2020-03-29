@@ -18,86 +18,58 @@ void assert_equals_string(lxc::String& str1, lxc::String& str2, const char* mess
 { assert_string(str1 == str2, message); }
 
 
+// unittest example
 void test_string_constructor()
 {
-	using std::cout;
-	using std::endl;
-	using lxc::String;
-	
-	String str;
-	cout << str << endl;
-
-	String str2("I love C++.", 2, 6);
-	cout << str2 << endl;
-
-	String str3("I love C++.");
-	cout << str3 << endl;
-
-	String str4(str3, 2, 6);
-	cout << str4 << endl;
-
-	String str5(str3);
-	cout << str5 << endl;
-
-	String str6(10, 'c');
-	cout << str6 << endl;
-}
-
-void test_string_operator_assign()
-{
-	using std::cout;
-	using std::endl;
+	const char* errmsg = "unittest failed: String::String";
 	using lxc::String;
 
-	lxc::String str;
-	str = String("I love C++.");
-	cout << str << endl;
+	try {
+		String str1;
+		lxc::assert(str1.capacity() == String::DEFAULT_CAPACITY, errmsg);
+		lxc::assert(str1.size() == 0, errmsg);
 
-	lxc::String str2;
-	str2 = "I love C++.";
-	cout << str2 << endl;
+		String str2("I love C++.", 2, 6);
+		assert_equals_string(str2, "love", errmsg);
 
-	lxc::String str3;
-	str3 = 'c';
-	cout << str3 << endl;
+		String str3("I love C++.");
+		assert_equals_string(str3, "I love C++.", errmsg);
+
+		String str4(str3, 2, 6);
+		assert_equals_string(str4, "love", errmsg);
+
+		String str5(str3);
+		assert_equals_string(str5, "I love C++.", errmsg);
+
+		String str6(3, 'c');
+		assert_equals_string(str6, "ccc", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
 }
 
-void test_string_resize()
-{
-	lxc::String str("I love C++.");
-	str.resize(20, '.');
-}
-
-// test example
 void test_string_operator_equals()
 {
 	const char* errmsg = "unittest failed: String::operator==";
-	lxc::String str1("abcdefg");
-	lxc::String str2("abcdefg");
-	assert_string(str1 == str2, errmsg);
+	using lxc::String;
 
-	lxc::String str3("abcdefh");
-	assert_string(!(str1 == str3), errmsg);
-}
+	try {
+		lxc::String str1("abcdefg");
+		lxc::String str2("abcdefg");
+		assert_string(str1 == str2, errmsg);
 
-void test_string_operator_plus()
-{
-	const char* errmsg = "unittest failed: String::operator+";
-	lxc::String str1("abcd");
-	lxc::String str2("efgh");
-	lxc::String str3 = str1 + str2;
-	assert_string(str3 == "abcdefgh", errmsg);
-	assert_string(!(str3 == "abcdefgi"), errmsg);
+		lxc::String str3("abcdefh");
+		assert_string(!(str1 == str3), errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
 }
 
 void test_string()
 {
-	try {
-		//test_string_constructor();
-		test_string_operator_equals();
-		test_string_operator_plus();
-	}
-	catch (lxc::AssertException e) {
-		std::cerr << e.get_name() << ": " << e.get_message() << std::endl;
-	}
+	test_string_constructor();
+	test_string_operator_equals();
+	//test_string_operator_plus();
 }

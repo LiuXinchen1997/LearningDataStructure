@@ -8,15 +8,6 @@ namespace lxc {
 	class String
 	{
 	protected:
-		static const SizeType DEFAULT_CAPACITY;
-		static const SizeType NPOS;
-		static const double SHRINK_RATIO;
-		static SizeType _cstr_len(const char* cstr);
-		static void _cstr_copy(char* dest, const char* source, SizeType low, SizeType high);
-		static void _cstr_copy(char* dest, const char* source);
-		static int _cstr_comp(const char* cstr1, const char* cstr2);
-		static bool _cstr_equal(const char* cstr1, const char* cstr2);
-
 		SizeType _size;
 		SizeType _capacity;
 		char* _elements;
@@ -27,15 +18,23 @@ namespace lxc {
 		void _shrink();
 
 	public:
+		// static members
+		static const SizeType DEFAULT_CAPACITY;
+		static const SizeType NPOS;
+		static const double SHRINK_RATIO;
+		static bool show_raw_data; // related to operator<<
+		static SizeType _cstr_len(const char* cstr);
+		static void _cstr_copy(char* dest, const char* source, SizeType low = 0, SizeType high = NPOS);
+		static int _cstr_comp(const char* cstr1, const char* cstr2);
+		static bool _cstr_equal(const char* cstr1, const char* cstr2);
+
 		// type conversions
 		static String convert_from(int val);
 
 		// constructor
 		explicit String();
-		String(const char* cstr, SizeType low, SizeType high);
-		String(const char* cstr);
-		String(const String& str, SizeType low, SizeType high);
-		String(const String& str);
+		String(const char* cstr, SizeType low = 0, SizeType high = NPOS);
+		String(const String& str, SizeType low = 0, SizeType high = NPOS);
 		String(SizeType n, char c);
 		String& operator= (const String& str);
 		String& operator= (const char* cstr);

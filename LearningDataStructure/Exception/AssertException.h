@@ -6,6 +6,6 @@ namespace lxc {
 	class AssertException :public Exception {
 	public:
 		AssertException(const char* message) :Exception("AssertException", message) {};
-		const char* get_message() { return _message; }
+		AssertException(const String message) :Exception(String("AssertException"), message) {};
 	};
 };

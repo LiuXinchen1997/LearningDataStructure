@@ -9,12 +9,16 @@
 
 
 std::ostream& operator<< (std::ostream& os, const lxc::String& str)
-{ os << str.to_cstr(); return os; }
+{
+	if (lxc::String::show_raw_data) { os << str.to_cstr(); } else { os << str.elements(); }
+	return os;
+}
 
 
 const lxc::SizeType lxc::String::DEFAULT_CAPACITY = 3;
 const lxc::SizeType lxc::String::NPOS = INT_MAX;
 const double lxc::String::SHRINK_RATIO = 0.25;
+bool lxc::String::show_raw_data = false;
 
 // static member methods
 lxc::SizeType lxc::String::_cstr_len(const char* cstr)
@@ -32,9 +36,6 @@ void lxc::String::_cstr_copy(char* dest, const char* source, lxc::SizeType low, 
 	for (; offset < high - low; offset++) { dest[offset] = source[low + offset]; }
 	dest[offset] = '\0';
 }
-
-void lxc::String::_cstr_copy(char* dest, const char* source)
-{ lxc::String::_cstr_copy(dest, source, 0, lxc::String::_cstr_len(source)); }
 
 int lxc::String::_cstr_comp(const char* cstr1, const char* cstr2)
 {
@@ -96,16 +97,16 @@ lxc::String::String()
 }
 
 lxc::String::String(const char* cstr, lxc::SizeType low, lxc::SizeType high)
-{ this->_copy_from(cstr, low, high); }
-
-lxc::String::String(const char* cstr)
-{ this->_copy_from(cstr, 0, lxc::String::_cstr_len(cstr)); }
+{ 
+	high = min_of_2(high, this->_cstr_len(cstr));
+	this->_copy_from(cstr, low, high); 
+}
 
 lxc::String::String(const String& str, lxc::SizeType low, lxc::SizeType high)
-{ this->_copy_from(str._elements, low, high); }
-
-lxc::String::String(const String& str)
-{ this->_copy_from(str._elements, 0, str._size); }
+{
+	high = min_of_2(high, str.size());
+	this->_copy_from(str._elements, low, high);
+}
 
 lxc::String::String(lxc::SizeType n, char c)
 { this->_copy_from(n, c); }
