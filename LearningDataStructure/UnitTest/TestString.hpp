@@ -49,6 +49,54 @@ void test_string_constructor()
 	}
 }
 
+void test_string_operator_assign()
+{
+	const char* errmsg = "unittest failed: String::operator=";
+	using lxc::String;
+
+	try {
+		String str1("abcde");
+		String str2;
+
+		str2 = str1;
+		assert_equals_string(str2, "abcde", errmsg);
+
+		str2 = "aaaaa";
+		assert_equals_string(str2, "aaaaa", errmsg);
+
+		str2 = 'a';
+		assert_equals_string(str2, "a", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_resize()
+{
+	const char* errmsg = "unittest failed: String::resize";
+	using lxc::String;
+
+	try {
+		String str("abcdefg");
+		
+		str.resize(5);
+		assert_equals_string(str, "abcde", errmsg);
+
+		str.resize(10, 'a');
+		assert_equals_string(str, "abcdeaaaaa", errmsg);
+
+		str.resize(1, 'a');
+		assert_equals_string(str, "a", errmsg);
+
+		str.resize(20, 'a');
+		assert_equals_string(str, "aaaaaaaaaaaaaaaaaaaa", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
 void test_string_operator_equals()
 {
 	const char* errmsg = "unittest failed: String::operator==";
@@ -70,6 +118,8 @@ void test_string_operator_equals()
 void test_string()
 {
 	test_string_constructor();
-	test_string_operator_equals();
-	//test_string_operator_plus();
+	test_string_operator_assign();
+	test_string_resize();
+
+	// test_string_operator_equals();
 }

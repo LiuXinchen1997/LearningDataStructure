@@ -179,7 +179,7 @@ void lxc::String::_shrink()
 void lxc::String::resize(lxc::SizeType new_size, char c)
 {
 	if (new_size <= this->_size) {
-		this->_size = new_size;
+		this->_size = new_size; this->_elements[this->_size] = '\0';
 		if (double(this->_size) / this->_capacity < lxc::String::SHRINK_RATIO) { this->_shrink(); }
 		return;
 	}

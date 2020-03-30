@@ -73,6 +73,8 @@
 |id|method name|tested|passed|
 |-|-|-|-|
 |1|constructor|√|√|
+|2|operator=|√|√|
+|3|resize|√|√|
 
 ## 3 Reference
 
