@@ -22,7 +22,7 @@ namespace lxc {
 		static const SizeType DEFAULT_CAPACITY;
 		static const SizeType NPOS;
 		static const double SHRINK_RATIO;
-		static bool show_raw_data; // related to operator<<
+		static bool show_full_data; // related to operator<<
 		static SizeType _cstr_len(const char* cstr);
 		static void _cstr_copy(char* dest, const char* source, SizeType low = 0, SizeType high = NPOS);
 		static int _cstr_comp(const char* cstr1, const char* cstr2);
@@ -60,11 +60,9 @@ namespace lxc {
 		bool empty() const { return (this->_size == 0); };
 
 		// element access
-		const char& operator[] (SizeType pos) const { return this->_elements[pos]; };
-		char& operator[] (SizeType pos) { return this->_elements[pos]; };
-		const char& at(SizeType pos) const { return this->operator[](pos); };
-		char& at(SizeType pos) { return this->operator[](pos); };
-		char get(SizeType pos) { return this->at(pos); }
+		char& operator[] (SizeType pos);
+		const char at(SizeType pos) { return this->operator[](pos); };
+		const char get(SizeType pos) { return this->at(pos); }
 
 		// modifiers
 		String& operator+= (const String& str);

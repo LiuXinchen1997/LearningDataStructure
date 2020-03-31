@@ -6,7 +6,9 @@
 #include "../DataStructure/String.hpp"
 #include "../General/Base.h"
 #include "../General/Assert.h"
+#include "../General/IOHelper.h"
 #include "../Exception/AssertException.h"
+#include "../Exception/OutOfBoundException.h"
 
 void assert_string(bool ass, const char* message)
 { lxc::assert(ass, message); }
@@ -121,7 +123,6 @@ void test_string_clear()
 	try {
 		String str("abcdefg");
 		str.clear();
-		std::cout << str << std::endl;
 		String str2;
 		assert_equals_string(str, str2, errmsg);
 	}
@@ -132,6 +133,27 @@ void test_string_clear()
 
 void test_string_operator_at()
 {
+	const char* errmsg = "unittest failed: String::operator[]";
+	using lxc::String;
+
+	try {
+		String str("abcdefg");
+
+		lxc::assert_equals(str[0], 'a', errmsg);
+		lxc::assert_equals(str[str.size() - 1], 'g', errmsg);
+		lxc::assert_equals(str[2], 'c', errmsg);
+
+		str[2] = 'b';
+		assert_equals_string(str, "abbdefg", errmsg);
+
+		str[10] = 'c';
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+	catch (lxc::OutOfBoundException e) {
+		// std::cerr << e << std::endl;
+	}
 }
 
 
@@ -142,4 +164,5 @@ void test_string()
 	test_string_resize();
 	test_string_reserve();
 	test_string_clear();
+	test_string_operator_at();
 }

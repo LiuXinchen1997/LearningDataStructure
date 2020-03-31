@@ -15,15 +15,3 @@ namespace lxc {
 		virtual const String get_message() { return _message; };
 	};
 }
-
-std::ostream& operator<< (std::ostream& os, lxc::Exception* e)
-{
-	os << e->get_name() << ": " << e->get_message();
-	return os;
-}
-
-std::ostream& operator<< (std::ostream& os, lxc::Exception& e)
-{
-	os << e.get_name() << ": " << e.get_message();
-	return os;
-}

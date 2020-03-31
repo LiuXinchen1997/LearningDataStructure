@@ -7,18 +7,13 @@
 
 #include <string>
 
-
-std::ostream& operator<< (std::ostream& os, const lxc::String& str)
-{
-	if (lxc::String::show_raw_data) { os << str.to_cstr(); } else { os << str.elements(); }
-	return os;
-}
+#include "../General/Assert.h"
 
 
 const lxc::SizeType lxc::String::DEFAULT_CAPACITY = 3;
 const lxc::SizeType lxc::String::NPOS = INT_MAX;
 const double lxc::String::SHRINK_RATIO = 0.25;
-bool lxc::String::show_raw_data = false;
+bool lxc::String::show_full_data = false;
 
 // static member methods
 lxc::SizeType lxc::String::_cstr_len(const char* cstr)
@@ -210,6 +205,14 @@ void lxc::String::clear()
 	this->_elements = new char[lxc::String::DEFAULT_CAPACITY];
 	this->_elements[this->_size] = '\0';
 	this->_capacity = lxc::String::DEFAULT_CAPACITY;
+}
+
+
+// element access
+char& lxc::String::operator[] (lxc::SizeType pos)
+{
+	assert_in_bound(*this, pos, "String::operator[]");
+	return this->_elements[pos];
 }
 
 

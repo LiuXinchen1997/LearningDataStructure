@@ -44,8 +44,12 @@
 |2|cstr_cpy: from source to dest and reuse this method|√|
 |3|para high default value: npos|√|
 |4|replace --> insert, erase, append||
-|5|is size redundant?||
+|5|is size redundant? no!|√|
 |6|types(int, float, ....) convert 2 String||
+|7|index: slice operation||
+|8|replace, insert at index of size||
+|9|split||
+|10|operator>>||
 
 
 #### 1.1.3 List
