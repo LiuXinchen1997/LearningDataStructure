@@ -208,6 +208,7 @@ void lxc::String::clear()
 	delete[] this->_elements;
 
 	this->_elements = new char[lxc::String::DEFAULT_CAPACITY];
+	this->_elements[this->_size] = '\0';
 	this->_capacity = lxc::String::DEFAULT_CAPACITY;
 }
 

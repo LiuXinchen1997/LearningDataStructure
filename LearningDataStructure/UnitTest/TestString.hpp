@@ -14,8 +14,8 @@ void assert_string(bool ass, const char* message)
 void assert_equals_string(lxc::String& str, const char* cstr, const char* message)
 { assert_string(str == cstr, message); }
 
-void assert_equals_string(lxc::String& str1, lxc::String& str2, const char* message)
-{ assert_string(str1 == str2, message); }
+void assert_equals_string(lxc::String& s1, lxc::String& s2, const char* message)
+{ assert_string(s1 == s2, message); }
 
 
 // unittest example
@@ -97,29 +97,49 @@ void test_string_resize()
 	}
 }
 
-void test_string_operator_equals()
+void test_string_reserve()
 {
-	const char* errmsg = "unittest failed: String::operator==";
+	const char* errmsg = "unittest failed: String::reserve";
 	using lxc::String;
 
 	try {
-		lxc::String str1("abcdefg");
-		lxc::String str2("abcdefg");
-		assert_string(str1 == str2, errmsg);
-
-		lxc::String str3("abcdefh");
-		assert_string(!(str1 == str3), errmsg);
+		String str("abcdefg");
+		str.reserve(80);
+		lxc::assert_equals(str.capacity(), lxc::SizeType(80), errmsg);
+		assert_equals_string(str, "abcdefg", errmsg);
 	}
 	catch (lxc::AssertException e) {
 		std::cerr << e << std::endl;
 	}
 }
 
+void test_string_clear()
+{
+	const char* errmsg = "unittest failed: String::clear";
+	using lxc::String;
+
+	try {
+		String str("abcdefg");
+		str.clear();
+		std::cout << str << std::endl;
+		String str2;
+		assert_equals_string(str, str2, errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_operator_at()
+{
+}
+
+
 void test_string()
 {
 	test_string_constructor();
 	test_string_operator_assign();
 	test_string_resize();
-
-	// test_string_operator_equals();
+	test_string_reserve();
+	test_string_clear();
 }

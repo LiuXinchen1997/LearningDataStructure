@@ -75,6 +75,8 @@
 |1|constructor|√|√|
 |2|operator=|√|√|
 |3|resize|√|√|
+|4|reserve|√|√|
+|5|clear|√|√|
 
 ## 3 Reference
 
