@@ -10,6 +10,22 @@
 #include "../General/Assert.h"
 
 
+std::ostream& lxc::operator<< (std::ostream& os, const String& str)
+{
+	if (String::show_full_data) { os << str.to_cstr(); }
+	else { os << str.elements(); }
+	return os;
+}
+
+std::istream& lxc::operator>> (std::istream& is, String& str)
+{
+	char tmp_cstr[201]; // Oops!
+	is >> tmp_cstr;
+	String tmp_str(tmp_cstr); str = tmp_cstr;
+	return is;
+}
+
+
 const lxc::SizeType lxc::String::DEFAULT_CAPACITY = 3;
 const lxc::SizeType lxc::String::NPOS = INT_MAX;
 const double lxc::String::SHRINK_RATIO = 0.25;

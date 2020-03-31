@@ -135,4 +135,7 @@ namespace lxc {
 		bool equals(const char* cstr) const;
 		bool equals(const String str) const;
 	};
+
+	std::ostream& operator<< (std::ostream& os, const String& str);
+	std::istream& operator>> (std::istream& is, String& str);
 };

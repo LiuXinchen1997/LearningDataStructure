@@ -6,7 +6,7 @@
 #include "../DataStructure/String.hpp"
 #include "../General/Base.h"
 #include "../General/Assert.h"
-#include "../General/IOHelper.h"
+#include "../Exception/Exception.h"
 #include "../Exception/AssertException.h"
 #include "../Exception/OutOfBoundException.h"
 
@@ -146,7 +146,7 @@ void test_string_operator_at()
 		str[2] = 'b';
 		assert_equals_string(str, "abbdefg", errmsg);
 
-		str[10] = 'c';
+		str[20] = 'c';
 	}
 	catch (lxc::AssertException e) {
 		std::cerr << e << std::endl;
