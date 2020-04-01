@@ -81,9 +81,12 @@
 |3|resize|√|√|
 |4|reserve|√|√|
 |5|clear|√|√|
+|6|operator+=|√|√|
+|7|append|√|√|
+|8|push_back|√|√|
 
 ## 3 Reference
 
 1. [MOOC of Deng Junhui](https://dsa.cs.tsinghua.edu.cn/~deng/ds/dsacpp/index.htm)
-
 2. C++ STL API
+3. CLRS

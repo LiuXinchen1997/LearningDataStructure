@@ -262,7 +262,7 @@ lxc::String& lxc::String::append(const lxc::String& str, lxc::SizeType low, lxc:
 { return this->append(str.elements(), low, high); }
 
 lxc::String& lxc::String::append(const lxc::String& str)
-{ return this->append(str, 0, this->_size); }
+{ return this->append(str, 0, str.size()); }
 
 lxc::String& lxc::String::append(lxc::SizeType n, char c)
 {

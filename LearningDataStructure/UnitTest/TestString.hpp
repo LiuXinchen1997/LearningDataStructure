@@ -156,6 +156,75 @@ void test_string_operator_at()
 	}
 }
 
+void test_string_operator_plus_equals()
+{
+	const char* errmsg = "unittest failed: String::operator+=";
+	using lxc::String;
+
+	try {
+		String str;
+
+		str += "abc";
+		assert_equals_string(str, "abc", errmsg);
+
+		str += String("de");
+		assert_equals_string(str, "abcde", errmsg);
+
+		str += 'f';
+		assert_equals_string(str, "abcdef", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_append()
+{
+	const char* errmsg = "unittest failed: String::append";
+	using lxc::String;
+
+	try {
+		String str;
+		str.append("abcdef", 0, String::NPOS);
+		assert_equals_string(str, "abcdef", errmsg);
+
+		str.append("abcdef", 3, 5);
+		assert_equals_string(str, "abcdefde", errmsg);
+
+		str.append("abcdef");
+		assert_equals_string(str, "abcdefdeabcdef", errmsg);
+
+		str.clear();
+		String str2("I love C++");
+		str.append(str2);
+		assert_equals_string(str, "I love C++", errmsg);
+
+		str.append(str2, 6, String::NPOS);
+		assert_equals_string(str, "I love C++ C++", errmsg);
+
+		str.append(3, 'a');
+		assert_equals_string(str, "I love C++ C++aaa", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_push_back()
+{
+	const char* errmsg = "unittest failed: String::push_back";
+	using lxc::String;
+
+	try {
+		String str("abcdef");
+		str.push_back('g');
+		assert_equals_string(str, "abcdefg", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
 
 void test_string()
 {
@@ -165,4 +234,7 @@ void test_string()
 	test_string_reserve();
 	test_string_clear();
 	test_string_operator_at();
+	test_string_operator_plus_equals();
+	test_string_append();
+	test_string_push_back();
 }
