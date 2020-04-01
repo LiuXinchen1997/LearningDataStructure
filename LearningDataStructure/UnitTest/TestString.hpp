@@ -225,6 +225,54 @@ void test_string_push_back()
 	}
 }
 
+void test_string_assign()
+{
+	const char* errmsg = "unittest failed: String::assign";
+	using lxc::String;
+
+	try {
+		String str("abcdef");
+		str.assign("I love C++");
+		assert_equals_string(str, "I love C++", errmsg);
+
+		str.assign("I love C++", 2, String::NPOS);
+		assert_equals_string(str, "love C++", errmsg);
+
+		str.assign("I love C++", 2, 6);
+		assert_equals_string(str, "love", errmsg);
+
+		str.assign(5, 'a');
+		assert_equals_string(str, "aaaaa", errmsg);
+
+		String str2("I love programming");
+		str.assign(str2);
+		assert_equals_string(str, "I love programming", errmsg);
+
+		str.assign(str2, 2, 6);
+		assert_equals_string(str, "love", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_insert()
+{
+	const char* errmsg = "unittest failed: String::insert";
+	using lxc::String;
+
+	try {
+		String str("I like ");
+		str.insert(2, "don't ");
+		assert_equals_string(str, "I don't like ", errmsg);
+
+		//str.insert();
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
 
 void test_string()
 {
@@ -237,4 +285,5 @@ void test_string()
 	test_string_operator_plus_equals();
 	test_string_append();
 	test_string_push_back();
+	test_string_assign();
 }

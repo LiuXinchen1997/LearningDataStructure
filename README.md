@@ -84,6 +84,7 @@
 |6|operator+=|√|√|
 |7|append|√|√|
 |8|push_back|√|√|
+|9|assign|√|√|
 
 ## 3 Reference
 
