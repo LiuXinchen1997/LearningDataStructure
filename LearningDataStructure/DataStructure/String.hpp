@@ -306,7 +306,7 @@ lxc::String& lxc::String::insert(lxc::SizeType pos, const char* cstr, lxc::SizeT
 	high = min_of_2(high, lxc::String::_cstr_len(cstr));
 	const char* errmsg = "String::insert";
 	assert_in_modified_range(*this, pos, errmsg);
-	assert_in_modified_range(String(cstr), low, errmsg);
+	assert_in_accessible_range(String(cstr), low, errmsg);
 	assert_in_modified_range(String(cstr), high, errmsg);
 
 	SizeType new_capacity = 0;
@@ -339,7 +339,7 @@ lxc::String& lxc::String::erase(lxc::SizeType low, lxc::SizeType high)
 {
 	high = lxc::min_of_2(high, this->_size);
 	const char* errmsg = "String::erase";
-	assert_in_modified_range(*this, low, errmsg);
+	assert_in_accessible_range(*this, low, errmsg);
 	assert_in_modified_range(*this, high, errmsg);
 
 	lxc::String::_cstr_copy(this->_elements + low, this->_elements + high);
@@ -356,8 +356,8 @@ lxc::String& lxc::String::replace(lxc::SizeType low1, lxc::SizeType high1, const
 	high1 = lxc::min_of_2(high1, this->_size);
 	high2 = lxc::min_of_2(high2, lxc::String::_cstr_len(cstr));
 	const char* errmsg = "String::replace";
-	assert_in_modified_range(*this, low1, errmsg); assert_in_modified_range(*this, high1, errmsg);
-	assert_in_modified_range(*this, low2, errmsg); assert_in_modified_range(*this, high2, errmsg);
+	assert_in_accessible_range(*this, low1, errmsg); assert_in_modified_range(*this, high1, errmsg);
+	assert_in_accessible_range(String(cstr), low2, errmsg); assert_in_modified_range(String(cstr), high2, errmsg);
 
 	lxc::SizeType new_size = this->_size - (high1 - low1) + (high2 - low2);
 	lxc::SizeType new_capacity = 0;
@@ -393,10 +393,14 @@ lxc::String& lxc::String::replace(lxc::SizeType low1, lxc::SizeType high1, const
 lxc::String& lxc::String::replace(lxc::SizeType low, lxc::SizeType high, lxc::SizeType n, char c)
 { return this->replace(low, high, String(n, c)); }
 
-lxc::SizeType lxc::String::copy(char* s, lxc::SizeType low, lxc::SizeType high)
+lxc::SizeType lxc::String::copy(char* cstr, lxc::SizeType low, lxc::SizeType high)
 {
 	high = lxc::min_of_2(high, this->_size);
-	lxc::String::_cstr_copy(s, this->_elements, low, high);
+	const char* errmsg = "String::copy";
+	assert_in_accessible_range(*this, low, errmsg);
+	assert_in_modified_range(*this, high, errmsg);
+
+	String::_cstr_copy(cstr, this->_elements, low, high);
 
 	return high - low;
 }

@@ -93,7 +93,7 @@ namespace lxc {
 		String& replace(SizeType low, SizeType high, SizeType n, char c);
 		String& replace(SizeType low, SizeType high, const String& str);
 		String& replace(SizeType low1, SizeType high1, const String& str, SizeType low2, SizeType high2);
-		SizeType copy(char* s, SizeType low, SizeType high);
+		SizeType copy(char* cstr, SizeType low = 0, SizeType high = NPOS); // copy elements from this to cstr
 		void swap(String& str);
 
 		// operations

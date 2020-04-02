@@ -50,6 +50,7 @@
 |8|replace, insert at index of size||
 |9|split||
 |10|operator>>|√|
+|11|compare||
 
 
 #### 1.1.3 List
@@ -86,6 +87,12 @@
 |8|push_back|√|√|
 |9|assign|√|√|
 |10|insert|√|√|
+|11|erase|√|√|
+|12|replace|√|√|
+|13|copy|√|√|
+|14|swap|√|√|
+|||||
+|||||
 
 ## 3 Reference
 

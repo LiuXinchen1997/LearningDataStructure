@@ -13,10 +13,10 @@
 void assert_string(bool ass, const char* message)
 { lxc::assert(ass, message); }
 
-void assert_equals_string(lxc::String& str, const char* cstr, const char* message)
+void assert_equals_string(const lxc::String& str, const char* cstr, const char* message)
 { assert_string(str == cstr, message); }
 
-void assert_equals_string(lxc::String& s1, lxc::String& s2, const char* message)
+void assert_equals_string(const lxc::String& s1, const lxc::String& s2, const char* message)
 { assert_string(s1 == s2, message); }
 
 
@@ -356,6 +356,43 @@ void test_string_replace()
 	catch (lxc::OutOfRangeException e) {}
 }
 
+void test_string_copy()
+{
+	const char* errmsg = "unittest failed: String::copy";
+	using lxc::String;
+
+	try {
+		String str("I love you.");
+		char buf[20];
+		str.copy(buf);
+		assert_equals_string(str, buf, errmsg);
+
+		str.copy(buf, 2, 6);
+		assert_equals_string(String("love"), buf, errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+	catch (lxc::OutOfRangeException e) {}
+}
+
+void test_string_swap()
+{
+	const char* errmsg = "unittest failed: String::swap";
+	using lxc::String;
+
+	try {
+		String str("Andy");
+		String str2("Tom");
+		str.swap(str2);
+		assert_equals_string(str, "Tom", errmsg);
+		assert_equals_string(str2, "Andy", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
 
 void test_string()
 {
@@ -372,4 +409,6 @@ void test_string()
 	test_string_insert();
 	test_string_erase();
 	test_string_replace();
+	test_string_copy();
+	test_string_swap();
 }
