@@ -8,7 +8,7 @@
 #include "../General/Assert.h"
 #include "../Exception/Exception.h"
 #include "../Exception/AssertException.h"
-#include "../Exception/OutOfBoundException.h"
+#include "../Exception/OutOfRangeException.h"
 
 void assert_string(bool ass, const char* message)
 { lxc::assert(ass, message); }
@@ -151,7 +151,7 @@ void test_string_operator_at()
 	catch (lxc::AssertException e) {
 		std::cerr << e << std::endl;
 	}
-	catch (lxc::OutOfBoundException e) {
+	catch (lxc::OutOfRangeException e) {
 		// std::cerr << e << std::endl;
 	}
 }
@@ -266,10 +266,30 @@ void test_string_insert()
 		str.insert(2, "don't ");
 		assert_equals_string(str, "I don't like ", errmsg);
 
-		//str.insert();
+		str.insert(str.size(), "C++", 0, String::NPOS);
+		assert_equals_string(str, "I don't like C++", errmsg);
+
+		str = " like";
+		str.insert(0, "Ann and Jack", 8, String::NPOS);
+		assert_equals_string(str, "Jack like", errmsg);
+
+		str.insert(str.size(), String(" C++"));
+		assert_equals_string(str, "Jack like C++", errmsg);
+
+		str.insert(5, String("I don't like"), 2, 8);
+		assert_equals_string(str, "Jack don't like C++", errmsg);
+
+		str.insert(0, 3, 'a');
+		assert_equals_string(str, "aaaJack don't like C++", errmsg);
+
+		str.insert(-1, 4, 'b');
+		str.insert(0, "abcdefg", -5, String::NPOS);
 	}
 	catch (lxc::AssertException e) {
 		std::cerr << e << std::endl;
+	}
+	catch (lxc::OutOfRangeException e) {
+		// std::cerr << e << std::endl;
 	}
 }
 
@@ -286,4 +306,5 @@ void test_string()
 	test_string_append();
 	test_string_push_back();
 	test_string_assign();
+	test_string_insert();
 }

@@ -85,6 +85,7 @@
 |7|append|√|√|
 |8|push_back|√|√|
 |9|assign|√|√|
+|10|insert|√|√|
 
 ## 3 Reference
 

@@ -227,7 +227,7 @@ void lxc::String::clear()
 // element access
 char& lxc::String::operator[] (lxc::SizeType pos)
 {
-	assert_in_bound(*this, pos, "String::operator[]");
+	assert_in_accessible_range(*this, pos, "String::operator[]");
 	return this->_elements[pos];
 }
 
@@ -304,12 +304,17 @@ lxc::String& lxc::String::assign(const lxc::String& str)
 lxc::String& lxc::String::insert(lxc::SizeType pos, const char* cstr, lxc::SizeType low, lxc::SizeType high)
 {
 	high = min_of_2(high, lxc::String::_cstr_len(cstr));
+	const char* errmsg = "String::insert";
+	assert_in_modified_range(*this, pos, errmsg);
+	assert_in_modified_range(String(cstr), low, errmsg);
+	assert_in_modified_range(String(cstr), high, errmsg);
+
 	SizeType new_capacity = 0;
 	char* new_elements = new char[new_capacity = ((this->_size + high - low + 1) << 1)];
 	String::_cstr_copy(new_elements, this->_elements, 0, pos);
 	String::_cstr_copy(new_elements + pos, cstr, low, high);
 	String::_cstr_copy(new_elements + pos + (high - low), this->_elements, pos, String::NPOS);
-	SizeType new_size = lxc::String::_cstr_len(cstr) + high - low;
+	SizeType new_size = this->_size + high - low;
 
 	delete[] this->_elements;
 	this->_elements = new_elements;
