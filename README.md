@@ -49,7 +49,7 @@
 |7|index: slice operation||
 |8|replace, insert at index of size||
 |9|split||
-|10|operator>>||
+|10|operator>>|√|
 
 
 #### 1.1.3 List

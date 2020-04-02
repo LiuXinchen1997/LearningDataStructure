@@ -293,6 +293,69 @@ void test_string_insert()
 	}
 }
 
+void test_string_erase()
+{
+	const char* errmsg = "unittest failed: String::errse";
+	using lxc::String;
+
+	try {
+		String str("abcdefg");
+		str.erase(0, 1);
+		assert_equals_string(str, "bcdefg", errmsg);
+
+		str.erase(str.size() - 1);
+		assert_equals_string(str, "bcdef", errmsg);
+
+		str.erase(1, 3);
+		assert_equals_string(str, "bef", errmsg);
+
+		str.erase(2, 2);
+		assert_equals_string(str, "bef", errmsg);
+
+		str.erase();
+		assert_equals_string(str, "", errmsg);
+
+		str.erase(-5);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+	catch (lxc::OutOfRangeException e) {
+		// std::cerr << e << std::endl;
+	}
+}
+
+void test_string_replace()
+{
+	const char* errmsg = "unittest failed: String::replace";
+	using lxc::String;
+
+	try {
+		String str("I like C++");
+		str.replace(0, 1, "Jack, Tom and Lily", 6, 9);
+		assert_equals_string(str, "Tom like C++", errmsg);
+
+		str.replace(9, String::NPOS, "Java");
+		assert_equals_string(str, "Tom like Java", errmsg);
+
+		str.replace(0, 3, "Jack, Tom and Lily", 4);
+		assert_equals_string(str, "Jack like Java", errmsg);
+
+		str.replace(0, 4, 3, 'A');
+		assert_equals_string(str, "AAA like Java", errmsg);
+
+		str.replace(0, 3, String("Lily"));
+		assert_equals_string(str, "Lily like Java", errmsg);
+
+		str.replace(10, String::NPOS, "Use Python", 4, String::NPOS);
+		assert_equals_string(str, "Lily like Python", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+	catch (lxc::OutOfRangeException e) {}
+}
+
 
 void test_string()
 {
@@ -307,4 +370,6 @@ void test_string()
 	test_string_push_back();
 	test_string_assign();
 	test_string_insert();
+	test_string_erase();
+	test_string_replace();
 }

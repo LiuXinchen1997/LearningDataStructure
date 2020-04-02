@@ -338,8 +338,13 @@ lxc::String& lxc::String::insert(lxc::SizeType pos, const lxc::String& str, lxc:
 lxc::String& lxc::String::erase(lxc::SizeType low, lxc::SizeType high)
 {
 	high = lxc::min_of_2(high, this->_size);
+	const char* errmsg = "String::erase";
+	assert_in_modified_range(*this, low, errmsg);
+	assert_in_modified_range(*this, high, errmsg);
+
 	lxc::String::_cstr_copy(this->_elements + low, this->_elements + high);
 	this->_size -= (high - low);
+	this->_elements[this->_size] = '\0';
 
 	if (double(this->_size) / this->_capacity < lxc::String::SHRINK_RATIO) { this->_shrink(); }
 	return *this;
@@ -350,6 +355,9 @@ lxc::String& lxc::String::replace(lxc::SizeType low1, lxc::SizeType high1, const
 {
 	high1 = lxc::min_of_2(high1, this->_size);
 	high2 = lxc::min_of_2(high2, lxc::String::_cstr_len(cstr));
+	const char* errmsg = "String::replace";
+	assert_in_modified_range(*this, low1, errmsg); assert_in_modified_range(*this, high1, errmsg);
+	assert_in_modified_range(*this, low2, errmsg); assert_in_modified_range(*this, high2, errmsg);
 
 	lxc::SizeType new_size = this->_size - (high1 - low1) + (high2 - low2);
 	lxc::SizeType new_capacity = 0;
