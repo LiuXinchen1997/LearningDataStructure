@@ -82,13 +82,22 @@ void lxc::Vector<T>::_shrink()
 
 // constructor
 template <class T>
-lxc::Vector<T>::Vector(lxc::SizeType capacity, lxc::SizeType s, T ele)
+lxc::Vector<T>::Vector()
 {
-	this->_capacity = capacity;
-	this->_size = s;
-	this->_elements = new T[s];
-	for (lxc::SizeType i = 0; i < s; i++) {
-		this->_elements[i] = ele;
+	this->_capacity = DEFAULT_CAPACITY;
+	this->_size = 0;
+	this->_elements = new T[this->_capacity];
+}
+
+template <class T>
+lxc::Vector<T>::Vector(lxc::SizeType _capacity, lxc::SizeType _size, T _ele)
+{
+	_capacity = lxc::max_of_2(_capacity, _size);
+	this->_capacity = _capacity;
+	this->_size = _size;
+	this->_elements = new T[this->_capacity];
+	for (lxc::SizeType i = 0; i < _size; i++) {
+		this->_elements[i] = _ele;
 	}
 }
 

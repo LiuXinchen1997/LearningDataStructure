@@ -415,6 +415,40 @@ void test_string_operator_more_less_equals()
 	}
 }
 
+void test_string_find()
+{
+	const char* errmsg = "unittest failed: String::find";
+	using lxc::String;
+
+	try {
+		String str("I love programming.");
+
+		lxc::assert_equals(str.find(String("love")), 2, errmsg);
+		lxc::assert_equals(str.find("love", 1), 2, errmsg);
+		lxc::assert_equals(str.find('p', 5, 10), 7, errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_rfind()
+{
+	const char* errmsg = "unittest failed: String::rfind";
+	using lxc::String;
+
+	try {
+		String str("abcdefabcdef.");
+
+		lxc::assert_equals(str.rfind(String("abc")), 6, errmsg);
+		lxc::assert_equals(str.rfind("cde", 2, 20), 8, errmsg);
+		lxc::assert_equals(str.rfind('e'), 10, errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
 
 void test_string()
 {
@@ -434,4 +468,8 @@ void test_string()
 	test_string_copy();
 	test_string_swap();
 	test_string_operator_more_less_equals();
+	test_string_find();
+	test_string_rfind();
+
+	return;
 }

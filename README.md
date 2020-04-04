@@ -43,12 +43,12 @@
 |1|constructor: not unnamed object warning|√|
 |2|cstr_cpy: from source to dest and reuse this method|√|
 |3|para high default value: npos|√|
-|4|replace --> insert, erase, append||
-|5|is size redundant? no!|√|
+|4|replace --> insert, erase, append? **NO!**|√|
+|5|is size redundant? **No!**|√|
 |6|types(int, float, ....) convert 2 String||
 |7|index: slice operation||
 |8|replace, insert at index of size||
-|9|split||
+|9|split|√|
 |10|operator>>|√|
 |11|compare||
 
@@ -92,6 +92,8 @@
 |13|copy|√|√|
 |14|swap|√|√|
 |15|operator<<=>>===!=|√|√|
+|16|find|√|√|
+|17|rfind|√|√|
 |||||
 
 ## 3 Reference

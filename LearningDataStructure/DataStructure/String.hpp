@@ -71,7 +71,7 @@ bool lxc::String::_cstr_equal(const char* cstr1, const char* cstr2)
 
 
 // type conversions
-lxc::String lxc::String::convert_from(int val) // !!!
+lxc::String lxc::String::to_String(int val) // !!!
 { return lxc::String(std::to_string(val).c_str()); }
 
 
@@ -147,21 +147,11 @@ lxc::String& lxc::String::operator= (char c)
 // getter
 const lxc::String lxc::String::to_str() const
 {
-	const String str = String("String { capacity: ") + String::convert_from(_capacity)
-		+ ", size: " + String::convert_from(_size) + ", elements: \""
+	const String str = String("String { capacity: ") + String::to_String(_capacity)
+		+ ", size: " + String::to_String(_size) + ", elements: \""
 		+ _elements + "\" }";
 
 	return str;
-}
-
-
-// element access
-bool lxc::String::equals(const char* cstr) const { return _cstr_equal(_elements, cstr); }
-
-bool lxc::String::equals(const String str) const
-{
-	if (this->_size != str.size()) { return false; }
-	return _cstr_equal(_elements, str.elements());
 }
 
 
@@ -422,6 +412,14 @@ lxc::String lxc::String::operator+(const char c) const
 { return this->operator+(String(1, c)); }
 
 
+bool lxc::String::equals(const char* cstr) const { return _cstr_equal(_elements, cstr); }
+
+bool lxc::String::equals(const String str) const
+{
+	if (this->_size != str.size()) { return false; }
+	return _cstr_equal(_elements, str.elements());
+}
+
 lxc::SizeType lxc::String::find(const char* cstr, lxc::SizeType low, lxc::SizeType high) const
 {
 	high = lxc::min_of_2(high, this->_size);
@@ -542,4 +540,19 @@ lxc::String lxc::String::substr(lxc::SizeType low, lxc::SizeType high) const
 {
 	high = lxc::min_of_2(high, this->_size);
 	return String(*this, low, high);
+}
+
+lxc::Vector<lxc::String> lxc::String::split(const lxc::String& splitter) const
+{
+	Vector<String> res;
+	SizeType prev = 0;
+	while (prev < this->_size) {
+		SizeType cur = this->find(splitter, prev);
+		res.insert_back(this->substr(prev, cur));
+
+		if (cur == String::NPOS) { break; }
+		prev = cur + splitter.size();
+	}
+
+	return res;
 }

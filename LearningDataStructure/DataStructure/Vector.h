@@ -40,7 +40,8 @@ namespace lxc {
 
 	public:
 		// constructor
-		Vector(SizeType capacity = DEFAULT_CAPACITY, SizeType s = 0, T e = 0);
+		Vector();
+		Vector(SizeType _capacity, SizeType _size, T _ele);
 		Vector(const T* arr, SizeType size); // copy from [0, size) of arr
 		Vector(const T* arr, SizeType low, SizeType high);
 		Vector(const Vector<T>& v);

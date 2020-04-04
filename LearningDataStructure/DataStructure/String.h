@@ -3,6 +3,7 @@
 #pragma once
 #include <iostream>
 #include "../General/Base.h"
+#include "../DataStructure/Vector.h"
 
 namespace lxc {
 	class String
@@ -29,7 +30,7 @@ namespace lxc {
 		static bool _cstr_equal(const char* cstr1, const char* cstr2);
 
 		// type conversions
-		static String convert_from(int val);
+		static String to_String(int val);
 
 		// constructor
 		explicit String();
@@ -113,6 +114,8 @@ namespace lxc {
 		String operator+(const char* cstr) const;
 		String operator+(const char c) const;
 
+		bool equals(const char* cstr) const;
+		bool equals(const String str) const;
 		SizeType find(const String& str, SizeType low = 0, SizeType high = NPOS) const;
 		SizeType find(const char* cstr, SizeType low = 0, SizeType high = NPOS) const;
 		SizeType find(char ch, SizeType low = 0, SizeType high = NPOS) const;
@@ -132,8 +135,7 @@ namespace lxc {
 		SizeType find_last_not_of(const char* cstr, SizeType low = 0, SizeType high = NPOS) const;
 		SizeType find_last_not_of(char ch, SizeType low = 0, SizeType high = NPOS) const;
 		String substr(SizeType low = 0, SizeType high = NPOS) const;
-		bool equals(const char* cstr) const;
-		bool equals(const String str) const;
+		Vector<String> split(const String& splitter) const;
 	};
 
 	std::ostream& operator<< (std::ostream& os, const String& str);
