@@ -393,6 +393,28 @@ void test_string_swap()
 	}
 }
 
+void test_string_operator_more_less_equals()
+{
+	const char* errmsg = "unittest failed: String::operator< <= > >= == !=";
+	using lxc::String;
+
+	try {
+		String str("Andy");
+		String str2("Anda");
+		assert_string(str > str2, errmsg);
+		assert_string(str >= "Aadd", errmsg);
+
+		assert_string(str2 < str, errmsg);
+		assert_string(str2 <= "Dndy", errmsg);
+
+		assert_string(str == "Andy", errmsg);
+		assert_string(str != "Anda", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
 
 void test_string()
 {
@@ -411,4 +433,5 @@ void test_string()
 	test_string_replace();
 	test_string_copy();
 	test_string_swap();
+	test_string_operator_more_less_equals();
 }
