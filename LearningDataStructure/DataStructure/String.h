@@ -51,7 +51,7 @@ namespace lxc {
 		SizeType capacity() const { return this->_capacity; }
 		SizeType max_size() const { return this->NPOS; }
 		const String to_str() const;
-		const String to_cstr() const { return this->to_str().elements(); }
+		const char* to_cstr() const { return this->to_str().elements(); }
 
 
 		// capacity
@@ -116,6 +116,13 @@ namespace lxc {
 
 		bool equals(const char* cstr) const;
 		bool equals(const String str) const;
+		int compare(SizeType low1, SizeType high1, const String& str, SizeType low2, SizeType high2) const;
+		int compare(SizeType low1, SizeType high1, const char* cstr, SizeType low2, SizeType high2) const;
+		int compare(const String& str) const;
+		int compare(const char* cstr) const;
+		int compare(SizeType low, SizeType high, const String& str) const;
+		int compare(SizeType low, SizeType high, const char* cstr) const;
+		int compare(SizeType low, SizeType high, const char* cstr, SizeType n) const;
 		SizeType find(const String& str, SizeType low = 0, SizeType high = NPOS) const;
 		SizeType find(const char* cstr, SizeType low = 0, SizeType high = NPOS) const;
 		SizeType find(char ch, SizeType low = 0, SizeType high = NPOS) const;

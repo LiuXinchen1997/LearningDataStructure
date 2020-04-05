@@ -420,6 +420,39 @@ bool lxc::String::equals(const String str) const
 	return _cstr_equal(_elements, str.elements());
 }
 
+int lxc::String::compare(lxc::SizeType low1, lxc::SizeType high1, const lxc::String& str, 
+	lxc::SizeType low2, lxc::SizeType high2) const
+{
+	high1 = lxc::min_of_2(high1, this->_size);
+	high2 = lxc::min_of_2(high2, str.size());
+	const char* errmsg = "String::compare";
+	assert_in_accessible_range(*this, low1, errmsg);
+	assert_in_modified_range(*this, high1, errmsg);
+	assert_in_accessible_range(str, low2, errmsg);
+	assert_in_modified_range(str, high2, errmsg);
+
+	return this->_cstr_comp(this->substr(low1, high1).elements(), str.substr(low2, high2).elements()); 
+}
+
+int lxc::String::compare(lxc::SizeType low1, lxc::SizeType high1, const char* cstr, 
+	lxc::SizeType low2, lxc::SizeType high2) const
+{ return compare(low1, high1, String(cstr), low2, high2); }
+
+int lxc::String::compare(lxc::SizeType low, lxc::SizeType high, const lxc::String& str) const
+{ return compare(low, high, str, 0, str.size()); }
+
+int lxc::String::compare(lxc::SizeType low, lxc::SizeType high, const char* cstr) const
+{ return compare(low, high, String(cstr)); }
+
+int lxc::String::compare(lxc::SizeType low, lxc::SizeType high, const char* cstr, lxc::SizeType n) const
+{ return compare(low, high, cstr, 0, n); }
+
+int lxc::String::compare(const lxc::String& str) const
+{ return compare(0, this->size(), str); }
+
+int lxc::String::compare(const char* cstr) const
+{ return compare(String(cstr)); }
+
 lxc::SizeType lxc::String::find(const char* cstr, lxc::SizeType low, lxc::SizeType high) const
 {
 	high = lxc::min_of_2(high, this->_size);
