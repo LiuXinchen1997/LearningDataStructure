@@ -449,6 +449,76 @@ void test_string_rfind()
 	}
 }
 
+void test_string_find_first_of()
+{
+	const char* errmsg = "unittest failed: String::find_first_of";
+	using lxc::String;
+
+	try {
+		String str("abcdefabcdef.");
+
+		lxc::assert_equals(str.find_first_of("ed"), 3, errmsg);
+		lxc::assert_equals(str.find_first_of('c'), 2, errmsg);
+		lxc::assert_equals(str.find_first_of("I love programming", 7), 10, errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_find_last_of()
+{
+	const char* errmsg = "unittest failed: String::find_last_of";
+	using lxc::String;
+
+	try {
+		String str("abcdefabcdef.");
+
+		lxc::assert_equals(str.find_last_of("ed"), 10, errmsg);
+		lxc::assert_equals(str.find_last_of('c'), 8, errmsg);
+		lxc::assert_equals(str.find_last_of("I love programming", 7), 10, errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_find_first_not_of()
+{
+	const char* errmsg = "unittest failed: String::find_first_not_of";
+	using lxc::String;
+
+	try {
+		String str("abcdefabcdef.");
+
+		lxc::assert_equals(str.find_first_not_of("ed"), 0, errmsg);
+		lxc::assert_equals(str.find_first_not_of("abcdef."), String::NPOS, errmsg);
+		lxc::assert_equals(str.find_first_not_of("I love programming"), 1, errmsg);
+		lxc::assert_equals(str.find_first_not_of("I love programming", 7), 7, errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_find_last_not_of()
+{
+	const char* errmsg = "unittest failed: String::find_last_not_of";
+	using lxc::String;
+
+	try {
+		String str("abcdefabcdef.");
+
+		lxc::assert_equals(str.find_last_not_of("ed"), 12, errmsg);
+		lxc::assert_equals(str.find_last_not_of("abcdef."), String::NPOS, errmsg);
+		lxc::assert_equals(str.find_last_not_of("I love programming."), 11, errmsg);
+		lxc::assert_equals(str.find_last_not_of("I love programming.", 7), 11, errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
 
 void test_string()
 {
@@ -470,6 +540,10 @@ void test_string()
 	test_string_operator_more_less_equals();
 	test_string_find();
 	test_string_rfind();
+	test_string_find_first_of();
+	test_string_find_last_of();
+	test_string_find_first_not_of();
+	test_string_find_last_not_of();
 
 	return;
 }

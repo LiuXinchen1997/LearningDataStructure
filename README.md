@@ -47,7 +47,7 @@
 |5|is size redundant? **No!**|√|
 |6|types(int, float, ....) convert 2 String||
 |7|index: slice operation||
-|8|replace, insert at index of size||
+|8|replace, insert at index of size|√|
 |9|split|√|
 |10|operator>>|√|
 |11|compare|√|
