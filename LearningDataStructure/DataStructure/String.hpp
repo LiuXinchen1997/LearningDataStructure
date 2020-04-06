@@ -589,3 +589,9 @@ lxc::Vector<lxc::String> lxc::String::split(const lxc::String& splitter) const
 
 	return res;
 }
+
+lxc::Vector<lxc::String> lxc::String::split(const char* splitter) const
+{ return split(String(splitter)); }
+
+lxc::Vector<lxc::String> lxc::String::split(const char splitter) const
+{ return split(String(1, splitter)); }

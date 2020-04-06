@@ -95,6 +95,11 @@
 |15|operator<<=>>===!=|√|√|
 |16|find|√|√|
 |17|rfind|√|√|
+|18|find_first_of|√|√|
+|19|find_last_of|√|√|
+|20|find_first_not_of|√|√|
+|21|find_last_not_of|√|√|
+|||||
 |||||
 
 ## 3 Reference

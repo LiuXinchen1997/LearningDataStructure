@@ -143,6 +143,8 @@ namespace lxc {
 		SizeType find_last_not_of(char ch, SizeType low = 0, SizeType high = NPOS) const;
 		String substr(SizeType low = 0, SizeType high = NPOS) const;
 		Vector<String> split(const String& splitter) const;
+		Vector<String> split(const char* splitter) const;
+		Vector<String> split(const char splitter) const;
 	};
 
 	std::ostream& operator<< (std::ostream& os, const String& str);
