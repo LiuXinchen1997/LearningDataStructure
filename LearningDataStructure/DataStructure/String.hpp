@@ -74,6 +74,8 @@ bool lxc::String::_cstr_equal(const char* cstr1, const char* cstr2)
 lxc::String lxc::String::to_String(int val) // !!!
 { return lxc::String(std::to_string(val).c_str()); }
 
+lxc::String lxc::String::to_String(double val) // !!!
+{ return lxc::String(std::to_string(val).c_str()); }
 
 // constructor
 void lxc::String::_copy_from(const char* cstr, lxc::SizeType low, lxc::SizeType high)
