@@ -519,6 +519,65 @@ void test_string_find_last_not_of()
 	}
 }
 
+void test_string_substr()
+{
+	const char* errmsg = "unittest failed: String::substr";
+	using lxc::String;
+
+	try {
+		String str("abcdef");
+
+		assert_equals_string(str.substr(2), "cdef", errmsg);
+		assert_equals_string(str.substr(2, 4), "cd", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_split()
+{
+	const char* errmsg = "unittest failed: String::split";
+	using lxc::String;
+
+	try {
+		String str("ab,,cd,,ef,,gg,,");
+
+		assert_equals_string(str.split(",,")[0], "ab", errmsg);
+		assert_equals_string(str.split(",,")[3], "gg", errmsg);
+
+		str = "hello my name is Tom";
+		assert_equals_string(str.split(' ')[0], "hello", errmsg);
+		assert_equals_string(str.split(' ')[1], "my", errmsg);
+		assert_equals_string(str.split(' ')[2], "name", errmsg);
+		assert_equals_string(str.split(' ')[3], "is", errmsg);
+		assert_equals_string(str.split(' ')[4], "Tom", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_compare()
+{
+	const char* errmsg = "unittest failed: String::compare";
+	using lxc::String;
+
+	try {
+		String str("abcdef");
+		assert_string(str.compare("abcdeg") < 0, errmsg);
+		assert_string(str.compare("abcdef") == 0, errmsg);
+		assert_string(str.compare("abcdee") > 0, errmsg);
+
+		assert_string(str.compare(2, String::NPOS, "abcdee", 1, 5) > 0, errmsg);
+		assert_string(str.compare(1, 5, "abcdef", 1, 5) == 0, errmsg);
+		assert_string(str.compare(2, String::NPOS, "abcdef", 2, 5) > 0, errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
 
 void test_string()
 {
@@ -544,6 +603,9 @@ void test_string()
 	test_string_find_last_of();
 	test_string_find_first_not_of();
 	test_string_find_last_not_of();
+	test_string_substr();
+	test_string_split();
+	test_string_compare();
 
 	return;
 }

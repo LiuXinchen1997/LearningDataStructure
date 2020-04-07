@@ -99,8 +99,9 @@
 |19|find_last_of|√|√|
 |20|find_first_not_of|√|√|
 |21|find_last_not_of|√|√|
-|||||
-|||||
+|22|substr|√|√|
+|23|split|√|√|
+|24|compare|√|√|
 
 ## 3 Reference
 
