@@ -34,6 +34,9 @@ bool lxc::String::show_full_data = false;
 // static member methods
 lxc::SizeType lxc::String::_cstr_len(const char* cstr)
 {
+	const char* errmsg = "String::_cstr_len";
+	assert_not_null(cstr, errmsg);
+
 	lxc::SizeType size = 0;
 	while (cstr[size]) { size++; }
 
@@ -42,6 +45,10 @@ lxc::SizeType lxc::String::_cstr_len(const char* cstr)
 
 void lxc::String::_cstr_copy(char* dest, const char* source, lxc::SizeType low, lxc::SizeType high)
 {
+	const char* errmsg = "String::_cstr_copy";
+	assert_not_null(dest, errmsg);
+	assert_not_null(source, errmsg);
+
 	high = lxc::min_of_2(high, lxc::String::_cstr_len(source));
 	SizeType offset = 0;
 	for (; offset < high - low; offset++) { dest[offset] = source[low + offset]; }
@@ -50,6 +57,10 @@ void lxc::String::_cstr_copy(char* dest, const char* source, lxc::SizeType low, 
 
 int lxc::String::_cstr_comp(const char* cstr1, const char* cstr2)
 {
+	const char* errmsg = "String::_cstr_comp";
+	assert_not_null(cstr1, errmsg);
+	assert_not_null(cstr2, errmsg);
+
 	// return value: 
 	// 0: str1 == str2
 	// 1: str1 > str2

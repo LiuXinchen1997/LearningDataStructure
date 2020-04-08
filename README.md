@@ -51,7 +51,7 @@
 |9|split|√|
 |10|operator>>|√|
 |11|compare|√|
-|12|exception: input cstr == NULL||
+|12|exception: input cstr == NULL|√|
 
 
 #### 1.1.3 List
