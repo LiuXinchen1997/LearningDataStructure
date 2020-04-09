@@ -102,6 +102,8 @@
 |22|substr|√|√|
 |23|split|√|√|
 |24|compare|√|√|
+|25|_shrink|√|√|
+|26|_expand|√|√|
 
 ## 3 Reference
 

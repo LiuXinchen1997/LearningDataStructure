@@ -247,7 +247,11 @@ lxc::String& lxc::String::operator+= (char c)
 
 lxc::String& lxc::String::append(const char* cstr, lxc::SizeType low, lxc::SizeType high)
 {
+	const char* errmsg = "String::append";
 	high = lxc::min_of_2(high, lxc::String::_cstr_len(cstr));
+	assert_in_accessible_range(String(cstr), low, errmsg);
+	assert_in_modified_range(String(cstr), high, errmsg);
+
 	while (this->_capacity <= this->_size + high - low + 1) { this->_expand(); }
 	lxc::String::_cstr_copy(this->_elements + this->_size, cstr, low, high);
 	this->_size += (high - low);

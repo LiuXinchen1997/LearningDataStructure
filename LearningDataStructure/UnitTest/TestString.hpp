@@ -578,6 +578,40 @@ void test_string_compare()
 	}
 }
 
+void test_string_shrink()
+{
+	const char* errmsg = "unittest failed: String::_shrink";
+	using lxc::String;
+
+	try {
+		String str("abcdefg");
+		lxc::assert(str.capacity() == 16, errmsg);
+		str.erase(1, 5);
+		lxc::assert(str.capacity() == 9, errmsg);
+		assert_equals_string(str, "afg", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_expand()
+{
+	const char* errmsg = "unittest failed: String::_expand";
+	using lxc::String;
+
+	try {
+		String str("abcdefg");
+		lxc::assert(str.capacity() == 16, errmsg);
+		str.append("I love programming.");
+		lxc::assert(str.capacity() == 32, errmsg);
+		assert_equals_string(str, "abcdefgI love programming.", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
 
 void test_string()
 {
@@ -606,6 +640,8 @@ void test_string()
 	test_string_substr();
 	test_string_split();
 	test_string_compare();
+	test_string_shrink();
+	test_string_expand();
 
 	return;
 }
