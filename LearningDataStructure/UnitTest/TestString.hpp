@@ -612,6 +612,74 @@ void test_string_expand()
 	}
 }
 
+void test_string_cstr_len()
+{
+	const char* errmsg = "unittest failed: String::_cstr_len";
+	using lxc::String;
+
+	try {
+		lxc::assert(String::_cstr_len("abcdef") == 6, errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_cstr_copy()
+{
+	const char* errmsg = "unittest failed: String::_cstr_len";
+	using lxc::String;
+
+	try {
+		char cstr1[20] = "I love you.";
+		char cstr2[20];
+		String::_cstr_copy(cstr2, cstr1);
+		assert_equals_string(String(cstr2), "I love you.", errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_cstr_comp()
+{
+	const char* errmsg = "unittest failed: String::_cstr_comp";
+	using lxc::String;
+
+	try {
+	    char cstr1[20] = "abcdefg";
+		char cstr2[20] = "abcdefh";
+		lxc::assert(String::_cstr_comp(cstr1, cstr2) < 0, errmsg);
+
+		cstr1[6] = 'z';
+		lxc::assert(String::_cstr_comp(cstr1, cstr2) > 0, errmsg);
+
+		cstr1[6] = 'h';
+		lxc::assert(String::_cstr_comp(cstr1, cstr2) == 0, errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+void test_string_cstr_equal()
+{
+	const char* errmsg = "unittest failed: String::_cstr_equal";
+	using lxc::String;
+
+	try {
+		char cstr1[20] = "abcdefg";
+		char cstr2[20] = "abcdefg";
+		lxc::assert(String::_cstr_equal(cstr1, cstr2), errmsg);
+
+		cstr1[6] = 'z';
+		lxc::assert(!String::_cstr_equal(cstr1, cstr2), errmsg);
+	}
+	catch (lxc::AssertException e) {
+		std::cerr << e << std::endl;
+	}
+}
+
 
 void test_string()
 {
@@ -642,6 +710,10 @@ void test_string()
 	test_string_compare();
 	test_string_shrink();
 	test_string_expand();
+	test_string_cstr_len();
+	test_string_cstr_copy();
+	test_string_cstr_comp();
+	test_string_cstr_equal();
 
 	return;
 }

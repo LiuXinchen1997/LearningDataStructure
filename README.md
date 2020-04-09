@@ -8,13 +8,14 @@
 
 ### 1.0 General
 
-| id   | description              | finished |
-| ---- | ------------------------ | -------- |
-| 0    | API doc                  |          |
-| 1    | project file arrangement | √        |
-| 2    | test code                | √        |
-| 3    | exception class		  |          |
-| 4    | assert func for unit test|          |
+| id   | description               | finished |
+| ---- | ------------------------- | -------- |
+| 0    | API doc                   |          |
+| 1    | project file arrangement  | √        |
+| 2    | test code                 | √        |
+| 3    | exception class           | √        |
+| 4    | assert func for unit test | √        |
+| 5    | unittest template func    |          |
 
 
 
@@ -104,6 +105,10 @@
 |24|compare|√|√|
 |25|_shrink|√|√|
 |26|_expand|√|√|
+|27|_cstr_len|√|√|
+|28|_cstr_copy|√|√|
+|29|_cstr_comp|√|√|
+|30|_cstr_equal|√|√|
 
 ## 3 Reference
 
