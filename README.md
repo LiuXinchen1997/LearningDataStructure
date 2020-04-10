@@ -15,7 +15,7 @@
 | 2    | test code                 | √        |
 | 3    | exception class           | √        |
 | 4    | assert func for unit test | √        |
-| 5    | unittest template func    |          |
+| 5    | unittest template func    | √        |
 
 
 
@@ -33,7 +33,7 @@
 |6 |bug: operator<<| √ |
 | 7 |sort and unsort default para "high"| √ |
 | 8 |const static variable and function management| √ |
-| 9 |to_str use lxc::String|  |
+| 9 |to_str use lxc::String| √ |
 
 
 

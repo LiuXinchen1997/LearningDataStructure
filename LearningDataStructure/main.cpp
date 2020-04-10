@@ -9,8 +9,8 @@ using lxc::Vector;
 int main()
 {
 	// run unit test
-	// test_vector();
-	test_string();
+	test_vector();
+	// test_string();
 
 	std::cout << "end!" << std::endl;
 

@@ -6,6 +6,8 @@
 #include "../DataStructure/Vector.h"
 
 namespace lxc {
+	template <class T> class Vector;
+
 	class String
 	{
 	protected:
@@ -32,7 +34,7 @@ namespace lxc {
 		// type conversions
 		static String to_String(int val);
 		static String to_String(double val);
-		template <class T>	static String to_String(Vector<T> val);
+		// template <class T>	static String to_String(Vector<T> val);
 
 		// constructor
 		explicit String();

@@ -10,28 +10,9 @@
 template <class T>
 std::ostream& operator<< (std::ostream& os, const lxc::Vector<T>& v)
 {
-	os << v.to_str();
+	os << v.to_Str();
 	return os;
 }
-
-/*
-// how to solve the problem of self-defined type 2 string ??? 
-template <class T>
-std::ostream& operator<< (std::ostream& os, const lxc::Vector<T>& v)
-{
-	os << "Vector {";
-	os << "capacity: " << v.capacity() << ", ";
-	os << "size: " << v.size() << ", ";
-	os << "elements: [";
-	for (lxc::SizeType i = 0; i < v.size(); i++) {
-		if (i) { os << ", "; }
-		os << v[i];
-	}
-	os << "]}";
-
-	return os;
-}
-*/
 
 
 // static member
@@ -240,19 +221,21 @@ template <class T>
 bool lxc::Vector<T>::equals(const T* arr, lxc::SizeType size) const
 { return *this == lxc::Vector<T>(arr, size); }
 
+
 template <class T>
-std::string lxc::Vector<T>::to_str() const
+lxc::String lxc::Vector<T>::to_Str() const
 {
-	std::string str = "Vector { capacity: " + std::to_string(this->_capacity)
-		+ ", size: " + std::to_string(this->_size) + ", elements: [ ";
+	String str = String("Vector { capacity: ") + String::to_String(this->_capacity)
+		+ ", size: " + String::to_String(this->_size) + ", elements: [ ";
 	for (lxc::SizeType i = 0; i < this->_size; i++) {
 		if (i) { str += ", "; }
-		str += std::to_string(this->get(i));
+		str += String::to_String(this->get(i));
 	}
 	str += "] }";
 
 	return str;
 }
+
 
 // writable interface and modifier
 template <class T>

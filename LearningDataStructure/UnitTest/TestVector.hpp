@@ -2,16 +2,50 @@
 
 #pragma once
 #include <iostream>
-#include <string>
 #include "../DataStructure/Vector.hpp"
 #include "../General/Base.h"
+#include "../General/Assert.h"
 
 void visit(int& ele) { std::cout << ele << " "; }
 
 template <class T>
-bool equals(const lxc::Vector<T>& v, const T* arr, lxc::SizeType size)
+bool equals_vector(const lxc::Vector<T>& v, const T* arr, lxc::SizeType size)
 { return v.equals(arr, size); }
 
+void assert_vector(bool ass, const char* errmsg)
+{ lxc::assert(ass, errmsg); }
+
+template <class T>
+void assert_equals_vector(const lxc::Vector<T>& vec1, const lxc::Vector<T>& vec2, const char* errmsg)
+{ assert_vector(vec1 == vec2, errmsg); }
+
+template <class T>
+void assert_equals_vector(const lxc::Vector<T>& vec, const T* arr, lxc::SizeType size, const char* errmsg)
+{ assert_vector(equals_vector(vec, arr, size), errmsg); }
+
+
+void unittest_template_vector(const char* errmsg, void(*processor)(const char*))
+{
+	try {
+		processor(errmsg);
+	}
+	catch (lxc::Exception e) {
+		std::cerr << e << std::endl;
+	}
+}
+
+
+// unittest example
+void test_vector_constructor(const char* errmsg)
+{
+	using lxc::Vector;
+	int arr[10] = { 5,3,2,5,8,5,2,5,88,11 };
+	Vector<int> vec(arr, 7);
+	assert_equals_vector(vec, arr, 7, errmsg);
+}
+
+
+/*
 void test_vector_merge_sort()
 {
 	int arr[6] = { 5, 3, 7, 1, 9, 6 };
@@ -170,20 +204,13 @@ void test_vector_reduce_to()
 		throw "vector reduce_to error.";
 	}
 }
+*/
 
 void test_vector()
 {
 	try {
-		test_vector_sort();
-		test_vector_deduplicate();
-		test_vector_uniquify();
-		test_vector_operator_plus();
-		test_vector_operator_plus_equal();
-		test_vector_remove_if();
-		test_vector_assign();
-		test_vector_swap();
-		test_vector_map_to();
-		test_vector_reduce_to();
+		lxc::String errmsg = "unittest failed: ";
+		unittest_template_vector((errmsg + "Vector::Vector").elements(), test_vector_constructor);
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;

@@ -4,7 +4,6 @@
 #include "String.h"
 #include <iostream>
 #include <climits>
-
 #include <string>
 
 #include "../General/Assert.h"

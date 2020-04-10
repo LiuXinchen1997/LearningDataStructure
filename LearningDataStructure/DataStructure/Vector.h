@@ -1,8 +1,8 @@
 /* declaration of Vector */
 #pragma once
 #include <iostream>
-#include <string>
 #include "../General/Base.h"
+#include "../DataStructure/String.h"
 
 namespace lxc {
 	template <class T>
@@ -69,11 +69,11 @@ namespace lxc {
 		bool operator==(const Vector<T>& v) const;
 		bool equals(const Vector<T>& v) const;
 		bool equals(const T* arr, SizeType size) const;
-		std::string to_str() const;
+		String to_Str() const;
 
 		// writable interface and modifier
 		T& operator[] (SizeType pos) const;
-		T& operator[] (std::string pos) const; // slice op
+		T& operator[] (String slice) const; // slice op
 		Vector<T>& operator=(const Vector<T>& v);
 		void assign(const T* arr, SizeType size);
 		void assign(const T* arr, SizeType low, SizeType high);
