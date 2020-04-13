@@ -5,43 +5,43 @@
 #include "../DataStructure/Vector.hpp"
 #include "../General/Base.h"
 #include "../General/Assert.h"
+#include "../General/UnitTest.h"
 
 void visit(int& ele) { std::cout << ele << " "; }
 
 template <class T>
-bool equals_vector(const lxc::Vector<T>& v, const T* arr, lxc::SizeType size)
-{ return v.equals(arr, size); }
-
-void assert_vector(bool ass, const char* errmsg)
-{ lxc::assert(ass, errmsg); }
-
-template <class T>
 void assert_equals_vector(const lxc::Vector<T>& vec1, const lxc::Vector<T>& vec2, const char* errmsg)
-{ assert_vector(vec1 == vec2, errmsg); }
+{ lxc::assert(vec1 == vec2, errmsg); }
 
 template <class T>
 void assert_equals_vector(const lxc::Vector<T>& vec, const T* arr, lxc::SizeType size, const char* errmsg)
-{ assert_vector(equals_vector(vec, arr, size), errmsg); }
-
-
-void unittest_template_vector(const char* errmsg, void(*processor)(const char*))
-{
-	try {
-		processor(errmsg);
-	}
-	catch (lxc::Exception e) {
-		std::cerr << e << std::endl;
-	}
-}
+{ lxc::assert(vec.equals(arr, size), errmsg); }
 
 
 // unittest example
 void test_vector_constructor(const char* errmsg)
 {
 	using lxc::Vector;
-	int arr[10] = { 5,3,2,5,8,5,2,5,88,11 };
-	Vector<int> vec(arr, 7);
-	assert_equals_vector(vec, arr, 7, errmsg);
+
+	Vector<int> vec;
+	lxc::assert(vec.capacity() == 3, errmsg);
+	lxc::assert(vec.size() == 0, errmsg);
+
+	Vector<int> vec2(10, 5, 10);
+	int arr[5] = { 10, 10, 10, 10, 10 };
+	assert_equals_vector(vec2, arr, 5, errmsg);
+
+	int arr2[10] = { 5,3,2,5,8,5,2,5,88,11 };
+	Vector<int> vec3(arr2, 2, 7);
+	int _arr2[5] = { 2,5,8,5,2 };
+	assert_equals_vector(vec3, _arr2, 5, errmsg);
+
+	Vector<int> vec4(vec3);
+	assert_equals_vector(vec4, vec3, errmsg);
+
+	Vector<int> vec5(vec3, 2, 5);
+	int _arr3[3] = { 8, 5, 2 };
+	assert_equals_vector(vec5, _arr3, 3, errmsg);
 }
 
 
@@ -210,7 +210,7 @@ void test_vector()
 {
 	try {
 		lxc::String errmsg = "unittest failed: ";
-		unittest_template_vector((errmsg + "Vector::Vector").elements(), test_vector_constructor);
+		lxc::unittest_template(errmsg + "Vector::Vector", test_vector_constructor);
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;

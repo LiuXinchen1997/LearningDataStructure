@@ -73,7 +73,7 @@
 
 |id|method name|tested|passed|
 |-|-|-|-|
-|1||||
+|1|constructor|√|√|
 
 #### 2.1.2 String
 
