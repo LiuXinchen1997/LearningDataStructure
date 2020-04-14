@@ -10,11 +10,11 @@
 void visit(int& ele) { std::cout << ele << " "; }
 
 template <class T>
-void assert_equals_vector(const lxc::Vector<T>& vec1, const lxc::Vector<T>& vec2, const char* errmsg)
+void assert_equals_vector(const lxc::Vector<T>& vec1, const lxc::Vector<T>& vec2, const lxc::String errmsg)
 { lxc::assert(vec1 == vec2, errmsg); }
 
 template <class T>
-void assert_equals_vector(const lxc::Vector<T>& vec, const T* arr, lxc::SizeType size, const char* errmsg)
+void assert_equals_vector(const lxc::Vector<T>& vec, const T* arr, lxc::SizeType size, const lxc::String errmsg)
 { lxc::assert(vec.equals(arr, size), errmsg); }
 
 
@@ -42,6 +42,36 @@ void test_vector_constructor(const char* errmsg)
 	Vector<int> vec5(vec3, 2, 5);
 	int _arr3[3] = { 8, 5, 2 };
 	assert_equals_vector(vec5, _arr3, 3, errmsg);
+}
+
+void test_vector_resize(const char* errmsg)
+{
+	using lxc::Vector;
+
+	int arr[6] = { 5, 4, 3, 1, 8, 9 };
+	Vector<int> vec(arr, 6);
+
+	vec.resize(4, 0);
+	assert_equals_vector(vec, arr, 4, errmsg);
+
+	vec.resize(8, 0);
+	int _arr[8] = { 5,4,3,1,0,0,0,0 };
+	assert_equals_vector(vec, _arr, 8, errmsg);
+}
+
+void test_vector_reserve(const char* errmsg)
+{
+	using lxc::Vector;
+
+	int arr[6] = { 5, 4, 3, 1, 8, 9 };
+	Vector<int> vec(arr, 6);
+	
+	vec.reserve(4);
+	assert_equals_vector(vec, arr, 6, errmsg);
+
+	vec.reserve(20);
+	assert_equals_vector(vec, arr, 6, errmsg);
+	lxc::assert(vec.capacity() == 20, errmsg);
 }
 
 
@@ -208,9 +238,13 @@ void test_vector_reduce_to()
 
 void test_vector()
 {
+	using lxc::unittest_template;
+
 	try {
-		lxc::String errmsg = "unittest failed: ";
-		lxc::unittest_template(errmsg + "Vector::Vector", test_vector_constructor);
+		lxc::String errmsg = "unittest failed: Vector::";
+		unittest_template(errmsg + "Vector", test_vector_constructor);
+		unittest_template(errmsg + "resize", test_vector_resize);
+		unittest_template(errmsg + "reserve", test_vector_reserve);
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;

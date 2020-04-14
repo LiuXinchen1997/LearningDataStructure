@@ -123,7 +123,7 @@ template <class T>
 bool lxc::Vector<T>::empty() const { return this->_size == 0; }
 
 template <class T>
-void lxc::Vector<T>::resize(lxc::SizeType new_size, T ele)
+void lxc::Vector<T>::resize(lxc::SizeType new_size, const T ele)
 {
 	if (new_size <= this->_size) { this->_size = new_size; return; }
 	if (new_size <= this->_capacity) {

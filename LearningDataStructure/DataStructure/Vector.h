@@ -54,7 +54,7 @@ namespace lxc {
 		SizeType size() const;
 		SizeType capacity() const;
 		bool empty() const;
-		void resize(SizeType new_size, T ele);
+		void resize(SizeType new_size, const T ele);
 		void reserve(SizeType new_capacity);
 
 		// access elements(read only)

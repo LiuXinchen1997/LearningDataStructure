@@ -74,6 +74,9 @@
 |id|method name|tested|passed|
 |-|-|-|-|
 |1|constructor|√|√|
+|2|resize|√|√|
+|3|reserve|√|√|
+|4||||
 
 #### 2.1.2 String
 
