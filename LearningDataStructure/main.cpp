@@ -4,15 +4,16 @@
 #include "UnitTest/TestVector.hpp"
 #include "UnitTest/TestString.hpp"
 
-using lxc::Vector;
+#include "DataStructure/List.tpp"
+
 
 int main()
 {
 	// run unit test
 	test_vector();
-	// test_string();
+	test_string();
 
-	std::cout << "end!" << std::endl;
+	std::cout << "end." << std::endl;
 
 	system("pause");
 	return 0;

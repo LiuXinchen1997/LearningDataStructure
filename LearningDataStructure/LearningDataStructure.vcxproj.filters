@@ -26,5 +26,11 @@
     <ClInclude Include="DataStructure\Vector.hpp">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="DataStructure\List.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructure\List.tpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

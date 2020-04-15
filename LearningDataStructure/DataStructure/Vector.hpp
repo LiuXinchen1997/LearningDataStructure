@@ -8,7 +8,7 @@
 
 
 template <class T>
-std::ostream& operator<< (std::ostream& os, const lxc::Vector<T>& v)
+std::ostream& lxc::operator<< (std::ostream& os, const lxc::Vector<T>& v)
 {
 	os << v.to_Str();
 	return os;
@@ -138,7 +138,7 @@ void lxc::Vector<T>::resize(lxc::SizeType new_size, const T ele)
 template <class T>
 void lxc::Vector<T>::reserve(lxc::SizeType new_capacity)
 {
-	if (new_capacity <= 0) { return; }
+	if (new_capacity < DEFAULT_CAPACITY) { return; }
 	if (new_capacity <= this->_size) { return; }
 	T* new_elements = new T[new_capacity];
 	for (lxc::SizeType i = 0; i < this->_size; i++) {
@@ -633,8 +633,7 @@ void lxc::Vector<T>::sort(const char* type, lxc::SizeType low, lxc::SizeType hig
 template <class T>
 void lxc::Vector<T>::unsort(lxc::SizeType low, lxc::SizeType high)
 {
-	time_t seed = time(0);
-	srand(seed);
+	srand((unsigned int)time(0));
 
 	for (lxc::SizeType i = high - 1; i >= low + 1; i--) {
 		lxc::SizeType pos = (rand() % (i - low + 1)) + low;

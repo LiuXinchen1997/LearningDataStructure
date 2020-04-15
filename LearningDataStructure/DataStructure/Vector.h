@@ -111,4 +111,6 @@ namespace lxc {
 		void traverse(void(*visit)(T&)); // for function pointer
 		template <class VST> void traverse(VST& visit); // for function object
 	};
+
+	template <class T> std::ostream& operator<< (std::ostream& os, const lxc::Vector<T>& v);
 };

@@ -206,6 +206,7 @@ void lxc::String::resize(lxc::SizeType new_size, char c)
 
 void lxc::String::reserve(SizeType new_capacity)
 {
+	if (new_capacity < DEFAULT_CAPACITY) { return; }
 	if (new_capacity <= this->_size) { return; }
 	
 	char* new_elements = new char[new_capacity];
