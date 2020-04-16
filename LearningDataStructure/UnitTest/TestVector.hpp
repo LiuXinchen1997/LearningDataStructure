@@ -74,6 +74,39 @@ void test_vector_reserve(const char* errmsg)
 	lxc::assert(vec.capacity() == 20, errmsg);
 }
 
+void test_vector_get(const char* errmsg)
+{
+	using lxc::Vector;
+
+	int arr[6] = { 6,3,5,8,1,3 };
+	Vector<int> vec(arr, 6);
+	lxc::assert(vec.get(0) == 6, errmsg);
+	lxc::assert(vec.get(1) == 3, errmsg);
+	lxc::assert(vec.get(2) == 5, errmsg);
+	lxc::assert(vec.get(3) == 8, errmsg);
+	lxc::assert(vec.get(5) == 3, errmsg);
+}
+
+void test_vector_front(const char* errmsg)
+{
+	using lxc::Vector;
+
+	int arr[6] = { 6,3,5,8,1,3 };
+	Vector<int> vec(arr, 6);
+	lxc::assert(vec.front() == 6, errmsg);
+}
+
+void test_vector_back(const char* errmsg)
+{
+	using lxc::Vector;
+
+	int arr[6] = { 6,3,5,8,1,3 };
+	Vector<int> vec(arr, 6);
+	lxc::assert(vec.back() == 6, errmsg);
+}
+
+
+
 
 /*
 void test_vector_merge_sort()
@@ -245,6 +278,9 @@ void test_vector()
 		unittest_template(errmsg + "Vector", test_vector_constructor);
 		unittest_template(errmsg + "resize", test_vector_resize);
 		unittest_template(errmsg + "reserve", test_vector_reserve);
+		unittest_template(errmsg + "get", test_vector_get);
+		unittest_template(errmsg + "front", test_vector_front);
+		unittest_template(errmsg + "back", test_vector_back);
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;

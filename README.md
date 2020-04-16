@@ -34,6 +34,7 @@
 | 7 |sort and unsort default para "high"| √ |
 | 8 |const static variable and function management| √ |
 | 9 |to_str use lxc::String| √ |
+| 10 |NOT_FOUND flag|  |
 
 
 
@@ -76,7 +77,10 @@
 |1|constructor|√|√|
 |2|resize|√|√|
 |3|reserve|√|√|
-|4||||
+|4|get|√|√|
+|5|front|√|√|
+|6|back|√|√|
+|7||||
 
 #### 2.1.2 String
 
