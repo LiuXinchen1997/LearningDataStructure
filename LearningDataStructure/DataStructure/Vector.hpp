@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <climits>
 
 #include "Vector.h"
 
@@ -16,11 +17,9 @@ std::ostream& lxc::operator<< (std::ostream& os, const lxc::Vector<T>& v)
 
 
 // static member
-template <class T>
-const lxc::SizeType lxc::Vector<T>::DEFAULT_CAPACITY = 3;
-
-template <class T>
-const double lxc::Vector<T>::SHRINK_RATIO = 0.25;
+template <class T> const lxc::SizeType lxc::Vector<T>::DEFAULT_CAPACITY = 3;
+template <class T> const lxc::SizeType lxc::Vector<T>::NPOS = lxc::NPOS;
+template <class T> const double lxc::Vector<T>::SHRINK_RATIO = 0.25;
 
 
 // auxiliary
@@ -162,13 +161,25 @@ bool lxc::Vector<T>::is_ordered() const
 }
 
 template <class T>
-T lxc::Vector<T>::get(lxc::SizeType r) const { return this->_elements[r]; }
+T lxc::Vector<T>::get(lxc::SizeType pos) const 
+{
+	assert_in_accessible_range(*this, pos, "Vector::get");
+	return this->_elements[pos];
+}
 
 template <class T>
-T lxc::Vector<T>::front() const { return this->get[0]; }
+T lxc::Vector<T>::front() const 
+{
+	assert_in_accessible_range(*this, 0, "Vector::front");
+	return this->get(0); 
+}
 
 template <class T>
-T lxc::Vector<T>::back() const { return this->get(this->_size - 1); }
+T lxc::Vector<T>::back() const 
+{
+	assert_in_accessible_range(*this, this->_size - 1, "Vector::back");
+	return this->get(this->_size - 1);
+}
 
 template <class T>
 lxc::SizeType lxc::Vector<T>::find(const T& ele) const { return this->find(ele, 0, this->_size); }
@@ -179,7 +190,7 @@ lxc::SizeType lxc::Vector<T>::find(const T& ele, lxc::SizeType low, lxc::SizeTyp
 	for (lxc::SizeType i = low; i < high; i++) {
 		if (this->get(i) == ele) { return i; }
 	}
-	return -1; // don't find it.
+	return this->NPOS; // don't find it.
 }
 
 template <class T>
@@ -199,7 +210,7 @@ lxc::SizeType lxc::Vector<T>::search(const T& ele, lxc::SizeType low, lxc::SizeT
 		else { high = mid; }
 	}
 
-	return -1;
+	return this->NPOS;
 }
 
 template <class T>

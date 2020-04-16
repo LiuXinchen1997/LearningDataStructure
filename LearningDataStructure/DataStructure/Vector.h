@@ -10,6 +10,7 @@ namespace lxc {
 	{
 	protected:
 		static const SizeType DEFAULT_CAPACITY;
+		static const SizeType NPOS; // not found flag
 		static const double SHRINK_RATIO;
 		static bool common_comp(T& ele1, T& ele2) { return (ele1 < ele2); }
 

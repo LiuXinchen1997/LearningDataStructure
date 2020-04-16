@@ -102,7 +102,7 @@ void test_vector_back(const char* errmsg)
 
 	int arr[6] = { 6,3,5,8,1,3 };
 	Vector<int> vec(arr, 6);
-	lxc::assert(vec.back() == 6, errmsg);
+	lxc::assert(vec.back() == 3, errmsg);
 }
 
 

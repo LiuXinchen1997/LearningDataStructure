@@ -1,7 +1,11 @@
 #pragma once
 
+#include <climits>
+
 namespace lxc {
 	typedef int SizeType;
+
+	static const SizeType NPOS = INT_MAX;
 
 	template <class S> S min_of_2(const S s1, const S s2) { return (s1 < s2 ? s1 : s2); }
 	template <class S> S max_of_2(const S s1, const S s2) { return (s1 < s2 ? s2 : s1); }

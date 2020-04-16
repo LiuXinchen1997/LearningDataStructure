@@ -26,7 +26,7 @@ std::istream& lxc::operator>> (std::istream& is, String& str)
 
 
 const lxc::SizeType lxc::String::DEFAULT_CAPACITY = 3;
-const lxc::SizeType lxc::String::NPOS = INT_MAX;
+const lxc::SizeType lxc::String::NPOS = lxc::NPOS;
 const double lxc::String::SHRINK_RATIO = 0.25;
 bool lxc::String::show_full_data = false;
 
