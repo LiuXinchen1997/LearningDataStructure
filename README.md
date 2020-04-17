@@ -56,7 +56,12 @@
 |12|exception: input cstr == NULL|√|
 
 
+
 #### 1.1.3 List
+
+| id   | description              | finished |
+| ---- | ------------------------ | -------- |
+| 1    | ListNode operator<< & >> |          |
 
 
 
@@ -116,6 +121,14 @@
 |28|_cstr_copy|√|√|
 |29|_cstr_comp|√|√|
 |30|_cstr_equal|√|√|
+
+#### 2.1.3 List
+
+| id   | method name | tested | passed |
+| ---- | ----------- | ------ | ------ |
+| 1    | constructor |        |        |
+
+
 
 ## 3 Reference
 
