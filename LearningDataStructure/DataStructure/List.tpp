@@ -54,3 +54,34 @@ template <class T> lxc::List<T>::List(ListNodePosi(T) p, SizeType n)
 		cur = cur->_succ; p = p->_succ;
 	}
 }
+
+template <class T> void lxc::List<T>::_copy_from(const T* arr, SizeType low, SizeType high)
+{
+	ListNodePosi(T) cur = this->_header;
+	for (SizeType pos = low; pos < high; pos++)
+	{
+		cur->insert_as_succ(arr[pos]);
+		std::cout << cur->_succ->_element << std::endl;
+		cur = cur->_succ;
+	}
+}
+
+template <class T> lxc::List<T>::List(const T* arr, SizeType low, SizeType high)
+{ this->_init(); this->_copy_from(arr, low, high); }
+
+template <class T> lxc::List<T>::List(const T* arr, SizeType n)
+{ this->_init(); this->_copy_from(arr, 0, n); }
+
+
+// deconstructor
+template <class T> void lxc::List<T>::_clear()
+{
+	ListNodePosi(T) cur = this->_header;
+	while (cur) {
+		ListNodePosi(T) tmp = cur->_succ;
+		delete cur; cur = tmp;
+	}
+}
+
+template <class T> lxc::List<T>::~List()
+{ this->_clear(); }

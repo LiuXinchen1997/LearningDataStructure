@@ -12,7 +12,7 @@ namespace lxc {
 		ListNodePosi(T) _pred;
 		ListNodePosi(T) _succ;
 
-		ListNode() {}
+		ListNode() : _pred(NULL), _succ(NULL) {}
 		ListNode(T e, ListNodePosi(T) p = NULL, ListNodePosi(T) s = NULL)
 			: _element(e), _pred(p), _succ(s) {}
 
@@ -30,12 +30,15 @@ namespace lxc {
 		
 		void _init();
 		void _clear();
+		void _copy_from(const T* arr, SizeType low, SizeType high);
 	public:
 		// constructor
 		List() { this->_init(); }
 		List(const List<T>& l);
 		List(const List<T>& l, SizeType low, SizeType high);
 		List(ListNodePosi(T) p, SizeType n);
+		List(const T* arr, SizeType low, SizeType high);
+		List(const T* arr, SizeType n);
 
 		// deconstructor
 		~List();
