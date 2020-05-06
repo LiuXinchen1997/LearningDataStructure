@@ -187,6 +187,8 @@ lxc::SizeType lxc::Vector<T>::find(const T& ele) const { return this->find(ele, 
 template <class T>
 lxc::SizeType lxc::Vector<T>::find(const T& ele, lxc::SizeType low, lxc::SizeType high) const
 {
+	high = lxc::min_of_2(high, this->_size);
+
 	for (lxc::SizeType i = low; i < high; i++) {
 		if (this->get(i) == ele) { return i; }
 	}
@@ -202,7 +204,9 @@ lxc::SizeType lxc::Vector<T>::search(const T& ele) const
 template <class T>
 lxc::SizeType lxc::Vector<T>::search(const T& ele, lxc::SizeType low, lxc::SizeType high) const
 {
-	if (!this->is_ordered()) { throw "lxc::Vector is not ordered."; }
+	high = lxc::min_of_2(high, this->_size);
+
+	if (!this->is_ordered()) { return this->NPOS; }
 	while (low < high) {
 		lxc::SizeType mid = (low + high) / 2;
 		if (this->get(mid) == ele) { return mid; }

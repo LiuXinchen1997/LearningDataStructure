@@ -105,6 +105,37 @@ void test_vector_back(const char* errmsg)
 	lxc::assert(vec.back() == 3, errmsg);
 }
 
+void test_vector_find(const char* errmsg)
+{
+	using lxc::Vector;
+
+	int arr[7] = { 6,3,5,8,1,9,3 };
+	Vector<int> vec(arr, 7);
+	lxc::assert(vec.find(6) == 0, errmsg);
+	lxc::assert(vec.find(3) == 1, errmsg);
+	lxc::assert(vec.find(9) == 5, errmsg);
+	lxc::assert(vec.find(3, 4, lxc::NPOS) == 6, errmsg);
+	lxc::assert(vec.find(9, 0, 3) == lxc::NPOS, errmsg);
+	lxc::assert(vec.find(100) == lxc::NPOS, errmsg);
+}
+
+void test_vector_search(const char* errmsg)
+{
+	using lxc::Vector;
+
+	int arr[6] = { 6,3,5,8,1,9 };
+	Vector<int> vec(arr, 6);
+	lxc::assert(vec.search(6) == lxc::NPOS, errmsg);
+
+	int arr2[6] = { 4, 5, 6, 7, 7, 9 };
+	Vector<int> vec2(arr2, 6);
+	lxc::assert(vec2.search(4) == 0, errmsg);
+	lxc::assert(vec2.search(9) == 5, errmsg);
+	lxc::assert(vec2.search(5) == 1, errmsg);
+	lxc::assert(vec2.search(7) == 3, errmsg);
+	lxc::assert(vec2.search(100) == lxc::NPOS, errmsg);
+	lxc::assert(vec2.find(7, 4, lxc::NPOS) == 4, errmsg);
+}
 
 
 
@@ -281,6 +312,8 @@ void test_vector()
 		unittest_template(errmsg + "get", test_vector_get);
 		unittest_template(errmsg + "front", test_vector_front);
 		unittest_template(errmsg + "back", test_vector_back);
+		unittest_template(errmsg + "find", test_vector_find);
+		unittest_template(errmsg + "search", test_vector_search);
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;

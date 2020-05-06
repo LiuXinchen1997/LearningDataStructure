@@ -10,7 +10,7 @@
 int main()
 {
 	// run unit test
-	// test_vector();
+	test_vector();
 	// test_string();
 
 	int arr[5] = { 3,4,5,7,1 };
