@@ -167,6 +167,40 @@ void test_vector_equals(const char* errmsg)
 	lxc::assert(vec4.equals(arr, 1, 4), errmsg);
 }
 
+void test_vector_assign(const char* errmsg)
+{
+	using lxc::Vector;
+
+	int arr[6] = { 1,2,3,4,5,6 };
+	Vector<int> vec;
+	vec.assign(arr, 6);
+	assert_equals_vector(vec, arr, 6, errmsg);
+
+	vec.assign(arr, 2, 4);
+	int arr2[2] = { 3, 4 };
+	assert_equals_vector(vec, arr2, 2, errmsg);
+
+	Vector<int> vec2;
+	vec2.assign(vec);
+	assert_equals_vector(vec2, vec, errmsg);
+
+	vec2.assign(vec, 1, 2);
+	int arr3[1] = { 4 };
+	assert_equals_vector(vec2, arr3, 1, errmsg);
+}
+
+void test_vector_operator_assign(const char* errmsg)
+{
+	using lxc::Vector;
+
+	int arr[6] = { 1,2,3,4,5,6 };
+	Vector<int> vec(arr, 6);
+
+	Vector<int> vec2;
+	vec2 = vec;
+	assert_equals_vector(vec2, vec, errmsg);
+}
+
 
 
 /*
@@ -345,7 +379,9 @@ void test_vector()
 		unittest_template(errmsg + "find", test_vector_find);
 		unittest_template(errmsg + "search", test_vector_search);
 		unittest_template(errmsg + "operator==", test_vector_operator_equals);
-		unittest_template(errmsg + "operator==", test_vector_equals);
+		unittest_template(errmsg + "equals", test_vector_equals);
+		unittest_template(errmsg + "assign", test_vector_assign);
+		unittest_template(errmsg + "operator=", test_vector_operator_assign);
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;

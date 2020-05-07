@@ -87,7 +87,11 @@
 |6|back|√|√|
 |7|find|√|√|
 |8|search|√|√|
-|9||||
+|9|operator==|√|√|
+|10|equals|√|√|
+|11|operator=|√|√|
+|12|assign|√|√|
+|13||||
 
 #### 2.1.2 String
 
