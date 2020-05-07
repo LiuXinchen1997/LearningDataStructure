@@ -137,6 +137,36 @@ void test_vector_search(const char* errmsg)
 	lxc::assert(vec2.find(7, 4, lxc::NPOS) == 4, errmsg);
 }
 
+void test_vector_operator_equals(const char* errmsg)
+{
+	using lxc::Vector;
+
+	Vector<int> vec1;
+	Vector<int> vec2;
+	lxc::assert(vec1 == vec2, errmsg);
+
+	int arr[6] = { 1,2,3,4,5,6 };
+	Vector<int> vec3(arr, 6);
+	Vector<int> vec4(arr, 6);
+	lxc::assert(vec3 == vec4, errmsg);
+}
+
+void test_vector_equals(const char* errmsg)
+{
+	using lxc::Vector;
+
+	Vector<int> vec1;
+	Vector<int> vec2;
+	lxc::assert(vec1.equals(vec2), errmsg);
+
+	int arr[6] = { 1,2,3,4,5,6 };
+	Vector<int> vec3(arr, 6);
+	lxc::assert(vec3.equals(arr, 6), errmsg);
+
+	Vector<int> vec4(arr, 1, 4);
+	lxc::assert(vec4.equals(arr, 1, 4), errmsg);
+}
+
 
 
 /*
@@ -314,6 +344,8 @@ void test_vector()
 		unittest_template(errmsg + "back", test_vector_back);
 		unittest_template(errmsg + "find", test_vector_find);
 		unittest_template(errmsg + "search", test_vector_search);
+		unittest_template(errmsg + "operator==", test_vector_operator_equals);
+		unittest_template(errmsg + "operator==", test_vector_equals);
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;

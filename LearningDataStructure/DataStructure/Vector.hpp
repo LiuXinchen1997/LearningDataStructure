@@ -236,6 +236,9 @@ template <class T>
 bool lxc::Vector<T>::equals(const T* arr, lxc::SizeType size) const
 { return *this == lxc::Vector<T>(arr, size); }
 
+template <class T>
+bool lxc::Vector<T>::equals(const T* arr, lxc::SizeType low, lxc::SizeType high) const
+{ return *this == lxc::Vector<T>(arr, low, high); }
 
 template <class T>
 lxc::String lxc::Vector<T>::to_Str() const

@@ -70,6 +70,7 @@ namespace lxc {
 		bool operator==(const Vector<T>& v) const;
 		bool equals(const Vector<T>& v) const;
 		bool equals(const T* arr, SizeType size) const;
+		bool equals(const T* arr, SizeType low, SizeType high) const;
 		String to_Str() const;
 
 		// writable interface and modifier
