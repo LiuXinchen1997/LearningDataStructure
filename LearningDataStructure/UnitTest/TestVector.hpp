@@ -216,6 +216,32 @@ void test_vector_swap(const char* errmsg)
 	assert_equals_vector(vec2, arr, 6, errmsg);
 }
 
+void test_vector_remove(const char* errmsg)
+{
+	using lxc::Vector;
+
+	int arr[8] = { 11, 22, 33, 44, 55, 66, 77, 88 };
+	Vector<int> vec(arr, 8);
+
+	vec.remove(0);
+	int arr2[7] = { 22, 33, 44, 55, 66, 77, 88 };
+	assert_equals_vector(vec, arr2, 7, errmsg);
+	vec.remove(6);
+	int arr3[6] = { 22, 33, 44, 55, 66, 77 };
+	assert_equals_vector(vec, arr3, 6, errmsg);
+	vec.remove(2, 5);
+	int arr4[3] = { 22, 33, 77 };
+	assert_equals_vector(vec, arr4, 3, errmsg);
+	vec.remove(3, 4);
+	int arr5[2] = { 22, 33 };
+	assert_equals_vector(vec, arr5, 2, errmsg);
+}
+
+void test_vector_remove_back(const char* errmsg)
+{
+	using lxc::Vector;
+}
+
 
 /*
 void test_vector_merge_sort()
@@ -397,6 +423,7 @@ void test_vector()
 		unittest_template(errmsg + "assign", test_vector_assign);
 		unittest_template(errmsg + "operator=", test_vector_operator_assign);
 		unittest_template(errmsg + "swap", test_vector_swap);
+		unittest_template(errmsg + "remove", test_vector_remove);
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;
