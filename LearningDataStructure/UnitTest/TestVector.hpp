@@ -201,6 +201,20 @@ void test_vector_operator_assign(const char* errmsg)
 	assert_equals_vector(vec2, vec, errmsg);
 }
 
+void test_vector_swap(const char* errmsg)
+{
+	using lxc::Vector;
+
+	int arr[6] = { 1,4,5,6,2,5 };
+	Vector<int> vec(arr, 6);
+
+	int arr2[4] = { 100, 4, 55, 99 };
+	Vector<int> vec2(arr2, 4);
+
+	vec.swap(vec2);
+	assert_equals_vector(vec, arr2, 4, errmsg);
+	assert_equals_vector(vec2, arr, 6, errmsg);
+}
 
 
 /*
@@ -382,6 +396,7 @@ void test_vector()
 		unittest_template(errmsg + "equals", test_vector_equals);
 		unittest_template(errmsg + "assign", test_vector_assign);
 		unittest_template(errmsg + "operator=", test_vector_operator_assign);
+		unittest_template(errmsg + "swap", test_vector_swap);
 	}
 	catch (const char* err_msg) {
 		std::cerr << err_msg << std::endl;
