@@ -85,3 +85,15 @@ template <class T> void lxc::List<T>::_clear()
 
 template <class T> lxc::List<T>::~List()
 { this->_clear(); }
+
+
+// element access
+template <class T> T& lxc::List<T>::operator[](SizeType pos)
+{
+	ListNodePosi(T) cur_node = this->_header;
+	for (SizeType i = 0; i <= pos; i++) {
+		cur_node = cur_node->_succ;
+	}
+
+	return cur_node->_element;
+}

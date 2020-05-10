@@ -47,5 +47,11 @@ namespace lxc {
 		SizeType size() const { return this->_size; }
 		ListNodePosi(T) header() const { return this->_header; }
 		ListNodePosi(T) trailer() const { return this->_trailer; }
+		bool empty() const { return this->_size == 0; }
+
+		// element access
+		T& operator[](SizeType pos);
+		ListNodePosi(T) first() const { return this->_header->_succ; }
+		ListNodePosi(T) last() const { return this->_trailer->_pred; }
 	};
 }
